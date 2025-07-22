@@ -1,0 +1,35 @@
+---
+import { getCollection } from "astro:content";
+import CardListWrapper from "./CardListWrapper.astro";
+import CardListItem from "./CardListItem.astro";
+import CardLong from "./CardLong.astro";
+import "../styles/global.css";
+
+const blogs = await getCollection("blogs");
+console.log("Blogs loaded:", blogs.length);
+---
+
+<section>
+    <p>Below are my blogs. Found {blogs.length} blogs.</p>
+</section>
+<section>
+    <CardListWrapper>
+        {
+            blogs.map((post: any) => (
+                <CardListItem>
+                    <CardLong
+                        href={`/blogs/${post.id}/`}
+                        title={post.data.title}
+                        body={post.data.description ?? ""}
+                        tags={post.data.tags}
+                        date={
+                            post.data.pubDate
+                                ? new Date(post.data.pubDate)
+                                : undefined
+                        }
+                    />
+                </CardListItem>
+            ))
+        }
+    </CardListWrapper>
+</section>

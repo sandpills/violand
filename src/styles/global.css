@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital@0;1&family=Newsreader:ital,opsz@0,6..72;1,6..72&display=swap');
+
+@import "tailwindcss";
+
+
+html {
+    background-color: #c7c7c7;
+    color: #000000;
+    font-family: sans-serif;
+}
+
+a {
+    color: #2e00fd;
+}
+
+@theme {
+    --font-mono: IBM Plex Mono, monospace;
+    --font-serif: Newsreader, serif;
+    --color-neutral: #c7c7c7;
+    --color-bright: #cacaca;
+}
+
+#main-container {
+    width: 60vw;
+    /* padding: 20vw; */
+    /* max-height: 100vh; */
+}
+
+.container {
+    margin: 10px;
+}
+
+.header {
+    margin: 8px 0 0 8px;
+}
+
+.mono {
+    font-family: "IBM Plex Mono", monospace;
+    font-weight: 400;
+    font-style: italic;
+}

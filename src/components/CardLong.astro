@@ -1,0 +1,34 @@
+---
+interface Props {
+    href?: string;
+    title: string;
+    body?: string;
+    tags?: string[];
+    date?: Date;
+}
+
+const { href, title, body, tags, date } = Astro.props;
+---
+
+<div
+    class="relative p-3 shadow-md hover:rounded-xl hover:shadow-[0_0_25px_rgba(200,200,255,0.9)] hover:inset-shadow-[0_0_20px_20px_rgba(100,100,200,0.1)] hover:bg-bright"
+>
+    <h3>
+        <a href={href} class="hover:blur-xs font-serif text-lg">{title}</a>
+    </h3>
+    <p class="absolute right-1 top-0 text-sm text-gray-500 font-mono">
+        {date && date.getFullYear()}
+    </p>
+    <p class="pb-2 pt-1 font-mono text-sm">{body}</p>
+    {
+        tags && (
+            <div class="font-mono italic text-xs flex gap-x-1">
+                {tags.map((tag) => (
+                    <span class="px-1 border-1 border-dotted border-gray-400 inline-flex hover:bg-bright hover:rounded-sm hover:inset-shadow-[0_0_5px_5px_rgba(0,0,255,0.1)] hover:shadow-[0_0_30px_rgba(200,200,255,0.5)]">
+                        {tag}
+                    </span>
+                ))}
+            </div>
+        )
+    }
+</div>
