@@ -9,7 +9,7 @@
 </script>
 
 <button
-    class="p-1 font-mono text-xs shadow-md hover:blur-sm absolute bottom-0 right-0"
+    class="p-1 font-mono text-xs shadow-md hover:blur-sm absolute bottom-2 right-2"
     on:click={handleClick}
 >
     {message}

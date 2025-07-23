@@ -1,9 +1,10 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 import "../../styles/global.css";
-import "../../styles/project.css";
-import Layout from "../../layouts/Layout.astro";
+import "../../styles/markdown.css";
+import "../../styles/cursor.css";
 import Nav from "../../components/nav.astro";
+import Mouse from "../../components/Mouse.svelte";
 
 export async function getStaticPaths() {
     const projects = await getCollection("projects");
@@ -14,7 +15,7 @@ export async function getStaticPaths() {
 }
 
 const { project } = Astro.props;
-const { Content } = await project.render();
+const { Content } = await render(project);
 ---
 
 <html lang="en">
@@ -26,21 +27,61 @@ const { Content } = await project.render();
         <title>{project.data.title}</title>
     </head>
     <body>
-        <Nav />
-        <section class="container font-mono text-sm">
-            <h1 class="font-serif text-2xl">{project.data.title}</h1>
-            <p>Year: {project.data.year}</p>
-            {project.data.description && <p>{project.data.description}</p>}
-
-            {
-                project.data.tags && (
-                    <div>
-                        <p>Tags: {project.data.tags.join(", ")}</p>
+        <!-- <Nav /> -->
+        <div class="flex">
+            <section
+                class="container outline overflow-y-auto"
+                id="left-container"
+            >
+                <section class="outline sticky bg-neutral top-0">
+                    <!-- Project Info -->
+                    <section class="outline flex flex-row gap-4">
+                        <span class="font-serif text-2xl">
+                            <a class="hover:blur-xs" href="/">↖︎</a>
+                        </span>
+                        <h1 class="font-serif text-2xl outline pl-2 pr-5 py-1">
+                            {project.data.title}
+                        </h1>
+                    </section>
+                </section>
+                <section class="pl-2 pb-1 outline">
+                    <div class="flex gap-2 pt-2 pb-1">
+                        {
+                            project.data.tags && (
+                                <span class="text-sm font-mono italic">
+                                    {project.data.tags.join(", ")}
+                                </span>
+                            )
+                        }
+                        <span class="text-sm font-mono"
+                            >{project.data.year}</span
+                        >
                     </div>
-                )
-            }
-
-            <Content />
-        </section>
+                </section>
+                <section class="px-10 pt-6 pb-3">
+                    <!-- Hero Image -->
+                    {
+                        project.data.heroImage && (
+                            <img
+                                src={project.data.heroImage}
+                                alt={project.data.title}
+                                class="w-full mb-4 rounded-lg"
+                                loading="lazy"
+                                class=""
+                            />
+                        )
+                    }
+                </section>
+                <!-- Main Content -->
+                <section class="outline pt-1 p-10 font-serif text-md">
+                    <div class="markdown-content">
+                        <Content />
+                    </div>
+                </section>
+            </section>
+            <section class="container" id="right-container"></section>
+        </div>
+        <section class="container font-mono text-sm"></section>
     </body>
+    <Mouse client:load />
 </html>

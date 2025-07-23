@@ -1,8 +1,8 @@
 ---
 import { getCollection } from "astro:content";
-import CardListWrapper from "./CardListWrapper.astro";
-import CardListItem from "./CardListItem.astro";
-import CardLong from "./CardLong.astro";
+import CardListWrapper from "../layouts/CardListWrapper.astro";
+import CardListItem from "../layouts/CardListItem.astro";
+import Card from "../layouts/Card.astro";
 import "../styles/global.css";
 
 const blogs = await getCollection("blogs");
@@ -10,21 +10,21 @@ console.log("Blogs loaded:", blogs.length);
 ---
 
 <section>
-    <p>Below are my blogs. Found {blogs.length} blogs.</p>
+    <p class="font-mono italic text-sm">found {blogs.length} blogs.</p>
 </section>
 <section>
     <CardListWrapper>
         {
             blogs.map((post: any) => (
                 <CardListItem>
-                    <CardLong
+                    <Card
                         href={`/blogs/${post.id}/`}
                         title={post.data.title}
                         body={post.data.description ?? ""}
                         tags={post.data.tags}
                         date={
-                            post.data.pubDate
-                                ? new Date(post.data.pubDate)
+                            post.data.date
+                                ? new Date(post.data.date)
                                 : undefined
                         }
                     />

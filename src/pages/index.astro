@@ -3,9 +3,13 @@ import About from "../components/about.astro";
 import Projects from "../components/projects.astro";
 import HelloButton from "../components/HelloButton.svelte";
 import Nav from "../components/nav.astro";
-import "../styles/global.css";
+import Upcoming from "../components/upcoming.astro";
+import Mouse from "../components/Mouse.svelte";
+import LocalTime from "../components/localTime.svelte";
+// import HoverCover from "../components/hoverCover.svelte";
 
-import Layout from "../layouts/Layout.astro";
+import "../styles/global.css";
+import "../styles/cursor.css";
 ---
 
 <html lang="en">
@@ -15,16 +19,34 @@ import Layout from "../layouts/Layout.astro";
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="generator" content={Astro.generator} />
 		<title>viola new website</title>
+		<style>
+			html,
+			body,
+			* {
+				cursor: none !important;
+			}
+		</style>
 	</head>
 	<body>
 		<Nav />
-		<section class="container" id="main-container">
-			<About />
-			<Projects />
-			<HelloButton client:load />
-		</section>
-		<section class="container" id="right-container">
-			<p></p>
-		</section>
+		<div class="flex">
+			<section class="container overflow-y-auto" id="main-container">
+				<About />
+				<Projects />
+				<section class="font-mono text-sm">
+					<p><br /> hi hi hi</p>
+				</section>
+			</section>
+			<section
+				class="container outline overflow-y-auto"
+				id="right-container"
+			>
+				<LocalTime client:load />
+
+				<Upcoming />
+			</section>
+		</div>
 	</body>
+	<HelloButton client:load />
+	<Mouse client:load />
 </html>

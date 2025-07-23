@@ -1,0 +1,18 @@
+:root {
+    cursor: none !important;
+}
+
+* {
+    cursor: none !important;
+}
+
+html {
+    cursor: none !important;
+}
+
+* {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}

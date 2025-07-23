@@ -1,0 +1,46 @@
+---
+import { getCollection, render } from "astro:content";
+import "../../styles/global.css";
+import "../../styles/project.css";
+import Nav from "../../components/nav.astro";
+
+export async function getStaticPaths() {
+    const events = await getCollection("events");
+    return events.map((event) => ({
+        params: { slug: event.id }, // url slug
+        props: { event }, // event data
+    }));
+}
+
+const { event } = Astro.props;
+const { Content } = await render(event);
+console.log(event);
+---
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="generator" content={Astro.generator} />
+        <title>{event.data.title}</title>
+    </head>
+    <body>
+        <Nav />
+        <section class="container font-mono text-sm">
+            <h1 class="font-serif text-2xl">{event.data.title}</h1>
+            <p>{event.data.date}</p>
+            {event.data.description && <p>{event.data.description}</p>}
+
+            {
+                new Date(event.data.date).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                })
+            }
+
+            <Content />
+        </section>
+    </body>
+</html>

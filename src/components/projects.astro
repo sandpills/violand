@@ -1,23 +1,38 @@
 ---
 import { getCollection } from "astro:content";
-import CardListWrapper from "./CardListWrapper.astro";
-import CardListItem from "./CardListItem.astro";
-import CardLong from "./CardLong.astro";
+import CardListWrapper from "../layouts/CardListWrapper.astro";
+import CardListItem from "../layouts/CardListItem.astro";
+import Card from "../layouts/Card.astro";
 
 const projects = await getCollection("projects");
-console.log("Projects loaded:", projects.length);
+
+// Sort projects by their numbered prefixes in the filename
+const sortedProjects = projects.sort((a, b) => {
+    // Extract the number from the beginning of the filename
+    const aMatch = a.id.match(/^(\d+)-/);
+    const bMatch = b.id.match(/^(\d+)-/);
+
+    if (aMatch && bMatch) {
+        return parseInt(aMatch[1]) - parseInt(bMatch[1]);
+    }
+
+    // Fallback to alphabetical if no numbers found
+    return a.id.localeCompare(b.id);
+});
+
+console.log("Projects loaded:", sortedProjects.length);
 ---
 
 <section class="font-mono italic text-sm pb-2">
-    <p>found {projects.length} projects.</p>
+    <p>found {sortedProjects.length} projects.</p>
 </section>
 <section>
     <CardListWrapper>
         {
-            projects.map((project: any) => (
+            sortedProjects.map((project: any) => (
                 <CardListItem>
-                    <CardLong
-                        href={`/projects/${project.id}/`}
+                    <Card
+                        href={project.data.link || `/projects/${project.id}/`}
                         title={project.data.title}
                         body={project.data.description ?? ""}
                         tags={project.data.tags}
@@ -26,6 +41,7 @@ console.log("Projects loaded:", projects.length);
                                 ? new Date(project.data.year, 0, 1)
                                 : undefined
                         }
+                        image={project.data.heroImage}
                     />
                 </CardListItem>
             ))

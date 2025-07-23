@@ -3,10 +3,10 @@ title: "Here and Where You Are"
 year: 2025
 link: ""
 tags:
-  ["Performance"]
+  ["Performance", "Audio-visual"]
 image:
 description: an audio-visual performance about finding memories and meaning in a digital cityscape, created for a circular LED screen in Shanghai's Oil Tank art park
-heroImage: "background.svg"
+heroImage: "/images/projects/here-and-where.png"
 ---
 
 "Here and Where You Are" is an audio-visual experience that thrusts viewers into a circular digital metropolis that transforms from a childhood TV room into pulsing cityscapes. Many stories, sounds, and sights run parallel - and in those chaotic landscapes we search for someone who matters.

@@ -1,9 +1,9 @@
 ---
 title: "Quiet, and Sometimes Silent"
-year: 2022
+year: 2023
 link: ""
 tags:
-  ["Hardware Design", "Electronics"]
+  ["Hardware Design", "Wearable"]
 image:
 description: A DIY wearable project that explores proximity, intimacy, and subtle communication.
 heroImage: "background.svg"
