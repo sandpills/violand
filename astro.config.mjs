@@ -11,5 +11,5 @@ export default defineConfig({
 
     integrations: [svelte()],
     site: 'https://sandpills.github.io',
-    base: process.env.NODE_ENV === 'production' ? '/violand' : undefined,
+    base: import.meta.env.PROD ? '/violand' : undefined,
 });

@@ -39,7 +39,9 @@ const { href, title, body, tags, date, image } = Astro.props;
     class="card relative h-95 shadow-md hover:rounded-xl hover:shadow-[0_0_25px_rgba(200,200,255,0.9)] hover:inset-shadow-[0_0_20px_20px_rgba(100,100,200,0.1)] hover:bg-bright overflow-hidden"
 >
     <img
-        src={image}
+        src={image?.startsWith("/")
+            ? `${import.meta.env.BASE_URL}${image.slice(1)}`
+            : image}
         alt={title}
         class="card-image w-full h-42 object-cover transition-all duration-100"
     />
