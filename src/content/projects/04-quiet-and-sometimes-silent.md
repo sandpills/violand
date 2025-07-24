@@ -6,7 +6,7 @@ tags:
   ["Hardware Design", "Wearable"]
 image:
 description: A DIY wearable project that explores proximity, intimacy, and subtle communication.
-heroImage: "background.svg"
+heroImage: "/images/projects/quiet-dither.png"
 ---
 
 Quiet, and Sometimes Silent is an on-going project that explores proximity, intimacy, and subtle communication. Two DIY wearable pieces talk to each other through LoRa, a wireless protocol that enables small data-packet transmissions using a free, hobbyist radio frequency. As two people approach each other, their headpieces morph into different shapes – flapping, shrinking, producing buzzing sensations and movements. Together, they turn into mutating sculptures, communicating with nonverbal subtlety. This project draws correlation between protocols outside of heavily surveilled mass superstructures and the state of acquainted human relationships, exploring the idea that small movements and sporadic data exchange can resemble our loose social connections with the people around us.

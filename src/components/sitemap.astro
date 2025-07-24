@@ -1,0 +1,197 @@
+---
+import { getCollection } from "astro:content";
+
+const projects = await getCollection("projects");
+const blogs = await getCollection("blogs");
+const events = await getCollection("events");
+
+const sortedProjects = projects.sort((a, b) => {
+    // extract the number from the beginning of the filename
+    const aMatch = a.id.match(/^(\d+)-/);
+    const bMatch = b.id.match(/^(\d+)-/);
+
+    if (aMatch && bMatch) {
+        return parseInt(aMatch[1]) - parseInt(bMatch[1]);
+    }
+
+    // fallback to alphabetical if no numbers found
+    return a.id.localeCompare(b.id);
+});
+
+const upcomingEvents = events.filter(
+    (event) => event.data.status === "upcoming",
+);
+
+const pastEvents = events.filter((event) => event.data.status === "past");
+
+const sortedPastEvents = pastEvents.sort((a, b) => {
+    return new Date(b.data.date).getTime() - new Date(a.data.date).getTime();
+});
+
+const sortedUpcomingEvents = upcomingEvents.sort((a, b) => {
+    return new Date(a.data.date).getTime() - new Date(b.data.date).getTime();
+});
+---
+
+<section class="outline font-mono text-sm" id="sitemap">
+    <div class="flex flex-col gap-4">
+        <h1 class="text-2xl font-serif">Site Map</h1>
+
+        <div class="tree-section">
+            <div class="tree-header italic">projects/</div>
+            <ul class="tree-list">
+                {
+                    sortedProjects.map((project: any, index: number) => (
+                        <li
+                            class={
+                                index === sortedProjects.length - 1
+                                    ? "tree-item-last"
+                                    : "tree-item"
+                            }
+                        >
+                            {project.data.link ? (
+                                <a href={project.data.link}>
+                                    {project.data.title}
+                                </a>
+                            ) : (
+                                <a href={`/projects/${project.id}`}>
+                                    {project.data.title}
+                                </a>
+                            )}
+                        </li>
+                    ))
+                }
+            </ul>
+        </div>
+
+        <div class="tree-section">
+            <div class="tree-header italic">blogs/</div>
+            <ul class="tree-list">
+                {
+                    blogs.map((blog: any, index: number) => (
+                        <li
+                            class={
+                                index === blogs.length - 1
+                                    ? "tree-item-last"
+                                    : "tree-item"
+                            }
+                        >
+                            <a href={`/blogs/${blog.id}`}>{blog.data.title}</a>
+                        </li>
+                    ))
+                }
+            </ul>
+        </div>
+
+        <div class="tree-section">
+            <div class="tree-header italic">events/</div>
+            <ul class="tree-list">
+                {
+                    sortedUpcomingEvents.map((event: any, index: number) => (
+                        <li
+                            class={
+                                index === sortedUpcomingEvents.length - 1 &&
+                                sortedPastEvents.length === 0
+                                    ? "tree-item-last"
+                                    : "tree-item"
+                            }
+                        >
+                            <a href={`/events/${event.id}`}>
+                                {event.data.title}
+                            </a>
+                        </li>
+                    ))
+                }
+                {
+                    sortedPastEvents.map((event: any, index: number) => (
+                        <li
+                            class={
+                                index === sortedPastEvents.length - 1
+                                    ? "tree-item-last"
+                                    : "tree-item"
+                            }
+                        >
+                            <a href={`/events/${event.id}`}>
+                                {event.data.title}
+                            </a>
+                        </li>
+                    ))
+                }
+            </ul>
+        </div>
+    </div>
+    <div class="tree-section">
+        <div class="tree-header italic">teaching/</div>
+    </div>
+</section>
+
+<style>
+    a {
+        color: #000;
+        text-decoration: none;
+    }
+
+    a:hover {
+        filter: blur(3px);
+    }
+
+    .tree-section {
+        margin-bottom: 1rem;
+    }
+
+    .tree-header {
+        color: #2e00fd;
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+    }
+
+    .tree-list {
+        list-style: none;
+        padding-left: 0;
+        margin: 0;
+    }
+
+    .tree-item,
+    .tree-item-last {
+        position: relative;
+        padding-left: 1.8rem;
+    }
+
+    .tree-secondary,
+    .tree-secondary-last {
+        position: relative;
+        padding-left: 3.6rem;
+    }
+
+    .tree-item::before {
+        content: "├──";
+        position: absolute;
+        left: 0;
+        color: #2e00fd;
+        font-weight: 600;
+    }
+
+    .tree-item-last::before {
+        content: "└──";
+        position: absolute;
+        left: 0;
+        color: #2e00fd;
+        font-weight: 600;
+    }
+
+    .tree-secondary::before {
+        content: "├──";
+        position: absolute;
+        left: 1.8rem;
+        color: #2e00fd;
+        font-weight: 600;
+    }
+
+    .tree-secondary-last::before {
+        content: "└──";
+        position: absolute;
+        left: 1.8rem;
+        color: #2e00fd;
+        font-weight: 600;
+    }
+</style>

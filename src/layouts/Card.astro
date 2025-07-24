@@ -75,13 +75,11 @@ const { href, title, body, tags, date, image } = Astro.props;
 </div>
 
 <style>
-    /* Default: blurred and dithered */
     .card-image {
         filter: blur(4px) grayscale(90%) url(#noisy);
         transition: filter 0.2s ease;
     }
 
-    /* On hover: clear and normal colors */
     .card:hover .card-image {
         border-top-left-radius: 0.75rem;
         border-top-right-radius: 0.75rem;

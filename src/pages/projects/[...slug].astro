@@ -4,6 +4,7 @@ import "../../styles/global.css";
 import "../../styles/markdown.css";
 import "../../styles/cursor.css";
 import Nav from "../../components/nav.astro";
+import ProjectNav from "../../components/sitemap.astro";
 import Mouse from "../../components/Mouse.svelte";
 
 export async function getStaticPaths() {
@@ -84,4 +85,5 @@ const { Content } = await render(project);
         <section class="container font-mono text-sm"></section>
     </body>
     <Mouse client:load />
+    <ProjectNav />
 </html>

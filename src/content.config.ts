@@ -35,12 +35,14 @@ const events = defineCollection({
         title: z.string(),
         date: z.date(),
         description: z.string().optional(),
-        link: z.string().url().optional(),
+        link: z.string().url().optional().or(z.literal("")),
+        embed: z.string().url().optional(),
         tags: z.array(z.string()).default([]),
-    }).transform((data) => ({
-        ...data,
-        status: data.date > new Date() ? 'upcoming' : 'past' as 'upcoming' | 'past'
-    })),
+    })
+        .transform((data) => ({
+            ...data,
+            status: data.date > new Date() ? 'upcoming' : 'past' as 'upcoming' | 'past'
+        })),
 });
 
 export const collections = { blogs, projects, events };

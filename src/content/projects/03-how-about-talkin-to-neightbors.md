@@ -6,7 +6,7 @@ tags:
   ["Research", "Hardware Design"]
 image:
 description: A series of research and electronics design project, in search of surveillance resistance through using small wireless protocols. 
-heroImage: "background.svg"
+heroImage: "/images/projects/neighbors-zine.png"
 ---
 
 Master’s Thesis at NYU

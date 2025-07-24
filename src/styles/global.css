@@ -47,6 +47,15 @@ a {
     /* border: 1px solid #9e9e9e; */
 }
 
+#sitemap {
+    width: 30vw;
+    height: 97vh;
+    position: fixed;
+    right: 10px;
+    top: 11px;
+    padding: 10px;
+}
+
 #right-container {
     width: 30vw;
     height: 97vh;

@@ -6,7 +6,7 @@ import Card from "../layouts/Card.astro";
 
 const projects = await getCollection("projects");
 
-// Sort projects by their numbered prefixes in the filename
+// sort projects by their numbered prefixes in the filename
 const sortedProjects = projects.sort((a, b) => {
     // Extract the number from the beginning of the filename
     const aMatch = a.id.match(/^(\d+)-/);
