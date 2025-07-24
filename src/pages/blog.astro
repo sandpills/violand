@@ -1,6 +1,7 @@
 ---
 import Blogs from "../components/blogs.astro";
 import Nav from "../components/nav.astro";
+import { getAssetPath } from "../utils/paths.ts";
 import "../styles/global.css";
 ---
 
@@ -10,7 +11,7 @@ import "../styles/global.css";
         <link
             rel="icon"
             type="image/svg+xml"
-            href={`${import.meta.env.BASE_URL}favicon.svg`}
+            href={getAssetPath("favicon.svg")}
         />
         <meta name="viewport" content="width=device-width" />
         <meta name="generator" content={Astro.generator} />

@@ -1,6 +1,6 @@
 <script>
     import { onMount } from "svelte";
-    import okImage from "/ok.png";
+    import okImage from "/ok.png?url";
     let x = 0;
     let y = 0;
     let trails = [];

@@ -6,6 +6,7 @@ import "../../styles/cursor.css";
 import Nav from "../../components/nav.astro";
 import ProjectNav from "../../components/sitemap.astro";
 import Mouse from "../../components/Mouse.svelte";
+import { getAssetPath } from "../../utils/paths.ts";
 
 export async function getStaticPaths() {
     const projects = await getCollection("projects");
@@ -25,7 +26,7 @@ const { Content } = await render(project);
         <link
             rel="icon"
             type="image/svg+xml"
-            href={`${import.meta.env.BASE_URL}favicon.svg`}
+            href={getAssetPath("favicon.svg")}
         />
         <meta name="viewport" content="width=device-width" />
         <meta name="generator" content={Astro.generator} />
@@ -70,7 +71,7 @@ const { Content } = await render(project);
                             <img
                                 src={
                                     project.data.heroImage?.startsWith("/")
-                                        ? `${import.meta.env.BASE_URL}${project.data.heroImage.slice(1)}`
+                                        ? getAssetPath(project.data.heroImage)
                                         : project.data.heroImage
                                 }
                                 alt={project.data.title}

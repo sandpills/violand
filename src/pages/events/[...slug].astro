@@ -3,6 +3,7 @@ import { getCollection, render } from "astro:content";
 import "../../styles/global.css";
 import "../../styles/markdown.css";
 import Nav from "../../components/nav.astro";
+import { getAssetPath } from "../../utils/paths.ts";
 
 export async function getStaticPaths() {
     const events = await getCollection("events");
@@ -23,7 +24,7 @@ console.log(event);
         <link
             rel="icon"
             type="image/svg+xml"
-            href={`${import.meta.env.BASE_URL}favicon.svg`}
+            href={getAssetPath("favicon.svg")}
         />
         <meta name="viewport" content="width=device-width" />
         <meta name="generator" content={Astro.generator} />
