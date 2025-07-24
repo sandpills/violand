@@ -1,4 +1,6 @@
 ---
+import { getLinkHref } from "../utils/paths.ts";
+
 interface Props {
     href?: string;
     title: string;
@@ -26,7 +28,10 @@ const { href, title, body, tags, date } = Astro.props;
                     day: "numeric",
                 })
         }
-        <a href={href} class="pl-1 hover:blur-xs font-serif text-lg non-italic">
+        <a
+            href={getLinkHref(href || "")}
+            class="pl-1 hover:blur-xs font-serif text-lg non-italic"
+        >
             {title}</a
         >
     </p>

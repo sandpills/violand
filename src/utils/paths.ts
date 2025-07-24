@@ -18,21 +18,24 @@ export function getAssetPath(path: string): string {
 }
 
 /**
- * Get a properly formatted link href
+ * Get a properly formatted link href for navigation
  */
 export function getLinkHref(href: string): string {
-    // External links should not get base path
-    if (href.startsWith('http')) {
+    // External links (including email) should not get base path
+    if (href.startsWith('http') || href.startsWith('mailto:')) {
         return href;
     }
 
     const base = import.meta.env.BASE_URL || '';
 
-    // If href already starts with base, don't double-add
-    if (base && href.startsWith(base)) {
+    // If no base or href already starts with base, return as-is
+    if (!base || href.startsWith(base)) {
         return href;
     }
 
-    // For internal links, just return as-is - Astro handles these automatically
-    return href;
+    // For internal links, add base path
+    const cleanHref = href.startsWith('/') ? href : '/' + href;
+    const baseWithoutSlash = base.endsWith('/') ? base.slice(0, -1) : base;
+
+    return baseWithoutSlash + cleanHref;
 } 

@@ -1,5 +1,6 @@
 ---
 import { getCollection } from "astro:content";
+import { getLinkHref } from "../utils/paths.ts";
 
 const projects = await getCollection("projects");
 const blogs = await getCollection("blogs");
@@ -50,11 +51,11 @@ const sortedUpcomingEvents = upcomingEvents.sort((a, b) => {
                             }
                         >
                             {project.data.link ? (
-                                <a href={project.data.link}>
+                                <a href={getLinkHref(project.data.link)}>
                                     {project.data.title}
                                 </a>
                             ) : (
-                                <a href={`/projects/${project.id}`}>
+                                <a href={getLinkHref(`/projects/${project.id}`)}>
                                     {project.data.title}
                                 </a>
                             )}
@@ -76,7 +77,7 @@ const sortedUpcomingEvents = upcomingEvents.sort((a, b) => {
                                     : "tree-item"
                             }
                         >
-                            <a href={`/blogs/${blog.id}`}>{blog.data.title}</a>
+                            <a href={getLinkHref(`/blogs/${blog.id}`)}>{blog.data.title}</a>
                         </li>
                     ))
                 }
@@ -96,7 +97,7 @@ const sortedUpcomingEvents = upcomingEvents.sort((a, b) => {
                                     : "tree-item"
                             }
                         >
-                            <a href={`/events/${event.id}`}>
+                            <a href={getLinkHref(`/events/${event.id}`)}>
                                 {event.data.title}
                             </a>
                         </li>
@@ -111,7 +112,7 @@ const sortedUpcomingEvents = upcomingEvents.sort((a, b) => {
                                     : "tree-item"
                             }
                         >
-                            <a href={`/events/${event.id}`}>
+                            <a href={getLinkHref(`/events/${event.id}`)}>
                                 {event.data.title}
                             </a>
                         </li>

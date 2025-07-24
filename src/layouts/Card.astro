@@ -1,5 +1,5 @@
 ---
-import { getAssetPath } from "../utils/paths.ts";
+import { getAssetPath, getLinkHref } from "../utils/paths.ts";
 
 interface Props {
     href?: string;
@@ -48,7 +48,7 @@ const { href, title, body, tags, date, image } = Astro.props;
     <div class="px-3 py-2">
         <h3>
             <a
-                href={href}
+                href={getLinkHref(href || "")}
                 class="card-title hover:blur-xs font-serif text-lg"
                 target={href?.startsWith("http") ? "_blank" : undefined}
                 rel={href?.startsWith("http")

@@ -6,7 +6,7 @@ import "../../styles/cursor.css";
 import Nav from "../../components/nav.astro";
 import ProjectNav from "../../components/sitemap.astro";
 import Mouse from "../../components/Mouse.svelte";
-import { getAssetPath } from "../../utils/paths.ts";
+import { getAssetPath, getLinkHref } from "../../utils/paths.ts";
 
 export async function getStaticPaths() {
     const projects = await getCollection("projects");
@@ -43,7 +43,9 @@ const { Content } = await render(project);
                     <!-- Project Info -->
                     <section class="outline flex flex-row gap-4">
                         <span class="font-serif text-2xl">
-                            <a class="hover:blur-xs" href="/">↖︎</a>
+                            <a class="hover:blur-xs" href={getLinkHref("/")}
+                                >↖︎</a
+                            >
                         </span>
                         <h1 class="font-serif text-2xl outline pl-2 pr-5 py-1">
                             {project.data.title}
