@@ -1,0 +1,130 @@
+---
+import Nav from "../components/nav.astro";
+import Mouse from "../components/Mouse.svelte";
+import { getAssetPath } from "../utils/paths.ts";
+import { getLinkHref } from "../utils/paths.ts";
+
+import "../styles/global.css";
+import "../styles/cursor.css";
+
+const cloudUrl = getLinkHref("cloud.png");
+---
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <link
+            rel="icon"
+            type="image/svg+xml"
+            href={getAssetPath("blueguy.png")}
+        />
+        <title>music!</title>
+    </head>
+    <style>
+        html,
+        body,
+        * {
+            cursor: none !important;
+        }
+        body {
+            background: #58cbe8;
+            background: linear-gradient(
+                180deg,
+                #c3c3c3 0%,
+                rgb(219, 229, 232) 20%,
+                rgb(194, 234, 255) 50%,
+                rgb(190, 255, 192) 100%
+            );
+        }
+    </style>
+
+    <body>
+        <div class="container">
+            <Nav />
+            <div id="webamp-container" style="width: 100vw; height: 100vh">
+            </div>
+        </div>
+    </body>
+
+    <script>
+        import Webamp from "../utils/webamp.mjs";
+        import { getLinkHref } from "../utils/paths.ts";
+        const winampSkinUrl = getLinkHref(
+            "winamp_skins/Pixelamp Winamp Skin.wsz",
+        );
+        const internetFriendsUrl = getLinkHref("music/Internet Friends.wav");
+        const playboiUrl = getLinkHref("music/Playboi.wav");
+        const playUrl = getLinkHref("music/PLAY !!!.wav");
+
+        // All configuration options are optional.
+        const webamp = new Webamp({
+            windowLayout: {
+                main: {
+                    position: { top: 0, left: 0 },
+                    shadeMode: false,
+                    closed: false,
+                },
+                equalizer: {
+                    position: { top: 230, left: 0 },
+                    shadeMode: true,
+                    closed: false,
+                },
+                playlist: {
+                    position: { top: 115, left: 0 },
+                    shadeMode: false,
+                    closed: false,
+                },
+                milkdrop: {
+                    position: { top: 0, left: 275 },
+                    size: { extraHeight: 8, extraWidth: 3 },
+                    closed: false,
+                },
+                // enableDoubleSizeMode: true,
+            },
+            initialSkin: {
+                url: winampSkinUrl,
+            },
+            initialTracks: [
+                {
+                    metaData: {
+                        artist: "v10101a / Bradley CD",
+                        title: "Internet Friends",
+                    },
+                    // NOTE: Your audio file must be served from the same domain as your HTML
+                    // file, or served with permissive CORS HTTP headers:
+                    // https://docs.webamp.org/docs/guides/cors
+                    url: internetFriendsUrl,
+                    duration: 3.29,
+                },
+                {
+                    metaData: {
+                        artist: "v10101a / Bradley CD",
+                        title: "playboi",
+                    },
+                    url: playboiUrl,
+                    duration: 3.16,
+                },
+                {
+                    metaData: {
+                        artist: "v10101a / Bradley CD",
+                        title: "PLAY !!!",
+                    },
+                    url: playUrl,
+                    duration: 3.16,
+                },
+            ],
+            // enableDoubleSizeMode: true,
+        });
+
+        // Render after the skin has loaded.
+        const container = document.getElementById("webamp-container");
+
+        if (container) {
+            webamp.renderWhenReady(container).then(() => {
+                (window as any).webamp = webamp;
+                // webamp.close();
+            });
+        }
+    </script>
+    <Mouse client:load />
+</html>
