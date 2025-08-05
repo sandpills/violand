@@ -3,7 +3,9 @@ import Clock from "../components/localTime.svelte";
 import MouseFollower from "../components/MouseFollower.svelte";
 import "../styles/global.css";
 import { getLinkHref } from "../utils/paths.ts";
-const url = getLinkHref("/images/ok.png");
+const musicUrl = getLinkHref("music.png");
+const clockUrl = getLinkHref("clock.png");
+const okUrl = getLinkHref("ok.png");
 ---
 
 <style>
@@ -202,21 +204,21 @@ const url = getLinkHref("/images/ok.png");
             class="gadget-icon w-30 h-30"
             aria-label="Toggle clock"
         >
-            <img src="/clock.png" alt="Clock" />
+            <img src={clockUrl} alt="Clock" />
         </button>
         <button
             id="music-toggle"
             class="gadget-icon w-30 h-30"
             aria-label="Toggle music player"
         >
-            <img src="/music.png" alt="Music" />
+            <img src={musicUrl} alt="Music" />
         </button>
         <button
             id="ok-toggle"
             class="gadget-icon w-30 h-30"
             aria-label="Toggle ok"
         >
-            <img src="/ok.png" alt="ok" />
+            <img src={okUrl} alt="ok" />
         </button>
     </div>
 

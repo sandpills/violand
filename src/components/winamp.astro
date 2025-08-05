@@ -1,5 +1,6 @@
 ---
-
+// import { getLinkHref } from "../utils/paths.ts";
+// const winampSkinUrl = getLinkHref("winamp_skins/Pixelamp Winamp Skin.wsz");
 ---
 
 <div
@@ -9,6 +10,11 @@
 </div>
 <script>
     import Webamp from "../utils/webamp.mjs";
+    import { getLinkHref } from "../utils/paths.ts";
+    const winampSkinUrl = getLinkHref("winamp_skins/Pixelamp Winamp Skin.wsz");
+    const internetFriendsUrl = getLinkHref("music/Internet Friends.wav");
+    const playboiUrl = getLinkHref("music/Playboi.wav");
+    const playUrl = getLinkHref("music/PLAY !!!.wav");
 
     // All configuration options are optional.
     const webamp = new Webamp({
@@ -36,7 +42,7 @@
             // enableDoubleSizeMode: true,
         },
         initialSkin: {
-            url: "/winamp_skins/Pixelamp Winamp Skin.wsz",
+            url: winampSkinUrl,
         },
         initialTracks: [
             {
@@ -47,7 +53,7 @@
                 // NOTE: Your audio file must be served from the same domain as your HTML
                 // file, or served with permissive CORS HTTP headers:
                 // https://docs.webamp.org/docs/guides/cors
-                url: "/music/Internet Friends.wav",
+                url: internetFriendsUrl,
                 duration: 3.29,
             },
             {
@@ -55,7 +61,7 @@
                     artist: "v10101a / Bradley CD",
                     title: "playboi",
                 },
-                url: "/music/Playboi.wav",
+                url: playboiUrl,
                 duration: 3.16,
             },
             {
@@ -63,7 +69,7 @@
                     artist: "v10101a / Bradley CD",
                     title: "PLAY !!!",
                 },
-                url: "/music/PLAY !!!.wav",
+                url: playUrl,
                 duration: 3.16,
             },
         ],
