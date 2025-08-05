@@ -7,6 +7,11 @@ import Upcoming from "../components/upcoming.astro";
 import Mouse from "../components/Mouse.svelte";
 import LocalTime from "../components/localTime.svelte";
 import { getAssetPath } from "../utils/paths.ts";
+import { getLinkHref } from "../utils/paths.ts";
+
+import Winamp from "../components/winamp.astro";
+import Gadgets from "../components/gadgets.astro";
+import MouseFollower from "../components/MouseFollower.svelte";
 // import HoverCover from "../components/hoverCover.svelte";
 
 import "../styles/global.css";
@@ -35,23 +40,58 @@ import "../styles/cursor.css";
 	<body>
 		<Nav />
 		<div class="flex">
-			<section class="container overflow-y-auto" id="main-container">
+			<section class="container main-container overflow-y-auto">
 				<About />
 				<Projects />
 				<section class="font-mono text-sm">
 					<button class="hover:blur">⇣ more </button>
 				</section>
+				<marquee
+					behavior="scroll"
+					scrollamount="5"
+					direction="down"
+					class="fixed top-0 left-0 h-full pointer-events-none marqueee"
+				>
+					<span class="text-sm font-mono text-bright text-shadow-lg">
+						<!-- <a
+							href={getLinkHref("/")}
+							class="text-bright hover:underline"
+						> -->
+						<pre>
+	♡							  ✩  ┊                       ✮  				 ┊                  ✩⋆
+						✩		┊    ┊      ★  ┊        |         ┊              ┊ 
+		💿				  		┊    ✮         ⊹˚ ⁭      ⁭| ⁭ ⁭ ⁭ ⁭ ⁭ ⁭ ⁭  ⋆      ⊹       ✩ 
+								┊                       ✮         ✧            |      ✧         ┊ 
+								✩⋆                                            ✩⋆                ┊
+	  	 	˚.⋆											          ✧                           ࣪⋆   
+	┊						|			┊      ★  ┊                 ┊               ┊                       |
+	┊						✧			✮         ⊹˚ ⁭        ⁭ ⁭ ⁭ ⁭ ⁭ ⁭ ⁭ | ⋆      ⊹      ♡                       |
+	┊				|			┊                       ✮   ┊       ✧           |         ✩     ┊           ⊹˚
+	✩				|			┊                           ✧                   ✩⋆          |   ✩⋆
+					✧			┊    ┊                                                       ✧   
+		┊						┊    ┊      ★  ┊   ┊    | ✩⋆      ┊              ┊  ˚               
+		┊						┊    ♡         ⊹˚ ⁭ ✩⋆   ⁭| ⁭ ⁭ ⁭ ⁭ ⁭ ⁭ ⁭  ⋆      ⊹       ✩ 
+		✧						★                       ✮   ┊     ✧                    ✧           💿
+				★				 							✩⋆                                            ✩⋆              
+						</pre>
+						<!-- </a> -->
+					</span>
+				</marquee>
 			</section>
 			<section
 				class="container outline overflow-y-auto"
 				id="right-container"
 			>
-				<LocalTime client:load />
+				<Gadgets />
+				<!-- <LocalTime client:load /> -->
 
 				<Upcoming />
 			</section>
 		</div>
+		<Winamp />
 	</body>
-	<HelloButton client:load />
 	<Mouse client:load />
+	<!-- <MouseFollower client:only enabled={true} /> -->
+
+	<!-- <Winamp client:load /> -->
 </html>

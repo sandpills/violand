@@ -10,10 +10,17 @@ import { getAssetPath, getLinkHref } from "../../utils/paths.ts";
 
 export async function getStaticPaths() {
     const projects = await getCollection("projects");
-    return projects.map((project) => ({
-        params: { slug: project.id },
-        props: { project },
-    }));
+    const filteredProjects = projects.filter(
+        (project) => project.data.link === "",
+    );
+    return filteredProjects.map((project) => {
+        const fileName = project.id.split("/").pop().replace(".md", "");
+        const cleanSlug = fileName.replace(/^\d+-/, ""); // remove number prefix chunk
+        return {
+            params: { slug: cleanSlug },
+            props: { project },
+        };
+    });
 }
 
 const { project } = Astro.props;
@@ -36,10 +43,10 @@ const { Content } = await render(project);
         <!-- <Nav /> -->
         <div class="flex">
             <section
-                class="container outline overflow-y-auto"
+                class="container left-container outline overflow-y-auto"
                 id="left-container"
             >
-                <section class="outline sticky bg-neutral top-0">
+                <div class="outline sticky bg-neutral top-0">
                     <!-- Project Info -->
                     <section class="outline flex flex-row gap-4">
                         <span class="font-serif text-2xl">
@@ -51,49 +58,55 @@ const { Content } = await render(project);
                             {project.data.title}
                         </h1>
                     </section>
-                </section>
-                <section class="pl-2 pb-1 outline">
-                    <div class="flex gap-2 pt-2 pb-1">
+                </div>
+                <div class="scroll-container">
+                    <section class="pl-2 pb-1 outline">
+                        <div class="flex gap-2 pt-2 pb-1">
+                            {
+                                project.data.tags && (
+                                    <span class="text-sm font-mono italic">
+                                        {project.data.tags.join(", ")}
+                                    </span>
+                                )
+                            }
+                            <span class="text-sm font-mono"
+                                >{project.data.year}</span
+                            >
+                        </div>
+                    </section>
+                    <section class="px-10 pt-6 pb-3">
+                        <!-- Hero Image -->
                         {
-                            project.data.tags && (
-                                <span class="text-sm font-mono italic">
-                                    {project.data.tags.join(", ")}
-                                </span>
+                            project.data.heroImage && (
+                                <img
+                                    src={
+                                        project.data.heroImage?.startsWith("/")
+                                            ? getAssetPath(
+                                                  project.data.heroImage,
+                                              )
+                                            : project.data.heroImage
+                                    }
+                                    alt={project.data.title}
+                                    class="w-full mb-4 rounded-lg"
+                                    loading="lazy"
+                                />
                             )
                         }
-                        <span class="text-sm font-mono"
-                            >{project.data.year}</span
-                        >
-                    </div>
-                </section>
-                <section class="px-10 pt-6 pb-3">
-                    <!-- Hero Image -->
-                    {
-                        project.data.heroImage && (
-                            <img
-                                src={
-                                    project.data.heroImage?.startsWith("/")
-                                        ? getAssetPath(project.data.heroImage)
-                                        : project.data.heroImage
-                                }
-                                alt={project.data.title}
-                                class="w-full mb-4 rounded-lg"
-                                loading="lazy"
-                            />
-                        )
-                    }
-                </section>
-                <!-- Main Content -->
-                <section class="outline pt-1 p-10 font-serif text-md">
-                    <div class="markdown-content">
-                        <Content />
-                    </div>
-                </section>
+                    </section>
+                    <!-- Main Content -->
+                    <section class="outline pt-1 p-10 font-serif text-md">
+                        <div class="markdown-content">
+                            <Content />
+                        </div>
+                    </section>
+                </div>
             </section>
             <section class="container" id="right-container"></section>
         </div>
         <section class="container font-mono text-sm"></section>
     </body>
     <Mouse client:load />
-    <ProjectNav />
+    <div class="outline" id="sitemap">
+        <ProjectNav />
+    </div>
 </html>

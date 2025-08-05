@@ -5,6 +5,8 @@
 /**
  * Joins the base URL with a path, ensuring proper slash handling
  */
+
+
 export function getAssetPath(path: string): string {
     const base = import.meta.env.BASE_URL || '/';
 

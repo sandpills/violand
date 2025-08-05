@@ -1,0 +1,115 @@
+---
+import { getAssetPath, getLinkHref } from "../utils/paths.ts";
+import { remark } from "remark";
+import remarkGfm from "remark-gfm";
+import html from "remark-html";
+
+import getStaticPaths from "../pages/projects/[...slug].astro";
+
+interface Props {
+    href?: string;
+    title: string;
+    body?: string;
+    tags?: string[];
+    date?: Date;
+    image?: string;
+}
+
+const { href, title, body, tags, date, image } = Astro.props;
+
+// Function to parse markdown to HTML with Tailwind classes
+async function parseMarkdown(markdown: string): Promise<string> {
+    if (!markdown) return "";
+
+    const result = await remark().use(remarkGfm).use(html).process(markdown);
+
+    // Add Tailwind classes to links
+    let htmlContent = String(result);
+    htmlContent = htmlContent.replace(
+        /<a href="([^"]+)">([^<]+)<\/a>/g,
+        '<a href="$1" class="text-blue-500 italic text-md hover:text-blue-700 hover:not-italic transition-colors duration-200" target="_blank" rel="noopener noreferrer">$2</a>',
+    );
+
+    // Remove any wrapping <p> tags since we're using a div container
+    htmlContent = htmlContent.replace(/^<p>(.*)<\/p>$/s, "$1");
+
+    return htmlContent;
+}
+
+const parsedBody = body ? await parseMarkdown(body) : "";
+---
+
+<!-- SVG filter -->
+<svg width="0" height="0" style="position: absolute;">
+    <defs>
+        <filter id="noisy" x="0%" y="0%" width="100%" height="100%">
+            <feTurbulence
+                baseFrequency="1.1"
+                numOctaves="0.2"
+                result="rawNoise"
+                type="fractalNoise"></feTurbulence>
+            <feColorMatrix in="rawNoise" type="saturate" values="0"
+            ></feColorMatrix>
+            <!-- <feComponentTransfer in="rawNoise" result="softNoise">
+                <feFuncA type="discrete" tableValues="0.3 0.1 0.4 0.2 0.3 0.1"
+                ></feFuncA>
+            </feComponentTransfer>
+            <feGaussianBlur
+                in="softNoise"
+                stdDeviation="0.4"
+                result="blurredNoise"></feGaussianBlur> -->
+            <feBlend in="SourceGraphic" in2="rawNoise" mode="screen"></feBlend>
+        </filter>
+    </defs>
+</svg>
+
+<div
+    class="card relative h-95 shadow-md hover:rounded-xl hover:shadow-[0_0_25px_rgba(200,200,255,0.9)] hover:inset-shadow-[0_0_20px_20px_rgba(100,100,200,0.1)] hover:bg-bright overflow-hidden"
+>
+    <img
+        src={image?.startsWith("/") ? getAssetPath(image) : image}
+        alt={title}
+        class="card-image w-full h-42 object-cover transition-all duration-100"
+    />
+    <div class="px-3 py-2">
+        <h3>
+            <a
+                href={getLinkHref(href || "")}
+                class="card-title hover:blur-xs font-serif text-lg"
+                target={href?.startsWith("http") ? "_blank" : undefined}
+                rel={href?.startsWith("http")
+                    ? "noopener noreferrer"
+                    : undefined}
+            >
+                {title}
+            </a>
+        </h3>
+        <div class="pb-2 pt-1 font-mono text-sm" set:html={parsedBody} />
+        {
+            tags && (
+                <div class="font-mono italic text-xs flex gap-x-1">
+                    {tags.map((tag) => (
+                        <span class="px-1 border-1 border-dotted border-gray-400 inline-flex hover:bg-bright hover:rounded-sm hover:inset-shadow-[0_0_5px_5px_rgba(0,0,255,0.1)] hover:shadow-[0_0_30px_rgba(200,200,255,0.5)]">
+                            {tag}
+                        </span>
+                    ))}
+                </div>
+            )
+        }
+    </div>
+</div>
+
+<style>
+    .card-image {
+        filter: blur(4px) grayscale(90%) url(#noisy);
+        transition: filter 0.2s ease;
+    }
+
+    .card:hover .card-image {
+        border-top-left-radius: 0.75rem;
+        border-top-right-radius: 0.75rem;
+        filter: blur(0px) grayscale(0%);
+        transition: filter 0.2s ease;
+        transition: border-top-left-radius 0.2s ease;
+    }
+</style>

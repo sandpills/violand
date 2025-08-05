@@ -1,0 +1,37 @@
+---
+import { getCollection } from "astro:content";
+import { getLinkHref } from "../utils/paths.ts";
+import CardListWrapper from "../layouts/CardListWrapper.astro";
+import CardListItem from "../layouts/CardListItem.astro";
+import RCCard from "../layouts/RCCard.astro";
+import "../styles/global.css";
+
+const things = await getCollection("things");
+console.log("Things loaded:", things.length);
+---
+
+<section>
+    <p class="font-mono italic text-sm">found {things.length} things.</p>
+</section>
+<section>
+    <CardListWrapper>
+        {
+            things.map((post: any) => (
+                <CardListItem>
+                    <RCCard
+                        href={post.data.link ?? `/things/${post.id}/`}
+                        title={post.data.title}
+                        body={post.data.description ?? ""}
+                        tags={post.data.tags}
+                        date={
+                            post.data.date
+                                ? new Date(post.data.date)
+                                : undefined
+                        }
+                        image={post.data.heroImage}
+                    />
+                </CardListItem>
+            ))
+        }
+    </CardListWrapper>
+</section>

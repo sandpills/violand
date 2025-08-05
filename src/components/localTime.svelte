@@ -4,15 +4,15 @@
     let currentTime = new Date();
     let clockContainer;
 
-    const clockSize = 160;
+    const clockSize = 600;
     const centerX = clockSize / 2;
     const centerY = clockSize / 2;
-    const pixelSize = 2;
+    const pixelSize = 4;
 
-    const hourHandLength = 38;
-    const minuteHandLength = 45;
-    const secondHandLength = 60;
-    const handWidth = 3;
+    const hourHandLength = clockSize / 8;
+    const minuteHandLength = clockSize / 5;
+    const secondHandLength = clockSize / 3;
+    const handWidth = 10;
 
     $: {
         // Calculate angles (12 o'clock = 0 degrees)
@@ -53,15 +53,15 @@
         //     drift.y = (Math.random() - 0.5) * 3;
         // }, 4000);
 
-        // // Breathing effect
-        // const breatheInterval = setInterval(() => {
-        //     breathe = 1 + Math.sin(Date.now() * 0.001) * 0.05;
-        // }, 100);
+        // Breathing effect
+        const breatheInterval = setInterval(() => {
+            breathe = 1 + Math.sin(Date.now() * 0.001) * 0.02;
+        }, 100);
 
         return () => {
             clearInterval(timeInterval);
             // clearInterval(driftInterval);
-            // clearInterval(breatheInterval);
+            clearInterval(breatheInterval);
         };
     });
 
@@ -97,13 +97,6 @@
     const gridDots = createGridDots();
     const edgeDots = createEdgeDots();
 
-    const hourMarkers = [
-        { x: centerX, y: 8 }, // 12
-        { x: clockSize - 8, y: centerY }, // 3
-        { x: centerX, y: clockSize - 8 }, // 6
-        { x: 8, y: centerY }, // 9
-    ];
-
     // generate dots for hands
     function generateHandDots(length, spacing = 10) {
         const dots = [];
@@ -121,29 +114,17 @@
         };
     }
 
-    const hourDots = generateHandDots(hourHandLength, 4);
-    const minuteDots = generateHandDots(minuteHandLength, 4);
-    const secondDots = generateHandDots(secondHandLength, 4);
+    const hourDots = generateHandDots(hourHandLength, 8);
+    const minuteDots = generateHandDots(minuteHandLength, 8);
+    const secondDots = generateHandDots(secondHandLength, 8);
 </script>
 
 <div
-    class="pixel-clock font-mono text-xs w-160px h-160px"
+    class="pixel-clock"
     bind:this={clockContainer}
     style="transform: translate({drift.x}px, {drift.y}px) scale({breathe})"
 >
     <svg width={clockSize} height={clockSize} class="clock-face">
-        <!-- gridline -->
-        <!-- {#each gridDots as dot}
-            <rect
-                x={dot.x}
-                y={dot.y}
-                width={2}
-                height={2}
-                fill="gray"
-                opacity="0.5"
-            />
-        {/each} -->
-
         {#each edgeDots as dot, i}
             <!-- Glow layer -->
             <rect
@@ -154,7 +135,7 @@
                 height={pixelSize * 2}
                 rx={pixelSize * 2}
                 ry={pixelSize * 2}
-                fill="rgba(0,0,255, 0.9)"
+                fill="rgba(0,0,255, 1)"
                 opacity={highlightedDots[i] ? "1" : "0"}
             />
             <!-- Main dot -->
@@ -183,25 +164,14 @@
             /> -->
         {/each}
 
-        <!-- Hour markers -->
-        <!-- {#each hourMarkers as marker}
-            <rect
-                x={marker.x - pixelSize}
-                y={marker.y - pixelSize}
-                width={pixelSize * 2}
-                height={pixelSize * 2}
-                fill="#414141"
-            />
-        {/each} -->
-
         <!-- Hour hand dots -->
         {#each hourDots as dot}
             {@const pos = getHandDotPosition(dot.distance, hourAngle)}
             <rect
                 x={pos.x - pixelSize}
                 y={pos.y - pixelSize}
-                width={pixelSize * 1}
-                height={pixelSize * 1}
+                width={pixelSize * 1.2}
+                height={pixelSize * 1.2}
                 fill="#2e2e2e"
             />
         {/each}
@@ -212,8 +182,8 @@
             <rect
                 x={pos.x - 1}
                 y={pos.y - 1}
-                width="2"
-                height="2"
+                width={pixelSize * 1}
+                height={pixelSize * 1}
                 fill="#2e2e2e"
             />
         {/each}
@@ -224,8 +194,8 @@
             <rect
                 x={pos.x - 1}
                 y={pos.y - 1}
-                width="2"
-                height="2"
+                width={pixelSize * 1}
+                height={pixelSize * 1}
                 fill="#2e00fd"
                 opacity="0.9"
             />
@@ -241,7 +211,7 @@
         />
     </svg>
     <p
-        class="glow w-full text-xl font-serif italic text-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+        class="glow w-full text-5xl font-serif italic text-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
     >
         {currentTime.toLocaleTimeString()}
     </p>
@@ -295,7 +265,7 @@
 
     .pixel-clock:hover {
         transition: all 0.2s ease-out;
-        border-radius: 100px;
+        border-radius: 500px;
         /* border: 1px solid rgb(151, 151, 151); */
         box-shadow: inset 0 0 30px 0 rgba(76, 85, 130, 0.2);
         box-shadow: 0 0 30px 0 rgba(244, 244, 255, 0.2);

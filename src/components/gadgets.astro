@@ -1,0 +1,233 @@
+---
+import Clock from "../components/localTime.svelte";
+import MouseFollower from "../components/MouseFollower.svelte";
+import "../styles/global.css";
+import { getLinkHref } from "../utils/paths.ts";
+const url = getLinkHref("/images/ok.png");
+---
+
+<style>
+    .gadgets-container {
+        /* position: relative; */
+        z-index: 99999999;
+    }
+
+    .gadget-icon {
+        background: none;
+        border: none;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+    }
+
+    .gadget-icon:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: scale(1.02);
+    }
+
+    .gadget {
+        /* position: fixed; */
+        transition: all 0.3s ease;
+        pointer-events: none;
+    }
+
+    .gadget.show {
+        display: block;
+        pointer-events: none;
+        background-color: #c7c7c735;
+    }
+
+    .gadget.hidden {
+        display: none;
+        pointer-events: none;
+    }
+
+    #clock-gadget {
+        /* height: 100vh; */
+    }
+
+    .gadget-content {
+        /* padding: 2px; */
+    }
+
+    #clock-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /* background-color: #c7c7c7a7; */
+        backdrop-filter: blur(10px);
+        height: 100%;
+        overflow: hidden;
+    }
+</style>
+
+<script>
+    let okEnabled = false;
+
+    window.onload = function () {
+        if ((window as any).webamp) {
+            (window as any).webamp.close();
+        }
+    };
+
+    document.addEventListener("DOMContentLoaded", function () {
+        let clockLoaded = false;
+        let winampLoaded = false;
+        let clockGadgetActive = false;
+        let musicGadgetActive = false;
+        let okGadgetActive = false;
+
+        const clockToggle = document.getElementById("clock-toggle");
+        const musicToggle = document.getElementById("music-toggle");
+        const clockGadget = document.getElementById("clock-gadget");
+        const musicGadget = document.getElementById("music-gadget");
+        const okToggle = document.getElementById("ok-toggle");
+        const okGadget = document.getElementById("ok-gadget");
+
+        function makeOkInstance() {
+            window.dispatchEvent(
+                new CustomEvent("okToggle", {
+                    detail: { enabled: okEnabled },
+                }),
+            );
+        }
+
+        clockToggle?.addEventListener("click", async function () {
+            if (clockGadget && clockGadget.classList.contains("show")) {
+                hideGadget(clockGadget);
+                console.log("clock hide");
+            } else if (clockGadget) {
+                console.log("clock show");
+                okEnabled = false;
+                hideAllGadgets();
+                if (musicGadget) hideGadget(musicGadget);
+                showGadget(clockGadget);
+            }
+        });
+
+        musicToggle?.addEventListener("click", async function () {
+            if (musicGadget && musicGadget.classList.contains("show")) {
+                hideGadget(musicGadget);
+            } else if (musicGadget) {
+                okEnabled = false;
+                hideAllGadgets();
+                showGadget(musicGadget);
+            }
+        });
+
+        okToggle?.addEventListener("click", async function () {
+            if (!okEnabled) {
+                okEnabled = !okEnabled;
+                makeOkInstance();
+            }
+            if (okGadget && okGadget.classList.contains("show")) {
+                okEnabled = false;
+                hideGadget(okGadget);
+                console.log("ok hide");
+            } else if (okGadget) {
+                hideAllGadgets();
+                okEnabled = true;
+                console.log("ok show");
+                if (musicGadget) hideGadget(musicGadget);
+                showGadget(okGadget);
+            }
+        });
+
+        // Close gadgets when clicking outside
+        document.addEventListener("click", function (event) {
+            const target = event.target as HTMLElement;
+            if (
+                target &&
+                !target.closest(".gadget") &&
+                target &&
+                !target.closest(".gadget-icon")
+            ) {
+                okEnabled = false;
+                hideAllGadgets();
+            }
+        });
+
+        function showGadget(gadget: HTMLElement) {
+            if (clockToggle && gadget.id === "clock-gadget") {
+                clockGadgetActive = true;
+                clockToggle.style.backgroundColor = "red";
+            } else if (musicToggle && gadget.id === "music-gadget") {
+                musicGadgetActive = true;
+                musicToggle.style.backgroundColor = "yellow";
+                if ((window as any).webamp) {
+                    (window as any).webamp.reopen();
+                }
+            } else if (okToggle && gadget.id === "ok-gadget") {
+                okGadgetActive = true;
+                okToggle.style.backgroundColor = "cyan";
+            }
+            gadget.classList.remove("hidden");
+            gadget.classList.add("show");
+            gadget.classList.add("cover-container");
+        }
+
+        function hideGadget(gadget: HTMLElement) {
+            if (gadget.id === "clock-gadget") {
+                clockGadgetActive = false;
+                if (clockToggle)
+                    clockToggle.style.backgroundColor = "transparent";
+            } else if (gadget.id === "music-gadget") {
+                musicGadgetActive = false;
+                if ((window as any).webamp) {
+                    (window as any).webamp.close();
+                }
+                if (musicToggle)
+                    musicToggle.style.backgroundColor = "transparent";
+            } else if (gadget.id === "ok-gadget") {
+                okGadgetActive = false;
+                if (okToggle) okToggle.style.backgroundColor = "transparent";
+                makeOkInstance();
+            }
+            gadget.classList.remove("show");
+            gadget.classList.add("hidden");
+        }
+
+        function hideAllGadgets() {
+            if (clockGadget) hideGadget(clockGadget);
+            if (okGadget) hideGadget(okGadget);
+            makeOkInstance();
+            // if (musicGadget) hideGadget(musicGadget);
+        }
+    });
+</script>
+
+<div class="gadgets-container">
+    <div class="flex gap-x-1 top-0 left-0 right-0 justify-left">
+        <button
+            id="clock-toggle"
+            class="gadget-icon w-30 h-30"
+            aria-label="Toggle clock"
+        >
+            <img src="/clock.png" alt="Clock" />
+        </button>
+        <button
+            id="music-toggle"
+            class="gadget-icon w-30 h-30"
+            aria-label="Toggle music player"
+        >
+            <img src="/music.png" alt="Music" />
+        </button>
+        <button
+            id="ok-toggle"
+            class="gadget-icon w-30 h-30"
+            aria-label="Toggle ok"
+        >
+            <img src="/ok.png" alt="ok" />
+        </button>
+    </div>
+
+    <div id="clock-gadget" class="gadget hidden">
+        <div class="gadget-content" id="clock-container">
+            <Clock client:load />
+        </div>
+    </div>
+
+    <div id="music-gadget" class="hidden"></div>
+</div>
+<div id="ok-gadget" class="gadget hidden">
+    <MouseFollower client:only enabled={false} />
+</div>

@@ -3,6 +3,7 @@ import Blogs from "../components/blogs.astro";
 import Nav from "../components/nav.astro";
 import { getAssetPath } from "../utils/paths.ts";
 import "../styles/global.css";
+import Mouse from "../components/Mouse.svelte";
 ---
 
 <html lang="en">
@@ -19,6 +20,11 @@ import "../styles/global.css";
     </head>
     <body>
         <Nav />
-        <Blogs />
+        <section class="container main-container overflow-y-auto">
+            <section class="font-mono text-sm pt-10 pb-2">
+                <Blogs />
+            </section>
+        </section>
+        <Mouse client:load />
     </body>
 </html>

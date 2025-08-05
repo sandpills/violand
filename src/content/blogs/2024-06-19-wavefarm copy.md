@@ -1,6 +1,6 @@
 ---
 title: "The answer may (or may not) be in the woods"
-description: "9 days upstate before summer ended"
+description: 9 days upstate before summer ended
 date: 2024-06-19
 heroImage: "/blog-placeholder-1.jpg"
 tags: ["blog"]

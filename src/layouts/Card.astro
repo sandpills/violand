@@ -1,5 +1,10 @@
 ---
 import { getAssetPath, getLinkHref } from "../utils/paths.ts";
+import { remark } from "remark";
+import remarkGfm from "remark-gfm";
+import html from "remark-html";
+
+import getStaticPaths from "../pages/projects/[...slug].astro";
 
 interface Props {
     href?: string;
@@ -11,6 +16,27 @@ interface Props {
 }
 
 const { href, title, body, tags, date, image } = Astro.props;
+
+// Function to parse markdown to HTML with Tailwind classes
+async function parseMarkdown(markdown: string): Promise<string> {
+    if (!markdown) return "";
+
+    const result = await remark().use(remarkGfm).use(html).process(markdown);
+
+    // Add Tailwind classes to links
+    let htmlContent = String(result);
+    htmlContent = htmlContent.replace(
+        /<a href="([^"]+)">([^<]+)<\/a>/g,
+        '<a href="$1" class="text-blue-500 italic text-md hover:text-blue-700 hover:not-italic transition-colors duration-200" target="_blank" rel="noopener noreferrer">$2</a>',
+    );
+
+    // Remove any wrapping <p> tags since we're using a div container
+    htmlContent = htmlContent.replace(/^<p>(.*)<\/p>$/s, "$1");
+
+    return htmlContent;
+}
+
+const parsedBody = body ? await parseMarkdown(body) : "";
 ---
 
 <!-- SVG filter -->
@@ -58,7 +84,7 @@ const { href, title, body, tags, date, image } = Astro.props;
                 {title}
             </a>
         </h3>
-        <p class="pb-2 pt-1 font-mono text-sm">{body}</p>
+        <div class="pb-2 pt-1 font-mono text-sm" set:html={parsedBody} />
         {
             tags && (
                 <div class="font-mono italic text-xs flex gap-x-1">

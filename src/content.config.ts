@@ -45,4 +45,16 @@ const events = defineCollection({
         })),
 });
 
-export const collections = { blogs, projects, events };
+const things = defineCollection({
+    loader: glob({ pattern: '**/*.md', base: './src/content/things' }),
+    schema: z.object({
+        title: z.string(),
+        description: z.string().optional(),
+        date: z.date().optional(),
+        link: z.string().optional(),
+        tags: z.array(z.string()).default([]).optional(),
+        heroImage: z.string().optional()
+    }),
+});
+
+export const collections = { blogs, projects, events, things };

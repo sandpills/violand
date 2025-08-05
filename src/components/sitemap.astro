@@ -5,6 +5,7 @@ import { getLinkHref } from "../utils/paths.ts";
 const projects = await getCollection("projects");
 const blogs = await getCollection("blogs");
 const events = await getCollection("events");
+const things = await getCollection("things");
 
 const sortedProjects = projects.sort((a, b) => {
     // extract the number from the beginning of the filename
@@ -17,6 +18,19 @@ const sortedProjects = projects.sort((a, b) => {
 
     // fallback to alphabetical if no numbers found
     return a.id.localeCompare(b.id);
+});
+
+const sortedThings = things.sort((a, b) => {
+    return a.id.localeCompare(b.id);
+});
+
+const sortedProjectsNewPaths = sortedProjects.map((project) => {
+    const fileName = project.id.split("/").pop()?.replace(".md", "");
+    const cleanSlug = fileName?.replace(/^\d+-/, ""); // remove number prefix chunk
+    return {
+        ...project,
+        id: cleanSlug,
+    };
 });
 
 const upcomingEvents = events.filter(
@@ -34,7 +48,7 @@ const sortedUpcomingEvents = upcomingEvents.sort((a, b) => {
 });
 ---
 
-<section class="outline font-mono text-sm" id="sitemap">
+<section class="font-mono text-sm">
     <div class="flex flex-col gap-4">
         <h1 class="text-2xl font-serif">Site Map</h1>
 
@@ -42,21 +56,54 @@ const sortedUpcomingEvents = upcomingEvents.sort((a, b) => {
             <div class="tree-header italic">projects/</div>
             <ul class="tree-list">
                 {
-                    sortedProjects.map((project: any, index: number) => (
+                    sortedProjectsNewPaths.map(
+                        (project: any, index: number) => (
+                            <li
+                                class={
+                                    index === sortedProjectsNewPaths.length - 1
+                                        ? "tree-item-last"
+                                        : "tree-item"
+                                }
+                            >
+                                {project.data.link ? (
+                                    <a href={getLinkHref(project.data.link)}>
+                                        {project.data.title}
+                                    </a>
+                                ) : (
+                                    <a
+                                        href={getLinkHref(
+                                            `/projects/${project.id}`,
+                                        )}
+                                    >
+                                        {project.data.title}
+                                    </a>
+                                )}
+                            </li>
+                        ),
+                    )
+                }
+            </ul>
+        </div>
+
+        <div class="tree-section">
+            <div class="tree-header italic">things/</div>
+            <ul class="tree-list">
+                {
+                    sortedThings.map((thing: any, index: number) => (
                         <li
                             class={
-                                index === sortedProjects.length - 1
+                                index === sortedThings.length - 1
                                     ? "tree-item-last"
                                     : "tree-item"
                             }
                         >
-                            {project.data.link ? (
-                                <a href={getLinkHref(project.data.link)}>
-                                    {project.data.title}
+                            {thing.data.link ? (
+                                <a href={getLinkHref(thing.data.link)}>
+                                    {thing.data.title}
                                 </a>
                             ) : (
-                                <a href={getLinkHref(`/projects/${project.id}`)}>
-                                    {project.data.title}
+                                <a href={getLinkHref(`/things/${thing.id}`)}>
+                                    {thing.data.title}
                                 </a>
                             )}
                         </li>
@@ -77,14 +124,16 @@ const sortedUpcomingEvents = upcomingEvents.sort((a, b) => {
                                     : "tree-item"
                             }
                         >
-                            <a href={getLinkHref(`/blogs/${blog.id}`)}>{blog.data.title}</a>
+                            <a href={getLinkHref(`/blogs/${blog.id}`)}>
+                                {blog.data.title}
+                            </a>
                         </li>
                     ))
                 }
             </ul>
         </div>
 
-        <div class="tree-section">
+        <!-- <div class="tree-section">
             <div class="tree-header italic">events/</div>
             <ul class="tree-list">
                 {
@@ -119,80 +168,83 @@ const sortedUpcomingEvents = upcomingEvents.sort((a, b) => {
                     ))
                 }
             </ul>
-        </div>
-    </div>
+        </div> 
+    </div> 
     <div class="tree-section">
         <div class="tree-header italic">teaching/</div>
+    </div> -->
     </div>
+
+    <style>
+        a {
+            color: #000;
+            text-decoration: none;
+        }
+
+        a:hover {
+            filter: blur(3px);
+        }
+
+        .tree-section {
+            margin-bottom: 1rem;
+        }
+
+        .tree-header {
+            color: #2e00fd;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .tree-list {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .tree-item,
+        .tree-item-last {
+            position: relative;
+            padding-left: 1.8rem;
+        }
+
+        .tree-secondary,
+        .tree-secondary-last {
+            position: relative;
+            padding-left: 3.6rem;
+        }
+
+        .tree-item::before {
+            content: "├──";
+            position: absolute;
+            left: 0;
+            color: #2e00fd;
+            font-weight: 600;
+        }
+
+        .tree-item-last::before {
+            content: "└──";
+            position: absolute;
+            left: 0;
+            color: #2e00fd;
+            font-weight: 600;
+        }
+
+        .tree-secondary::before {
+            content: "├──";
+            position: absolute;
+            left: 1.8rem;
+            color: #2e00fd;
+            font-weight: 600;
+        }
+
+        .tree-secondary-last::before {
+            content: "└──";
+            position: absolute;
+            left: 1.8rem;
+            color: #2e00fd;
+            font-weight: 600;
+        }
+    </style>
 </section>
 
-<style>
-    a {
-        color: #000;
-        text-decoration: none;
-    }
-
-    a:hover {
-        filter: blur(3px);
-    }
-
-    .tree-section {
-        margin-bottom: 1rem;
-    }
-
-    .tree-header {
-        color: #2e00fd;
-        font-weight: 600;
-        margin-bottom: 0.25rem;
-    }
-
-    .tree-list {
-        list-style: none;
-        padding-left: 0;
-        margin: 0;
-    }
-
-    .tree-item,
-    .tree-item-last {
-        position: relative;
-        padding-left: 1.8rem;
-    }
-
-    .tree-secondary,
-    .tree-secondary-last {
-        position: relative;
-        padding-left: 3.6rem;
-    }
-
-    .tree-item::before {
-        content: "├──";
-        position: absolute;
-        left: 0;
-        color: #2e00fd;
-        font-weight: 600;
-    }
-
-    .tree-item-last::before {
-        content: "└──";
-        position: absolute;
-        left: 0;
-        color: #2e00fd;
-        font-weight: 600;
-    }
-
-    .tree-secondary::before {
-        content: "├──";
-        position: absolute;
-        left: 1.8rem;
-        color: #2e00fd;
-        font-weight: 600;
-    }
-
-    .tree-secondary-last::before {
-        content: "└──";
-        position: absolute;
-        left: 1.8rem;
-        color: #2e00fd;
-        font-weight: 600;
-    }
-</style>
+<script></script>

@@ -20,16 +20,25 @@ const sortedProjects = projects.sort((a, b) => {
     return a.id.localeCompare(b.id);
 });
 
-console.log("Projects loaded:", sortedProjects.length);
+const sortedProjectsNewPaths = sortedProjects.map((project) => {
+    const fileName = project.id.split("/").pop()?.replace(".md", "");
+    const cleanSlug = fileName?.replace(/^\d+-/, ""); // remove number prefix chunk
+    return {
+        ...project,
+        id: cleanSlug,
+    };
+});
+
+console.log("Projects loaded:", sortedProjectsNewPaths.length);
 ---
 
 <section class="font-mono italic text-sm pb-2">
-    <p>found {sortedProjects.length} projects.</p>
+    <p>found {sortedProjectsNewPaths.length} projects.</p>
 </section>
 <section>
     <CardListWrapper>
         {
-            sortedProjects.map((project: any) => (
+            sortedProjectsNewPaths.map((project: any) => (
                 <CardListItem>
                     <Card
                         href={project.data.link || `/projects/${project.id}/`}

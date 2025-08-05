@@ -1,0 +1,82 @@
+---
+
+---
+
+<div
+    id="app"
+    style="height: 100vh; width: 80vw; position: fixed; top: 0; left: 0; z-index: -1; pointer-events: none; "
+>
+</div>
+<script>
+    import Webamp from "../utils/webamp.mjs";
+
+    // All configuration options are optional.
+    const webamp = new Webamp({
+        windowLayout: {
+            main: {
+                position: { top: 0, left: 0 },
+                shadeMode: false,
+                closed: false,
+            },
+            equalizer: {
+                position: { top: 230, left: 0 },
+                shadeMode: true,
+                closed: false,
+            },
+            playlist: {
+                position: { top: 115, left: 0 },
+                shadeMode: false,
+                closed: false,
+            },
+            milkdrop: {
+                position: { top: 0, left: 275 },
+                size: { extraHeight: 8, extraWidth: 3 },
+                closed: false,
+            },
+            // enableDoubleSizeMode: true,
+        },
+        initialSkin: {
+            url: "/winamp_skins/Pixelamp Winamp Skin.wsz",
+        },
+        initialTracks: [
+            {
+                metaData: {
+                    artist: "v10101a / Bradley CD",
+                    title: "Internet Friends",
+                },
+                // NOTE: Your audio file must be served from the same domain as your HTML
+                // file, or served with permissive CORS HTTP headers:
+                // https://docs.webamp.org/docs/guides/cors
+                url: "/music/Internet Friends.wav",
+                duration: 3.29,
+            },
+            {
+                metaData: {
+                    artist: "v10101a / Bradley CD",
+                    title: "playboi",
+                },
+                url: "/music/Playboi.wav",
+                duration: 3.16,
+            },
+            {
+                metaData: {
+                    artist: "v10101a / Bradley CD",
+                    title: "PLAY !!!",
+                },
+                url: "/music/PLAY !!!.wav",
+                duration: 3.16,
+            },
+        ],
+        // enableDoubleSizeMode: true,
+    });
+
+    // Render after the skin has loaded.
+    const container = document.getElementById("app");
+
+    if (container) {
+        webamp.renderWhenReady(container).then(() => {
+            (window as any).webamp = webamp;
+            webamp.close();
+        });
+    }
+</script>
