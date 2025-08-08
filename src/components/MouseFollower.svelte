@@ -3,7 +3,7 @@
     import { getLinkHref } from "../utils/paths.ts";
     const okUrl = getLinkHref("ok.png");
 
-    export let enabled = false; // Prop to control if the component is active
+    export let enabled = false;
 
     let mouseX = 0;
     let mouseY = 0;
@@ -12,7 +12,7 @@
     let trailTimer;
     let mouseMoveHandler;
 
-    const maxTrailLength = 500; // Number of trail images
+    const maxTrailLength = 500; // too long is problem
     const trailDelay = 20;
     const marqueeCol = 20;
 
@@ -22,13 +22,11 @@
         mouseX = 0;
         mouseY = 0;
 
-        // Create mouse move handler
         mouseMoveHandler = (event) => {
             mouseX = event.clientX;
             mouseY = event.clientY;
         };
 
-        // Create trail update function
         const updateTrail = () => {
             if (enabled) {
                 trail = [

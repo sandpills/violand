@@ -1,18 +1,15 @@
 ---
 import About from "../components/about.astro";
 import Projects from "../components/projects.astro";
-import HelloButton from "../components/HelloButton.svelte";
 import Nav from "../components/nav.astro";
 import Upcoming from "../components/upcoming.astro";
 import Mouse from "../components/Mouse.svelte";
-import LocalTime from "../components/localTime.svelte";
 import { getAssetPath } from "../utils/paths.ts";
 import { getLinkHref } from "../utils/paths.ts";
 
 import Winamp from "../components/winamp.astro";
 import Gadgets from "../components/gadgets.astro";
 import MouseFollower from "../components/MouseFollower.svelte";
-// import HoverCover from "../components/hoverCover.svelte";
 
 import "../styles/global.css";
 import "../styles/cursor.css";
@@ -29,35 +26,31 @@ import "../styles/cursor.css";
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="generator" content={Astro.generator} />
 		<title>viola new website</title>
-		<style>
-			html,
-			body,
-			* {
-				cursor: none !important;
-			}
-		</style>
 	</head>
 	<body>
 		<Nav />
 		<div class="flex">
 			<section class="container main-container overflow-y-auto">
-				<About />
-				<Projects />
-				<section class="font-mono text-sm">
-					<button class="hover:blur">⇣ more </button>
-				</section>
-				<marquee
-					behavior="scroll"
-					scrollamount="5"
-					direction="down"
-					class="fixed top-0 left-0 h-full pointer-events-none marqueee"
-				>
-					<span class="text-sm font-mono text-bright text-shadow-lg">
-						<!-- <a
+				<div id="left-outline">
+					<About />
+					<Projects />
+					<section class="font-mono text-sm">
+						<button class="hover:blur">⇣ more </button>
+					</section>
+					<marquee
+						behavior="scroll"
+						scrollamount="5"
+						direction="down"
+						class="fixed top-0 left-0 h-full pointer-events-none marqueee"
+					>
+						<span
+							class="text-sm font-mono text-bright text-shadow-lg"
+						>
+							<!-- <a
 							href={getLinkHref("/")}
 							class="text-bright hover:underline"
 						> -->
-						<pre>
+							<pre>
 	♡							  ✩  ┊                       ✮  				 ┊                  ✩⋆
 						✩		┊    ┊      ★  ┊        |         ┊              ┊ 
 		💿				  		┊    ✮         ⊹˚ ⁭      ⁭| ⁭ ⁭ ⁭ ⁭ ⁭ ⁭ ⁭  ⋆      ⊹       ✩ 
@@ -74,18 +67,22 @@ import "../styles/cursor.css";
 		✧						★                       ✮   ┊     ✧                    ✧           💿
 				★				 							✩⋆                                            ✩⋆              
 						</pre>
-						<!-- </a> -->
-					</span>
-				</marquee>
+							<!-- </a> -->
+						</span>
+					</marquee>
+				</div>
 			</section>
 			<section
-				class="container outline overflow-y-auto"
-				id="right-container"
+				class="container overflow-y-hidden main-container-right scrollbar-hide"
 			>
-				<Gadgets />
-				<!-- <LocalTime client:load /> -->
-
-				<Upcoming />
+				<div id="right-outline" class="flex flex-col outline">
+					<div class="margin-0">
+						<Upcoming />
+					</div>
+					<div class="absolute bottom-1 left-3">
+						<Gadgets />
+					</div>
+				</div>
 			</section>
 		</div>
 		<Winamp />

@@ -4,6 +4,6 @@ description: "A browser-based music player with a live-codeable visuals interfac
 date: 2025-08-01
 link: "/music/"
 tags:
-  ["project", "with Gage Krause"]
+  ["project"]
 heroImage: "/images/things/webamp.png"
 ---

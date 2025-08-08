@@ -7,10 +7,10 @@
     const clockSize = 600;
     const centerX = clockSize / 2;
     const centerY = clockSize / 2;
-    const pixelSize = 4;
+    const pixelSize = 6;
 
     const hourHandLength = clockSize / 8;
-    const minuteHandLength = clockSize / 5;
+    const minuteHandLength = clockSize / 4;
     const secondHandLength = clockSize / 3;
     const handWidth = 10;
 
@@ -46,17 +46,12 @@
         // update time 60 fps
         const timeInterval = setInterval(() => {
             currentTime = new Date();
-        }, 16);
-
-        // const driftInterval = setInterval(() => {
-        //     drift.x = (Math.random() - 0.5) * 3;
-        //     drift.y = (Math.random() - 0.5) * 3;
-        // }, 4000);
+        }, 32);
 
         // Breathing effect
         const breatheInterval = setInterval(() => {
             breathe = 1 + Math.sin(Date.now() * 0.001) * 0.02;
-        }, 100);
+        }, 60);
 
         return () => {
             clearInterval(timeInterval);
@@ -124,7 +119,12 @@
     bind:this={clockContainer}
     style="transform: translate({drift.x}px, {drift.y}px) scale({breathe})"
 >
-    <svg width={clockSize} height={clockSize} class="clock-face">
+    <p
+        class="glow w-full text-5xl font-serif italic text-center absolute bottom-1/4 left-1/2 -translate-x-1/2"
+    >
+        {currentTime.toLocaleTimeString()}
+    </p>
+    <svg width={clockSize} height={clockSize} class="clock-face z-10">
         {#each edgeDots as dot, i}
             <!-- Glow layer -->
             <rect
@@ -150,18 +150,6 @@
                 fill={highlightedDots[i] ? "#4080ff" : "#888888"}
                 opacity={highlightedDots[i] ? "0" : "0.5"}
             />
-            <!-- Inner bright core -->
-            <!-- <rect
-                class="edge-dot-core"
-                x={dot.x - pixelSize / 4}
-                y={dot.y - pixelSize / 4}
-                width={pixelSize / 2}
-                height={pixelSize / 2}
-                rx={pixelSize / 4}
-                ry={pixelSize / 4}
-                fill="rgba(255, 255, 255, 0.8)"
-                opacity={highlightedDots[i] ? "1" : "0"}
-            /> -->
         {/each}
 
         <!-- Hour hand dots -->
@@ -207,20 +195,18 @@
             y={centerY - pixelSize}
             width={pixelSize * 2}
             height={pixelSize * 2}
-            fill="black"
+            fill="gray"
         />
     </svg>
-    <p
-        class="glow w-full text-5xl font-serif italic text-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-    >
-        {currentTime.toLocaleTimeString()}
-    </p>
 </div>
 
 <style>
     .pixel-clock {
         /* transition: transform 0.3s ease-out; */
         display: inline-block;
+        /* Enable hardware acceleration for smooth animations */
+        transform: translateZ(10);
+        will-change: transform;
     }
 
     .clock-face {
@@ -231,6 +217,8 @@
         transition:
             x 0.1s ease-out,
             y 0.1s ease-out;
+        /* Enable hardware acceleration for smooth hand movement */
+        transform: translateZ(0);
     }
 
     /* Smooth transitions for edge dots */

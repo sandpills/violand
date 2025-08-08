@@ -10,6 +10,6 @@ export default defineConfig({
     },
 
     integrations: [svelte()],
-    site: 'https://sandpills.github.io',
+    site: 'https://viola.city',
     base: import.meta.env.PROD ? '/violand' : undefined,
 });
