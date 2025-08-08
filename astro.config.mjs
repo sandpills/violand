@@ -11,5 +11,5 @@ export default defineConfig({
 
     integrations: [svelte()],
     site: 'https://viola.city',
-    base: import.meta.env.PROD ? '/violand' : undefined,
+    base: undefined,
 });
