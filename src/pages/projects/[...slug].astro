@@ -2,7 +2,6 @@
 import { getCollection, render } from "astro:content";
 import "../../styles/global.css";
 import "../../styles/markdown.css";
-import "../../styles/cursor.css";
 import Nav from "../../components/nav.astro";
 import ProjectNav from "../../components/sitemap.astro";
 import Mouse from "../../components/Mouse.svelte";
@@ -48,8 +47,8 @@ const { Content } = await render(project);
             >
                 <div class="outline sticky bg-neutral top-0">
                     <!-- Project Info -->
-                    <section class="outline flex flex-row gap-4">
-                        <span class="font-serif text-2xl">
+                    <section class="outline flex flex-row">
+                        <span class="font-serif text-2xl pr-4">
                             <a class="hover:blur-xs" href={getLinkHref("/")}
                                 >↖︎</a
                             >
@@ -74,7 +73,7 @@ const { Content } = await render(project);
                             >
                         </div>
                     </section>
-                    <section class="px-10 pt-6 pb-3">
+                    <section class="px-12 pt-6 pb-3">
                         <!-- Hero Image -->
                         {
                             project.data.heroImage && (
@@ -94,19 +93,37 @@ const { Content } = await render(project);
                         }
                     </section>
                     <!-- Main Content -->
-                    <section class="outline pt-1 p-10 font-serif text-md">
+                    <section class="outline pt-5 p-12 font-serif text-md">
                         <div class="markdown-content">
                             <Content />
                         </div>
+                    </section>
+                    <!-- Footer Nav -->
+                    <section
+                        class="outline sticky bg-neutral bottom-0 flex-row"
+                    >
+                        <span class="px-2">
+                            <a class="hover:blur-xs" href={getLinkHref("/")}>
+                                <span class="text-2xl">←</span></a
+                            >
+                        </span>
+                        <span class="px-2">
+                            <a class="hover:blur-xs" href={getLinkHref("/")}>
+                                <span class="text-2xl">→</span></a
+                            >
+                        </span>
                     </section>
                 </div>
             </section>
             <section class="container" id="right-container"></section>
         </div>
-        <section class="container font-mono text-sm"></section>
+        <section
+            class="container overflow-y-hidden main-container-right scrollbar-hide"
+        >
+            <div id="right-outline" class="flex flex-col outline">
+                <ProjectNav />
+            </div>
+        </section>
+        <Mouse client:load />
     </body>
-    <Mouse client:load />
-    <div class="outline" id="sitemap">
-        <ProjectNav />
-    </div>
 </html>

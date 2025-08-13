@@ -3,7 +3,9 @@ import { getCollection, render } from "astro:content";
 import "../../styles/global.css";
 import "../../styles/markdown.css";
 import Nav from "../../components/nav.astro";
-import { getAssetPath } from "../../utils/paths.ts";
+import { getAssetPath, getLinkHref } from "../../utils/paths.ts";
+import ProjectNav from "../../components/sitemap.astro";
+import Mouse from "../../components/Mouse.svelte";
 
 export async function getStaticPaths() {
     const blogs = await getCollection("blogs");
@@ -30,30 +32,94 @@ const { Content } = await render(blog);
         <title>{blog.data.title}</title>
     </head>
     <body>
-        <Nav />
-        <h1>{blog.data.title}</h1>
-        {
-            blog.data.date && (
-                <p>
-                    Published:{" "}
-                    {new Date(blog.data.date).toLocaleDateString("en-US", {
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                    })}
-                </p>
-            )
-        }
-        {blog.data.description && <p>{blog.data.description}</p>}
+        <!-- <Nav /> -->
 
-        {
-            blog.data.tags && (
-                <div>
-                    <p>Tags: {blog.data.tags.join(", ")}</p>
+        <div class="flex">
+            <section
+                class="container left-container outline overflow-y-auto"
+                id="left-container"
+            >
+                <div class="outline sticky bg-neutral top-0">
+                    <!-- Project Info -->
+                    <section class="outline flex flex-row">
+                        <span class="font-serif text-2xl pr-4">
+                            <a class="hover:blur-xs" href={getLinkHref("/")}
+                                >↖︎</a
+                            >
+                        </span>
+                        <h1 class="font-serif text-2xl outline pl-2 pr-5 py-1">
+                            {blog.data.title}
+                        </h1>
+                    </section>
                 </div>
-            )
-        }
-
-        <Content />
+                <div class="scroll-container">
+                    <section class="pl-2 pb-1 outline">
+                        <div class="flex gap-2 pt-2 pb-1">
+                            {
+                                blog.data.date && (
+                                    <span class="text-sm font-mono">
+                                        Published:{" "}
+                                        {new Date(
+                                            blog.data.date,
+                                        ).toLocaleDateString("en-US", {
+                                            year: "numeric",
+                                            month: "long",
+                                            day: "numeric",
+                                        })}
+                                    </span>
+                                )
+                            }
+                            <span class="text-sm font-mono"> | </span>
+                            {
+                                blog.data.description && (
+                                    <span class="text-sm font-mono">
+                                        {blog.data.description}
+                                    </span>
+                                )
+                            }
+                            <!-- 
+                            {
+                                blog.data.tags && (
+                                    <span class="text-sm font-mono">
+                                        {" "}
+                                        {blog.data.tags.join(", ")}
+                                    </span>
+                                )
+                            } -->
+                        </div>
+                    </section>
+                    <!-- Main Content -->
+                    <section class="pt-8 p-12 font-serif text-md">
+                        <div class="markdown-content">
+                            <Content />
+                        </div>
+                    </section>
+                    <!-- Footer Nav -->
+                    <section
+                        class="outline sticky bg-neutral bottom-0 flex-row"
+                    >
+                        <span class="px-2">
+                            <a class="hover:blur-xs" href={getLinkHref("/")}>
+                                <span class="text-2xl">←</span></a
+                            >
+                        </span>
+                        <span class="px-2">
+                            <a class="hover:blur-xs" href={getLinkHref("/")}>
+                                <span class="text-2xl">→</span></a
+                            >
+                        </span>
+                    </section>
+                </div>
+            </section>
+            <section
+                class="container overflow-y-hidden main-container-right scrollbar-hide"
+            >
+                <div id="right-outline" class="flex flex-col outline">
+                    <ProjectNav />
+                </div>
+            </section>
+        </div>
     </body>
+
+    <Mouse client:load />
 </html>

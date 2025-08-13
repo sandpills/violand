@@ -15,17 +15,15 @@ const okUrl = getLinkHref("ok.png");
     }
 
     .gadget-icon {
-        background: none;
         border: none;
         border-radius: 4px;
-        transition: all 0.2s ease;
+        transition: all 0.3s ease;
     }
 
     .gadget-icon:hover {
-        background: rgba(255, 255, 255, 0.481);
-        box-shadow: 0 0 10px 0 rgba(255, 255, 255, 0.5);
-        /* filter: blur(10px); */
-        transform: scale(1.02);
+        box-shadow: inset rgb(163, 163, 163) 10px;
+        transform: scale(1.05);
+        cursor: none;
     }
 
     .gadget {
@@ -37,7 +35,6 @@ const okUrl = getLinkHref("ok.png");
     .gadget.show {
         display: block;
         pointer-events: none;
-        background-color: #c7c7c735;
     }
 
     .gadget.hidden {
@@ -205,21 +202,21 @@ const okUrl = getLinkHref("ok.png");
     <div class="flex flex-col gap-x-2 justify-center pb-2">
         <button
             id="clock-toggle"
-            class="gadget-icon w-20 h-20"
+            class="gadget-icon w-18 h-18"
             aria-label="Toggle clock"
         >
             <img src={clockUrl} alt="Clock" />
         </button>
         <button
             id="music-toggle"
-            class="gadget-icon w-20 h-20"
+            class="gadget-icon w-18 h-18"
             aria-label="Toggle music player"
         >
             <img src={musicUrl} alt="Music" />
         </button>
         <button
             id="ok-toggle"
-            class="gadget-icon w-20 h-20"
+            class="gadget-icon w-18 h-18"
             aria-label="Toggle ok"
         >
             <img src={okUrl} alt="ok" />

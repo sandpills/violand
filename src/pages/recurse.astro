@@ -37,7 +37,10 @@ import "../styles/cursor.css";
         <Nav />
         <div class="flex">
             <section class="container main-container overflow-y-auto">
-                <section class="font-mono text-sm pt-10 pb-2">
+                <section
+                    id="left-container"
+                    class="font-mono text-sm pt-10 pb-2"
+                >
                     <div class="rc-scout-wrapper">
                         <div class="rc-scout" data-scout-rendered="true">
                             <p class="rc-scout__text">
@@ -89,19 +92,17 @@ import "../styles/cursor.css";
                 <br />
             </section>
 
-            <section>
-                
-            </section>
             <section
-                class="container outline overflow-y-auto main-container-right"
-                id="right-container"
+                class="container overflow-y-hidden main-container-right scrollbar-hide"
             >
-                <div class="absolute bottom-1 left-3">
-                    <Gadgets />
-                </div>
-                <div class="px-3">
-                    <SiteMap />
-                </div>
+                <section id="right-outline" class="flex flex-col">
+                    <div class="absolute bottom-1 left-3">
+                        <Gadgets />
+                    </div>
+                    <div class="">
+                        <SiteMap />
+                    </div>
+                </section>
             </section>
             <!-- <LocalTime client:load /> -->
         </div>

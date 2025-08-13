@@ -2,8 +2,8 @@
     import { spring } from "svelte/motion";
     import { onMount } from "svelte";
 
-    let mouseX = spring(0, { stiffness: 0.1, damping: 0.5 });
-    let mouseY = spring(0, { stiffness: 0.1, damping: 0.5 });
+    let mouseX = spring(0, { stiffness: 0.8, damping: 0.8 });
+    let mouseY = spring(0, { stiffness: 0.8, damping: 0.8 });
     let isReady = false;
 
     function handleMouseMove(event) {

@@ -9,9 +9,9 @@
     const centerY = clockSize / 2;
     const pixelSize = 6;
 
-    const hourHandLength = clockSize / 8;
+    const hourHandLength = clockSize / 6;
     const minuteHandLength = clockSize / 4;
-    const secondHandLength = clockSize / 3;
+    const secondHandLength = clockSize / 2.5;
     const handWidth = 10;
 
     $: {
@@ -135,7 +135,7 @@
                 height={pixelSize * 2}
                 rx={pixelSize * 2}
                 ry={pixelSize * 2}
-                fill="rgba(0,0,255, 1)"
+                fill={highlightedDots[i] ? "blue" : "#8e8e8e"}
                 opacity={highlightedDots[i] ? "1" : "0"}
             />
             <!-- Main dot -->
@@ -147,8 +147,8 @@
                 height={pixelSize * 2}
                 rx={pixelSize / 2}
                 ry={pixelSize / 2}
-                fill={highlightedDots[i] ? "#4080ff" : "#888888"}
-                opacity={highlightedDots[i] ? "0" : "0.5"}
+                fill={highlightedDots[i] ? "blue" : "#8e8e8e"}
+                opacity={highlightedDots[i] ? "0" : "0.9"}
             />
         {/each}
 
@@ -156,10 +156,10 @@
         {#each hourDots as dot}
             {@const pos = getHandDotPosition(dot.distance, hourAngle)}
             <rect
-                x={pos.x - pixelSize}
-                y={pos.y - pixelSize}
-                width={pixelSize * 1.2}
-                height={pixelSize * 1.2}
+                x={pos.x - 1}
+                y={pos.y - 1}
+                width={pixelSize * 1}
+                height={pixelSize * 1}
                 fill="#2e2e2e"
             />
         {/each}
@@ -225,11 +225,13 @@
     .edge-dot {
         transition:
             opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-            fill 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            fill 1s ease-in-out;
     }
 
     .edge-dot-glow {
-        transition: opacity 1s;
+        transition:
+            opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+            fill 1s ease-in-out;
     }
 
     /* Pulsing animation for highlighted dots */
@@ -247,9 +249,9 @@
         }
     }
 
-    .edge-dot-glow[opacity="1"] {
+    /* .edge-dot-glow[opacity="1"] {
         animation: pulse-glow 1s ease-in-out infinite;
-    }
+    } */
 
     .pixel-clock:hover {
         transition: all 0.2s ease-out;
@@ -268,7 +270,7 @@
         animation: glow 1s ease-in-out infinite alternate;
     }
 
-    @-webkit-keyframes glow {
+    @keyframes glow {
         from {
             text-shadow:
                 0 0 2px #c7c7c7,

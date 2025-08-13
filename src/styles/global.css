@@ -50,11 +50,11 @@ a {
 }
 
 .left-container {
-    width: 68vw;
+    width: 69vw;
     height: 97vh;
     position: fixed;
     left: 10px;
-    top: 11px;
+    top: 10px;
     overflow-y: auto;
 
 }
@@ -69,18 +69,9 @@ a {
 
 }
 
-#sitemap {
-    width: 30vw;
-    height: 97vh;
-    position: fixed;
-    right: 10px;
-    top: 11px;
-    padding: 10px;
-}
-
 #right-outline {
     /* background-color: blue; */
-    height: 98vh;
+    height: 97vh;
     right: 10px;
     top: 11px;
     padding: 10px;

@@ -12,7 +12,6 @@ import Gadgets from "../components/gadgets.astro";
 import MouseFollower from "../components/MouseFollower.svelte";
 
 import "../styles/global.css";
-import "../styles/cursor.css";
 ---
 
 <html lang="en">
@@ -75,11 +74,11 @@ import "../styles/cursor.css";
 			<section
 				class="container overflow-y-hidden main-container-right scrollbar-hide"
 			>
-				<div id="right-outline" class="flex flex-col outline">
+				<div id="right-outline" class="flex flex-col">
 					<div class="margin-0">
 						<Upcoming />
 					</div>
-					<div class="absolute bottom-1 left-3">
+					<div class="absolute bottom-4 left-4">
 						<Gadgets />
 					</div>
 				</div>
