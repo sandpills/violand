@@ -1,0 +1,43 @@
+---
+import { metadata } from "../data/metadata.ts";
+
+// Get current time in the specified timezone
+const now = new Date();
+const timeString = now.toLocaleTimeString("en-US", {
+    timeZone: metadata.timezone,
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+});
+const dateString = now.toLocaleDateString("en-US", {
+    timeZone: metadata.timezone,
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+});
+---
+
+<div class="simple-time font-mono text-xs">
+    <span class="location">📍 {metadata.location}</span>
+    <span class="time-display text-xs">{timeString}</span>
+    <div class="status">{metadata.status}</div>
+</div>
+
+<script>
+    // Update time every minute
+    function updateTime() {
+        const now = new Date();
+        const timeString = now.toLocaleTimeString("en-US", {
+            timeZone: "Asia/Shanghai",
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: true,
+        });
+
+        const timeElement = document.querySelector(".time-display");
+        if (timeElement) timeElement.textContent = timeString;
+    }
+
+    // Update every minute
+    setInterval(updateTime, 60000);
+</script>

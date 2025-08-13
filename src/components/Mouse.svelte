@@ -1,20 +1,20 @@
 <script>
-    import { spring } from "svelte/motion";
     import { onMount } from "svelte";
 
-    let mouseX = spring(0, { stiffness: 0.8, damping: 0.8 });
-    let mouseY = spring(0, { stiffness: 0.8, damping: 0.8 });
+    let mouseX = 1;
+    let mouseY = 1;
     let isReady = false;
 
     function handleMouseMove(event) {
-        mouseX.set(event.clientX);
-        mouseY.set(event.clientY);
+        // Direct linear movement - no animation, no smoothing
+        mouseX = event.clientX;
+        mouseY = event.clientY;
     }
 
     onMount(() => {
         const handleFirstMove = (e) => {
-            mouseX.set(e.clientX);
-            mouseY.set(e.clientY);
+            mouseX = e.clientX;
+            mouseY = e.clientY;
             isReady = true;
             window.removeEventListener("mousemove", handleFirstMove);
         };
@@ -31,7 +31,7 @@
 <div
     class="custom-cursor"
     class:ready={isReady}
-    style="left: {$mouseX}px; top: {$mouseY}px;"
+    style="left: {mouseX}px; top: {mouseY}px;"
 />
 
 <style>

@@ -1,0 +1,83 @@
+---
+import Violawhere from "./violawhere.astro";
+import { metadata, getGitLastCommit } from "../data/metadata.ts";
+
+// Get git last commit time (when you last pushed)
+const gitLastCommit = await getGitLastCommit();
+
+// Format the git last commit date with full date and time
+const formatGitDateTime = (dateString: string) => {
+    const date = new Date(dateString);
+    const dayString = date.toLocaleString("en-US", {
+        timeZone: metadata.timezone,
+        year: "2-digit",
+        month: "2-digit",
+        day: "2-digit",
+    });
+    const timeString = date.toLocaleTimeString("en-US", {
+        timeZone: metadata.timezone,
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+    });
+    return `${dayString} ${timeString}`;
+};
+
+const lastUpdated = formatGitDateTime(gitLastCommit);
+---
+
+<div class="metadata-container font-mono text-sm space-y-1">
+    <!-- Current Whereabouts -->
+    <div class="metadata-section">
+        <h3 class="text-sm font-serif italic text-[#2f00ff]">
+            Current Whereabouts
+        </h3>
+        <div class="text-xs font-mono pb-2">
+            <Violawhere />
+        </div>
+    </div>
+
+    <!-- Things on Mind -->
+    <div class="metadata-section">
+        <h3 class="text-sm font-serif italic text-[#2f00ff]">
+            Things on my Mind
+        </h3>
+        <ul class="text-xs font-mono space-y-1 pb-2 pl-1">
+            {metadata.things.map((thing) => <li>⇢ {thing}</li>)}
+        </ul>
+    </div>
+
+    <!-- Site Last Updated -->
+    <div class="metadata-section">
+        <h3 class="text-sm font-serif italic text-[#2f00ff] mr-1">
+            Last Updated
+            <span class="font-mono not-italic text-xs text-black ml-1">
+                ⇢ {lastUpdated}</span
+            >
+        </h3>
+        <!-- <p class="text-xs"></p> -->
+    </div>
+</div>
+
+<style>
+    .metadata-section {
+        /* padding: 0.5rem 0.5rem; */
+        padding-top: 0.25rem;
+        padding-bottom: 0.25rem;
+        border-bottom: 1px dashed rgb(57, 57, 57);
+    }
+
+    .metadata-section:last-child {
+        /* border-bottom: none; */
+    }
+
+    .metadata-section h3 {
+        margin-bottom: 0.25rem;
+    }
+
+    .metadata-section p,
+    .metadata-section ul {
+        margin: 0;
+        line-height: 1;
+    }
+</style>
