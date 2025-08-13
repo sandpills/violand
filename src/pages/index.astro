@@ -4,6 +4,8 @@ import Projects from "../components/projects.astro";
 import Nav from "../components/nav.astro";
 import Upcoming from "../components/upcoming.astro";
 import Mouse from "../components/Mouse.svelte";
+import AboutRC from "../components/aboutrc.astro";
+import LittleThings from "../components/littlethings.astro";
 import { getAssetPath } from "../utils/paths.ts";
 import { getLinkHref } from "../utils/paths.ts";
 
@@ -26,19 +28,46 @@ import "../styles/global.css";
 		/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="generator" content={Astro.generator} />
-		<title>viola new website</title>
+		<title>✧˚.⋆ ⊹ ♡ !! ✦</title>
 	</head>
 	<body>
 		<Nav />
 		<div class="flex flex-col lg:flex-row">
 			<section
-				class="container main-container overflow-y-auto lg:w-7/12 lg:fixed lg:left-0 lg:top-0 w-full"
+				class="container overflow-y-hidden main-container-right relative lg:w-5/12 lg:fixed lg:right-0 lg:top-0 w-full mt-4 lg:mt-0"
 			>
+				<div id="right-outline" class="flex flex-col">
+					<div class="mb-4">
+						<Metadata />
+					</div>
+					<div class="upcoming mt-4">
+						<Upcoming />
+					</div>
+					<div class="absolute bottom-4 right-4 hidden lg:block">
+						<Gadgets />
+					</div>
+					<!-- <DarkModeToggle /> -->
+				</div>
+			</section>
+			<section
+				class="container main-container overflow-y-auto relative lg:fixed lg:left-0 lg:top-0 w-full"
+			>
+				<Winamp />
 				<div id="left-outline">
 					<About />
 					<Projects />
 					<section class="font-mono text-sm">
-						<button class="hover:blur">⇣ more </button>
+						<button
+							id="more"
+							class="my-5 px-1 border-1 border-dotted border-gray-400 inline-flex hover:bg-bright hover:rounded-sm hover:inset-shadow-[0_0_5px_5px_rgba(0,0,255,0.1)] hover:shadow-[0_0_30px_rgba(200,200,255,0.5)]"
+							>⇣ more
+						</button>
+					</section>
+					<section class="hide" id="rc-section">
+						<AboutRC />
+						<section>
+							<LittleThings />
+						</section>
 					</section>
 					<marquee
 						behavior="scroll"
@@ -75,27 +104,36 @@ import "../styles/global.css";
 					</marquee>
 				</div>
 			</section>
-			<section
-				class="container overflow-y-hidden main-container-right lg:w-5/12 lg:fixed lg:right-0 lg:top-0 w-full mt-4 lg:mt-0"
-			>
-				<div id="right-outline" class="flex flex-col">
-					<div class="mb-4">
-						<Metadata />
-					</div>
-					<div class="mt-4">
-						<Upcoming />
-					</div>
-					<div class="absolute bottom-4 left-4 hidden lg:block">
-						<Gadgets />
-					</div>
-					<!-- <DarkModeToggle /> -->
-				</div>
-			</section>
 		</div>
-		<Winamp />
-	</body>
-	<Mouse client:load />
-	<!-- <MouseFollower client:only enabled={true} /> -->
+		<Mouse client:load />
+		<!-- <MouseFollower client:only enabled={true} /> -->
 
-	<!-- <Winamp client:load /> -->
+		<!-- <Winamp client:load /> -->
+	</body>
 </html>
+
+<script>
+	const dropdown = document.getElementById("more");
+	const rcSection = document.getElementById("rc-section");
+	// let toggleMore = false;
+
+	dropdown?.addEventListener("click", async function () {
+		if (dropdown && rcSection?.classList.contains("show")) {
+			rcSection?.classList.add("hide");
+			dropdown.textContent;
+			rcSection?.classList.remove("show");
+		} else if (dropdown) {
+			rcSection?.classList.add("show");
+			rcSection?.classList.remove("hide");
+		}
+	});
+</script>
+
+<style>
+	.hide {
+		display: none;
+	}
+	.show {
+		display: block;
+	}
+</style>

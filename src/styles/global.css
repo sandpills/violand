@@ -93,15 +93,18 @@ a {
     font-style: italic;
 }
 
-/* Mobile responsive styles */
-@media (max-width: 1024px) {
-
-    .main-container,
-    .main-container-right {
+/* @media (max-width: 1024px) {
+    .main-container {
         width: 100%;
         height: auto;
         position: relative;
         padding: 10px;
+    }
+
+    .left-container {
+        width: 100%;
+        height: auto;
+        position: relative;
     }
 
     .main-container {
@@ -112,6 +115,9 @@ a {
     .main-container-right {
         right: auto;
         top: auto;
+        position: relative;
+        width: 100%;
+        margin-top: 10px;
     }
 
     #right-outline {
@@ -121,29 +127,87 @@ a {
         padding: 10px;
     }
 
-    /* Hide marquee on mobile */
     .marqueee {
         display: none !important;
     }
 
-    /* Adjust cursor behavior for mobile */
     html {
         cursor: auto !important;
+        overflow-x: hidden;
     }
 
     a {
         cursor: pointer !important;
     }
-}
+} */
 
 @media (max-width: 768px) {
+    .main-container {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
 
-    .main-container,
     .main-container-right {
-        padding: 8px;
+        width: 100%;
+        height: fit-content;
+        position: relative;
     }
 
     #right-outline {
-        padding: 8px;
+        height: fit-content;
     }
+
+    #left-outline {
+        padding: 10px;
+    }
+
+    #intro {
+        padding-top: 0px;
+    }
+
+    /* project/blog page! */
+    #left-container {
+        width: 100%;
+        height: auto;
+        position: relative;
+        left: 0;
+        top: 0;
+        padding: 10px;
+        outline: none;
+    }
+
+    .sitemap {
+        /* margin-top: 10px; */
+        width: 100%;
+    }
+
 }
+
+
+
+/* @media (max-width: 768px) {
+
+    .main-container {
+        padding: 10px;
+    }
+
+    .left-container {
+        margin-right: 10px;
+        width: 96%;
+        height: auto;
+        position: relative;
+        right: 10px;
+    }
+
+    .main-container-right {
+        width: 100%;
+        height: auto;
+        position: relative;
+        margin-top: 10px;
+    }
+
+    #right-outline {
+        outline: none;
+    }
+} */

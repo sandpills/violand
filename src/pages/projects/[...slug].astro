@@ -40,7 +40,7 @@ const { Content } = await render(project);
     </head>
     <body>
         <!-- <Nav /> -->
-        <div class="flex">
+        <div class="flex flex-col lg:flex-row">
             <section
                 class="container left-container outline overflow-y-auto"
                 id="left-container"
@@ -58,7 +58,7 @@ const { Content } = await render(project);
                         </h1>
                     </section>
                 </div>
-                <div class="scroll-container">
+                <div class="scroll-container outline">
                     <section class="pl-2 pb-1 outline">
                         <div class="flex gap-2 pt-2 pb-1">
                             {
@@ -73,7 +73,7 @@ const { Content } = await render(project);
                             >
                         </div>
                     </section>
-                    <section class="px-12 pt-6 pb-3">
+                    <section class="px-5 lg:px-12 pt-6 pb-3">
                         <!-- Hero Image -->
                         {
                             project.data.heroImage && (
@@ -93,7 +93,9 @@ const { Content } = await render(project);
                         }
                     </section>
                     <!-- Main Content -->
-                    <section class="outline pt-5 p-12 font-serif text-md">
+                    <section
+                        class="outline py-5 px-5 lg:px-12 font-serif text-md"
+                    >
                         <div class="markdown-content">
                             <Content />
                         </div>
@@ -115,15 +117,14 @@ const { Content } = await render(project);
                     </section>
                 </div>
             </section>
-            <section class="container" id="right-container"></section>
+            <section
+                class="container overflow-y-hidden main-container-right scrollbar-hide"
+            >
+                <div id="right-outline" class="sitemap flex flex-col outline">
+                    <ProjectNav />
+                </div>
+            </section>
+            <Mouse client:load />
         </div>
-        <section
-            class="container overflow-y-hidden main-container-right scrollbar-hide"
-        >
-            <div id="right-outline" class="flex flex-col outline">
-                <ProjectNav />
-            </div>
-        </section>
-        <Mouse client:load />
     </body>
 </html>
