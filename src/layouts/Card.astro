@@ -64,7 +64,7 @@ const parsedBody = body ? await parseMarkdown(body) : "";
 </svg>
 
 <div
-    class="card relative h-100 shadow-md hover:rounded-xl hover:shadow-[0_0_25px_rgba(200,200,255,0.9)] hover:inset-shadow-[0_0_20px_20px_rgba(100,100,200,0.1)] hover:bg-bright overflow-hidden"
+    class="card relative h-100 z-0 shadow-md hover:rounded-xl hover:shadow-[0_0_25px_rgba(200,200,255,0.9)] hover:inset-shadow-[0_0_20px_20px_rgba(100,100,200,0.1)] hover:bg-bright overflow-hidden"
 >
     <img
         src={image?.startsWith("/") ? getAssetPath(image) : image}

@@ -1,7 +1,7 @@
 export const metadata = {
-    location: "Shanghai, China",
-    timezone: "Asia/Shanghai",
-    status: "🌴 day off in kyotooo",
+    location: "Kyoto, Japan",
+    timezone: "Asia/Tokyo",
+    status: "🌴 not bored at the temples",
     things: [
         "teaching",
         "oddly shaped browser windows",

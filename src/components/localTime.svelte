@@ -2,6 +2,12 @@
     import { onMount } from "svelte";
 
     let currentTime = new Date();
+    let currentTimeString = currentTime.toLocaleTimeString("en-US", {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false,
+    });
     let clockContainer;
 
     const clockSize = 600;
@@ -10,7 +16,7 @@
     const pixelSize = 6;
 
     const hourHandLength = clockSize / 6;
-    const minuteHandLength = clockSize / 4;
+    const minuteHandLength = clockSize / 3;
     const secondHandLength = clockSize / 2.5;
     const handWidth = 10;
 
@@ -120,9 +126,9 @@
     style="transform: translate({drift.x}px, {drift.y}px) scale({breathe})"
 >
     <p
-        class="glow w-full text-5xl font-serif italic text-center absolute bottom-1/4 left-1/2 -translate-x-1/2"
+        class="glow w-full text-6xl text-center absolute bottom-1/4 left-1/2 -translate-x-1/2 font-workbench"
     >
-        {currentTime.toLocaleTimeString()}
+        {currentTimeString}
     </p>
     <svg width={clockSize} height={clockSize} class="clock-face z-10">
         {#each edgeDots as dot, i}
@@ -147,7 +153,7 @@
                 height={pixelSize * 2}
                 rx={pixelSize / 2}
                 ry={pixelSize / 2}
-                fill={highlightedDots[i] ? "blue" : "#8e8e8e"}
+                fill={highlightedDots[i] ? "blue" : "#5e5e5e"}
                 opacity={highlightedDots[i] ? "0" : "0.9"}
             />
         {/each}
@@ -280,6 +286,7 @@
                 0 0 6px #949bfb,
                 0 0 7px #6c76ff,
                 0 0 8px #949bfb;
+            color: #0004ff;
         }
         to {
             text-shadow:

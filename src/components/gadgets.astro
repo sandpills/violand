@@ -27,14 +27,17 @@ const okUrl = getLinkHref("ok.png");
     }
 
     .gadget {
-        /* position: fixed; */
+        position: fixed; /* Fixed positioning relative to viewport */
+        top: 0;
+        left: 0;
+        height: 100vh;
         transition: all 0.3s ease;
         pointer-events: none;
     }
 
     .gadget.show {
         display: block;
-        pointer-events: none;
+        pointer-events: auto;
     }
 
     .gadget.hidden {
@@ -42,24 +45,12 @@ const okUrl = getLinkHref("ok.png");
         pointer-events: none;
     }
 
-    #clock-gadget {
-        /* height: 100vh; */
-    }
-
     .gadget-content {
-        /* padding: 2px; */
         position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
-    }
-
-    #clock-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        /* background-color: #c7c7c7a7; */
-        backdrop-filter: blur(10px);
         height: 100%;
-        overflow: hidden;
     }
 </style>
 
@@ -223,14 +214,5 @@ const okUrl = getLinkHref("ok.png");
         </button>
     </div>
 
-    <div id="clock-gadget" class="gadget hidden">
-        <div class="gadget-content" id="clock-container">
-            <Clock client:load />
-        </div>
-    </div>
-
     <div id="music-gadget" class="hidden"></div>
-</div>
-<div id="ok-gadget" class="gadget hidden">
-    <MouseFollower client:only enabled={false} />
 </div>

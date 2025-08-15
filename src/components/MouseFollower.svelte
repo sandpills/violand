@@ -86,7 +86,7 @@
 </script>
 
 {#if enabled}
-    <div class="container" bind:this={container}>
+    <div class="ok-container" bind:this={container}>
         {#each trail as trailPoint, index (trailPoint.id)}
             <img
                 src={okUrl}
@@ -119,14 +119,13 @@
 {/if}
 
 <style>
-    .container {
+    .ok-container {
         position: fixed;
         top: 0;
         left: 0;
-        width: 100%;
-        height: 100%;
+        width: 100vw;
+        height: 100vh;
         pointer-events: none;
-        z-index: 9999;
         /* overflow: hidden; */
     }
 
