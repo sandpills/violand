@@ -35,19 +35,4 @@
 />
 
 <style>
-    .custom-cursor {
-        position: fixed;
-        width: 10px;
-        height: 10px;
-        background-color: blue;
-        pointer-events: none;
-        transform: translate(-50%, -50%);
-        z-index: 9999;
-        opacity: 0;
-        transition: opacity 0.1s;
-    }
-
-    .custom-cursor.ready {
-        opacity: 1;
-    }
 </style>

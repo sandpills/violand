@@ -14,7 +14,9 @@ import Gadgets from "../components/gadgets.astro";
 import Clock from "../components/localTime.svelte";
 import MouseFollower from "../components/MouseFollower.svelte";
 import Metadata from "../components/metadata.astro";
+import Box from "../layouts/Box.astro";
 import DarkModeToggle from "../components/darkModeToggle.astro";
+import DarkModeScript from "../components/darkModeScript.astro";
 
 import "../styles/global.css";
 ---
@@ -38,7 +40,7 @@ import "../styles/global.css";
 				class="container overflow-y-hidden main-container-right relative lg:w-5/12 lg:fixed lg:right-0 lg:top-0 w-full mt-4 lg:mt-0"
 			>
 				<div id="right-outline" class="flex flex-col">
-					<div class="mb-4">
+					<div class="mt-4 lg:mt-0 mb-4">
 						<Metadata />
 					</div>
 					<div class="upcoming mt-4">
@@ -47,7 +49,6 @@ import "../styles/global.css";
 					<div class="absolute bottom-4 right-4 hidden lg:block">
 						<Gadgets />
 					</div>
-					<!-- <DarkModeToggle /> -->
 				</div>
 			</section>
 			<section
@@ -57,12 +58,8 @@ import "../styles/global.css";
 				<div id="left-outline">
 					<About />
 					<Projects />
-					<section class="font-mono text-sm">
-						<button
-							id="more"
-							class="my-5 px-1 border-1 border-dotted border-gray-400 inline-flex hover:bg-bright hover:rounded-sm hover:inset-shadow-[0_0_5px_5px_rgba(0,0,255,0.1)] hover:shadow-[0_0_30px_rgba(200,200,255,0.5)]"
-							>⇣ more
-						</button>
+					<section id="more" class="font-mono text-sm py-4">
+						<Box> ⇣ more </Box>
 					</section>
 					<section class="hide" id="rc-section">
 						<AboutRC />
@@ -77,7 +74,7 @@ import "../styles/global.css";
 						class="fixed top-0 left-0 h-full pointer-events-none marqueee hidden lg:block"
 					>
 						<span
-							class="text-sm font-mono text-bright text-shadow-lg"
+							class="text-sm font-mono text-bright dark:text-dark-bright text-shadow-lg"
 						>
 							<!-- <a
 							href={getLinkHref("/")}
@@ -107,6 +104,7 @@ import "../styles/global.css";
 			</section>
 		</div>
 		<Mouse client:load />
+		<DarkModeScript />
 		<div id="clock-gadget" class="gadget hidden">
 			<div class="gadget-content" id="clock-container">
 				<Clock client:load />

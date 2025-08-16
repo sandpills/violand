@@ -29,7 +29,9 @@ const lastUpdated = formatGitDateTime(gitLastCommit);
 <div class="metadata-container font-mono text-sm space-y-1">
     <!-- Current Whereabouts -->
     <div class="metadata-section">
-        <h3 class="text-sm font-serif italic text-[#2f00ff]">
+        <h3
+            class="text-sm font-serif italic text-blue-text dark:text-dark-text"
+        >
             Current Whereabouts
         </h3>
         <div class="text-xs font-mono pb-2">
@@ -39,7 +41,9 @@ const lastUpdated = formatGitDateTime(gitLastCommit);
 
     <!-- Things on Mind -->
     <div class="metadata-section">
-        <h3 class="text-sm font-serif italic text-[#2f00ff]">
+        <h3
+            class="text-sm font-serif italic text-blue-text dark:text-dark-text"
+        >
             Things on my Mind
         </h3>
         <ul class="text-xs font-mono space-y-1 pb-2 pl-1">
@@ -49,11 +53,15 @@ const lastUpdated = formatGitDateTime(gitLastCommit);
 
     <!-- Site Last Updated -->
     <div class="metadata-section">
-        <h3 class="text-sm font-serif italic text-[#2f00ff] mr-1">
+        <h3
+            class="text-sm font-serif italic text-blue-text dark:text-dark-text mr-1"
+        >
             Last Updated
-            <span class="font-mono not-italic text-xs text-black ml-1">
-                ⇢ {lastUpdated}</span
+            <span
+                class="font-mono not-italic text-xs text-black dark:text-dark-text ml-1"
             >
+                ⇢ {lastUpdated}
+            </span>
             <span class="font-mono not-italic text-xs text-black ml-1">
                 <a
                     href="https://github.com/sandpills/violand"

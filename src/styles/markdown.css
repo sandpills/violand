@@ -147,3 +147,15 @@ ul li::before {
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
+
+html.dark ::-webkit-scrollbar-thumb {
+    background: #b2a2cd;
+}
+
+html.dark ::-webkit-scrollbar-track {
+    background: #3b4028;
+}
+
+html.dark ul li::before {
+    color: #b2a2cd;
+}

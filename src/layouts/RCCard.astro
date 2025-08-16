@@ -3,6 +3,7 @@ import { getAssetPath, getLinkHref } from "../utils/paths.ts";
 import { remark } from "remark";
 import remarkGfm from "remark-gfm";
 import html from "remark-html";
+import Box from "./Box.astro";
 
 import getStaticPaths from "../pages/projects/[...slug].astro";
 
@@ -63,8 +64,35 @@ const parsedBody = body ? await parseMarkdown(body) : "";
     </defs>
 </svg>
 
+<svg width="0" height="0" style="position: absolute;">
+    <defs>
+        <filter id="dark-noisy" x="0%" y="0%" width="100%" height="100%">
+            <feTurbulence
+                baseFrequency="1.1"
+                numOctaves="0.2"
+                result="rawNoise"
+                type="fractalNoise"></feTurbulence>
+            <feColorMatrix in="rawNoise" type="saturate" values="0"
+            ></feColorMatrix>
+            <!-- <feComponentTransfer in="rawNoise" result="softNoise">
+                <feFuncA type="discrete" tableValues="0.3 0.1 0.4 0.2 0.3 0.1"
+                ></feFuncA>
+            </feComponentTransfer>
+            <feGaussianBlur
+                in="softNoise"
+                stdDeviation="0.4"
+                result="blurredNoise"></feGaussianBlur> -->
+            <feBlend
+                id="blend"
+                in="SourceGraphic"
+                in2="rawNoise"
+                mode="multiply"></feBlend>
+        </filter>
+    </defs>
+</svg>
+
 <div
-    class="card relative h-100 shadow-md hover:rounded-xl hover:shadow-[0_0_25px_rgba(200,200,255,0.9)] hover:inset-shadow-[0_0_20px_20px_rgba(100,100,200,0.1)] hover:bg-bright overflow-hidden"
+    class="card relative h-100 shadow-md hover:rounded-xl hover:shadow-[0_0_25px_rgba(200,200,255,0.9)] hover:inset-shadow-[0_0_20px_20px_rgba(100,100,200,0.1)] dark:hover:shadow-[0_0_25px_rgba(100,120,100,0.9)] dark:hover:inset-shadow-[0_0_20px_20px_rgba(100,120,200,0.1)] hover:bg-bright dark:hover:bg-dark-bright overflow-hidden"
 >
     <img
         src={image?.startsWith("/") ? getAssetPath(image) : image}
@@ -89,9 +117,7 @@ const parsedBody = body ? await parseMarkdown(body) : "";
             tags && (
                 <div class="font-mono italic text-xs flex gap-x-1">
                     {tags.map((tag) => (
-                        <span class="px-1 border-1 border-dotted border-gray-400 inline-flex hover:bg-bright hover:rounded-sm hover:inset-shadow-[0_0_5px_5px_rgba(0,0,255,0.1)] hover:shadow-[0_0_30px_rgba(200,200,255,0.5)]">
-                            {tag}
-                        </span>
+                        <Box>{tag}</Box>
                     ))}
                 </div>
             )
@@ -111,5 +137,11 @@ const parsedBody = body ? await parseMarkdown(body) : "";
         filter: blur(0px) grayscale(0%);
         transition: filter 0.2s ease;
         transition: border-top-left-radius 0.2s ease;
+    }
+
+    html.dark .card-image {
+        filter: blur(4px) grayscale(90%) invert(60%) brightness(0.6)
+            saturate(0.9) url(#dark-noisy);
+        transition: filter 0.2s ease;
     }
 </style>

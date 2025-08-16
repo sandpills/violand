@@ -1,5 +1,6 @@
 ---
 import { getLinkHref } from "../utils/paths.ts";
+import Box from "./Box.astro";
 
 interface Props {
     href?: string;
@@ -13,13 +14,9 @@ const { href, title, body, tags, date } = Astro.props;
 ---
 
 <div
-    class="w-full p-3 shadow-md hover:rounded-xl hover:shadow-[0_0_25px_rgba(200,200,255,0.9)] hover:inset-shadow-[0_0_20px_20px_rgba(100,100,200,0.1)] hover:bg-bright"
+    class="w-full p-3 shadow-md hover:rounded-xl hover:shadow-[0_0_25px_rgba(200,200,255,0.9)] hover:inset-shadow-[0_0_20px_20px_rgba(100,100,200,0.1)] dark:hover:shadow-[0_0_12px_rgba(100,120,100,0.9)] dark:hover:inset-shadow-[0_0_20px_20px_rgba(100,120,100,0.1)] hover:bg-bright dark:hover:bg-dark-bright overflow-hidden"
 >
-    <span
-        class="font-mono italic text-xs px-1 border-1 border-dotted border-gray-400 inline-flex hover:bg-bright hover:rounded-sm hover:inset-shadow-[0_0_5px_5px_rgba(0,0,255,0.1)] hover:shadow-[0_0_30px_rgba(200,200,255,0.5)]"
-    >
-        {tags}
-    </span>
+    <Box>{tags}</Box>
     <p class="text-sm font-serif">
         {
             date &&

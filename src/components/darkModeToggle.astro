@@ -1,15 +1,17 @@
 ---
-// Get initial theme from localStorage or default to light
+// Dark mode toggle component that uses shared dark mode functionality
 ---
 
 <button
     id="darkModeToggle"
-    class="fixed bottom-4 right-4 z-50 p-3 rounded-full bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 dark:border-gray-600"
+    class="my-3 mx-4 w-12 h-12 bg-bright dark:bg-dark-bright shadow-lg hover:shadow-xl transition-all duration-300 dark:border-red-700 cursor-pointer flex items-center justify-center hover:scale-108"
+    style="cursor: pointer !important; pointer-events: auto !important;"
     aria-label="Toggle dark mode"
 >
     <!-- Sun icon for light mode -->
     <svg
-        class="w-6 h-6 text-yellow-500 dark:hidden"
+        id="sunIcon"
+        class="w-10 h-10 text-blue-700"
         fill="currentColor"
         viewBox="0 0 20 20"
     >
@@ -21,7 +23,8 @@
 
     <!-- Moon icon for dark mode -->
     <svg
-        class="w-6 h-6 text-blue-400 hidden dark:block"
+        id="moonIcon"
+        class="w-8 h-8 text-dark-text hidden"
         fill="currentColor"
         viewBox="0 0 20 20"
     >
@@ -32,19 +35,58 @@
 </button>
 
 <script>
-    // Dark mode toggle functionality
-    const darkModeToggle = document.getElementById("darkModeToggle");
-    const html = document.documentElement;
+    // Function to update the toggle visual state based on current theme
+    function updateToggleState() {
+        const sunIcon = document.getElementById("sunIcon");
+        const moonIcon = document.getElementById("moonIcon");
+        const darkModeToggle = document.getElementById("darkModeToggle");
+        const html = document.documentElement;
 
-    // Check for saved theme preference or default to light mode
-    const currentTheme = localStorage.getItem("theme") || "light";
-    html.classList.toggle("dark", currentTheme === "dark");
+        if (html.classList.contains("dark")) {
+            sunIcon?.classList.add("hidden");
+            moonIcon?.classList.remove("hidden");
+            darkModeToggle?.classList.remove("rounded-sm");
+            darkModeToggle?.classList.add("rounded-full");
+        } else {
+            sunIcon?.classList.remove("hidden");
+            moonIcon?.classList.add("hidden");
+            darkModeToggle?.classList.remove("rounded-full");
+            darkModeToggle?.classList.add("rounded-sm");
+        }
+    }
 
-    // Toggle theme
-    darkModeToggle?.addEventListener("click", () => {
-        html.classList.toggle("dark");
-        const newTheme = html.classList.contains("dark") ? "dark" : "light";
-        localStorage.setItem("theme", newTheme);
+    // Wait for DOM to be fully loaded and dark mode functions to be available
+    document.addEventListener("DOMContentLoaded", () => {
+        const darkModeToggle = document.getElementById("darkModeToggle");
+
+        // Set initial state
+        updateToggleState();
+
+        // Add click event listener to toggle theme
+        darkModeToggle?.addEventListener("click", () => {
+            if (window.darkMode) {
+                window.darkMode.toggleTheme();
+                // Update the toggle state after theme change
+                setTimeout(updateToggleState, 0);
+            }
+        });
+
+        // Listen for theme changes from other sources
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (
+                    mutation.type === "attributes" &&
+                    mutation.attributeName === "class"
+                ) {
+                    updateToggleState();
+                }
+            });
+        });
+
+        // Observe changes to the html element's class attribute
+        observer.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ["class"],
+        });
     });
-    console.log(html.classList.toggle);
 </script>

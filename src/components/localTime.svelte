@@ -126,7 +126,7 @@
     style="transform: translate({drift.x}px, {drift.y}px) scale({breathe})"
 >
     <p
-        class="glow w-full text-6xl text-center absolute bottom-1/4 left-1/2 -translate-x-1/2 font-workbench"
+        class="glow w-full text-6xl text-center absolute bottom-1/4 left-1/2 -translate-x-1/2 font-sixtyfour"
     >
         {currentTimeString}
     </p>
@@ -153,7 +153,7 @@
                 height={pixelSize * 2}
                 rx={pixelSize / 2}
                 ry={pixelSize / 2}
-                fill={highlightedDots[i] ? "blue" : "#5e5e5e"}
+                fill="#5e5e5e"
                 opacity={highlightedDots[i] ? "0" : "0.9"}
             />
         {/each}
@@ -162,6 +162,7 @@
         {#each hourDots as dot}
             {@const pos = getHandDotPosition(dot.distance, hourAngle)}
             <rect
+                class="dark:fill-dark-bright"
                 x={pos.x - 1}
                 y={pos.y - 1}
                 width={pixelSize * 1}
@@ -174,6 +175,7 @@
         {#each minuteDots as dot}
             {@const pos = getHandDotPosition(dot.distance, minuteAngle)}
             <rect
+                class="dark:fill-dark-bright"
                 x={pos.x - 1}
                 y={pos.y - 1}
                 width={pixelSize * 1}
@@ -186,6 +188,7 @@
         {#each secondDots as dot}
             {@const pos = getHandDotPosition(dot.distance, secondAngle)}
             <rect
+                class="dark:fill-dark-text"
                 x={pos.x - 1}
                 y={pos.y - 1}
                 width={pixelSize * 1}
@@ -253,18 +256,6 @@
             transform: scale(0.9);
             transform: translate(0, 0);
         }
-    }
-
-    /* .edge-dot-glow[opacity="1"] {
-        animation: pulse-glow 1s ease-in-out infinite;
-    } */
-
-    .pixel-clock:hover {
-        transition: all 0.2s ease-out;
-        border-radius: 500px;
-        /* border: 1px solid rgb(151, 151, 151); */
-        box-shadow: inset 0 0 30px 0 rgba(76, 85, 130, 0.2);
-        box-shadow: 0 0 30px 0 rgba(244, 244, 255, 0.2);
     }
 
     .glow {

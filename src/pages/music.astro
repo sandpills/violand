@@ -1,6 +1,8 @@
 ---
 import Nav from "../components/nav.astro";
 import Mouse from "../components/Mouse.svelte";
+import DarkModeToggle from "../components/darkModeToggle.astro";
+import DarkModeScript from "../components/darkModeScript.astro";
 import { getAssetPath } from "../utils/paths.ts";
 import { getLinkHref } from "../utils/paths.ts";
 
@@ -41,9 +43,14 @@ const cloudUrl = getLinkHref("cloud.png");
     <body>
         <div class="container">
             <Nav />
+            <!-- Dark Mode Toggle -->
+            <div class="absolute top-4 right-4 z-10">
+                <DarkModeToggle />
+            </div>
             <div id="webamp-container" style="width: 100vw; height: 100vh">
             </div>
         </div>
+        <DarkModeScript />
     </body>
 
     <script>

@@ -1,6 +1,8 @@
 ---
 import Blogs from "../components/blogs.astro";
 import Nav from "../components/nav.astro";
+import DarkModeToggle from "../components/darkModeToggle.astro";
+import DarkModeScript from "../components/darkModeScript.astro";
 import { getAssetPath } from "../utils/paths.ts";
 import "../styles/global.css";
 import Mouse from "../components/Mouse.svelte";
@@ -20,11 +22,16 @@ import Mouse from "../components/Mouse.svelte";
     </head>
     <body>
         <Nav />
+        <!-- Dark Mode Toggle -->
+        <div class="absolute top-4 right-4 z-10">
+            <DarkModeToggle />
+        </div>
         <section class="container main-container overflow-y-auto">
             <section class="font-mono text-sm pt-10 pb-2">
                 <Blogs />
             </section>
         </section>
         <Mouse client:load />
+        <DarkModeScript />
     </body>
 </html>

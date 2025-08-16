@@ -1,0 +1,92 @@
+---
+// This component provides consistent dark mode functionality across all pages
+---
+
+<!-- Prevent flash of unstyled content by applying theme immediately -->
+<script is:inline>
+    (function () {
+        const theme = localStorage.getItem("theme") || "light";
+        if (theme === "dark") {
+            document.documentElement.classList.add("dark");
+        } else {
+            document.documentElement.classList.remove("dark");
+        }
+    })();
+</script>
+
+<script>
+    // Extend Window interface to include darkMode
+    declare global {
+        interface Window {
+            darkMode: {
+                getCurrentTheme: () => string;
+                applyTheme: (theme: string) => void;
+                setTheme: (theme: string) => void;
+                toggleTheme: () => void;
+            };
+        }
+    }
+
+    // Function to get the current theme from localStorage or default to light
+    function getCurrentTheme(): string {
+        if (typeof window !== "undefined") {
+            return localStorage.getItem("theme") || "light";
+        }
+        return "light";
+    }
+
+    // Function to apply theme to the document
+    function applyTheme(theme: string): void {
+        if (typeof document !== "undefined") {
+            const html = document.documentElement;
+            if (theme === "dark") {
+                html.classList.add("dark");
+            } else {
+                html.classList.remove("dark");
+            }
+        }
+    }
+
+    // Function to set theme and save to localStorage
+    function setTheme(theme: string): void {
+        if (typeof window !== "undefined" && typeof document !== "undefined") {
+            applyTheme(theme);
+            localStorage.setItem("theme", theme);
+            console.log("theme changed to:", theme);
+        }
+    }
+
+    // Function to toggle theme
+    function toggleTheme(): void {
+        const html = document.documentElement;
+        const newTheme = html.classList.contains("dark") ? "light" : "dark";
+        setTheme(newTheme);
+    }
+
+    // Initialize theme when DOM is loaded
+    if (typeof document !== "undefined") {
+        document.addEventListener("DOMContentLoaded", () => {
+            const currentTheme = getCurrentTheme();
+            applyTheme(currentTheme);
+        });
+
+        // Also apply theme immediately if DOM is already loaded
+        if (document.readyState === "loading") {
+            // DOM is still loading
+        } else {
+            // DOM is already loaded
+            const currentTheme = getCurrentTheme();
+            applyTheme(currentTheme);
+        }
+    }
+
+    // Make functions available globally for other components to use
+    if (typeof window !== "undefined") {
+        window.darkMode = {
+            getCurrentTheme,
+            applyTheme,
+            setTheme,
+            toggleTheme,
+        };
+    }
+</script>

@@ -24,11 +24,12 @@ const dateString = now.toLocaleDateString("en-US", {
 </div>
 
 <script>
-    // Update time every minute
+    import { metadata } from "../data/metadata";
+
     function updateTime() {
         const now = new Date();
         const timeString = now.toLocaleTimeString("en-US", {
-            timeZone: "Asia/Shanghai",
+            timeZone: metadata.timezone,
             hour: "2-digit",
             minute: "2-digit",
             hour12: true,

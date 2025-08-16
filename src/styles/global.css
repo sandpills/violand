@@ -4,6 +4,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Sixtyfour&family=Sixtyfour+Convergence&display=swap');
 
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
 
 
 html {
@@ -16,6 +18,11 @@ html {
     cursor: none !important;
 }
 
+html.dark {
+    background-color: #1b1f11;
+    color: #c7c7c7;
+}
+
 html::-webkit-scrollbar {
     display: none;
 }
@@ -25,18 +32,46 @@ a {
     cursor: none !important;
 }
 
+html.dark a {
+    color: #b2a2cd;
+}
+
+html.dark .custom-cursor {
+    background-color: #b2a2cd;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    filter: blur(3px);
+}
+
+/* clock */
+/* 
+html.dark .edge-dot {
+    fill: #b2a2cd;
+} */
+
+html.dark .edge-dot-glow {
+    fill: #b2a2cd;
+}
+
+
 @theme {
     --font-mono: IBM Plex Mono, monospace;
     --font-serif: Newsreader, serif;
-    --font-workbench: Sixtyfour, serif;
+    --font-sixtyfour: Sixtyfour, serif;
     --color-neutral: #c7c7c7;
     --color-bright: #cacaca;
+    --color-dark: #1b1f11;
+    --color-dark-bright: #3b4028;
+    --color-dark-text: #b2a2cd;
+    --color-blue-text: #2e00fd;
 }
 
 .main-container {
     width: 70vw;
     height: 100vh;
     position: fixed;
+    overflow-x: hidden;
     left: 0;
     top: 0;
     padding: 10px;
@@ -75,6 +110,7 @@ a {
     overflow-y: hidden;
     z-index: 10;
     transform: translateZ(0);
+    pointer-events: none;
 }
 
 #ok-gadget {
@@ -121,12 +157,33 @@ a {
     display: flex;
     justify-content: center;
     align-items: center;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(8px);
+    background-color: #c7c7c724;
+    -webkit-backdrop-filter: blur(8px);
     height: 100%;
     width: 100%;
     /* z-index: 99999999; */
     overflow: hidden;
+}
+
+html.dark #clock-container {
+    background-color: #1b1f1124;
+}
+
+.custom-cursor {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    background-color: blue;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    opacity: 0;
+    transition: opacity 0.1s;
+}
+
+.custom-cursor.ready {
+    opacity: 1;
 }
 
 /* @media (max-width: 1024px) {
@@ -222,28 +279,34 @@ a {
 
 
 
-/* @media (max-width: 768px) {
+html.dark .glow {
+    -webkit-animation: glow-dark 1s ease-in-out infinite alternate;
+    -moz-animation: glow-dark 1s ease-in-out infinite alternate;
+    animation: glow-dark 1s ease-in-out infinite alternate;
+    color: #53554b2a;
+}
 
-    .main-container {
-        padding: 10px;
+@keyframes glow-dark {
+    from {
+        text-shadow:
+            0 0 2px #292d1a,
+            0 0 3px #292d1a,
+            0 0 4px #322832,
+            0 0 5px #949bfb,
+            0 0 6px #614661d1,
+            0 0 7px #cda8cd,
+            0 0 8px #69506c;
+        color: #292d1a;
     }
 
-    .left-container {
-        margin-right: 10px;
-        width: 96%;
-        height: auto;
-        position: relative;
-        right: 10px;
+    to {
+        text-shadow:
+            0 0 3px #292d1a,
+            0 0 4px #292d1a,
+            0 0 5px #292d1a,
+            0 0 6px #292d1a,
+            0 0 7px #292d1a,
+            0 0 8px #292d1a,
+            0 0 9px #292d1a;
     }
-
-    .main-container-right {
-        width: 100%;
-        height: auto;
-        position: relative;
-        margin-top: 10px;
-    }
-
-    #right-outline {
-        outline: none;
-    }
-} */
+}

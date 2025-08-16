@@ -6,6 +6,8 @@ import Nav from "../../components/nav.astro";
 import { getAssetPath, getLinkHref } from "../../utils/paths.ts";
 import ProjectNav from "../../components/sitemap.astro";
 import Mouse from "../../components/Mouse.svelte";
+import DarkModeToggle from "../../components/darkModeToggle.astro";
+import DarkModeScript from "../../components/darkModeScript.astro";
 
 export async function getStaticPaths() {
     const blogs = await getCollection("blogs");
@@ -16,6 +18,9 @@ export async function getStaticPaths() {
 }
 
 const { blog } = Astro.props;
+if (!blog) {
+    throw new Error("Blog not found");
+}
 const { Content } = await render(blog);
 ---
 
@@ -37,15 +42,21 @@ const { Content } = await render(blog);
             class="container left-container outline overflow-y-auto"
             id="left-container"
         >
-            <div class="outline sticky bg-neutral top-0">
+            <div class="outline sticky bg-neutral dark:bg-dark top-0">
                 <!-- Project Info -->
-                <section class="outline flex flex-row">
-                    <span class="font-serif text-2xl pr-4">
-                        <a class="hover:blur-xs" href={getLinkHref("/")}>↖︎</a>
-                    </span>
-                    <h1 class="font-serif text-2xl outline pl-2 pr-5 py-1">
-                        {blog.data.title}
-                    </h1>
+                <section
+                    class="outline flex flex-row items-center justify-between"
+                >
+                    <div class="flex items-center">
+                        <span class="font-serif text-2xl pr-4">
+                            <a class="hover:blur-xs" href={getLinkHref("/")}
+                                >↖︎</a
+                            >
+                        </span>
+                        <h1 class="font-serif text-2xl outline pl-2 pr-5 py-1">
+                            {blog.data.title}
+                        </h1>
+                    </div>
                 </section>
             </div>
             <div class="scroll-container outline">
@@ -91,7 +102,9 @@ const { Content } = await render(blog);
                     </div>
                 </section>
                 <!-- Footer Nav -->
-                <section class="outline sticky bg-neutral bottom-0 flex-row">
+                <section
+                    class="outline sticky bg-neutral dark:bg-dark bottom-0 flex-row"
+                >
                     <span class="px-2">
                         <a class="hover:blur-xs" href={getLinkHref("/")}>
                             <span class="text-2xl">←</span></a
@@ -112,7 +125,10 @@ const { Content } = await render(blog);
                 <ProjectNav />
             </div>
         </section>
+        <div class="pr-4 absolute right-0 bottom-6">
+            <DarkModeToggle />
+            <DarkModeScript />
+        </div>
+        <Mouse client:load />
     </body>
 </html>
-
-<Mouse client:load />

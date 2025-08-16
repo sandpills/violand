@@ -2,6 +2,8 @@
 import Nav from "../components/nav.astro";
 import Mouse from "../components/Mouse.svelte";
 import LocalTime from "../components/localTime.svelte";
+import DarkModeToggle from "../components/darkModeToggle.astro";
+import DarkModeScript from "../components/darkModeScript.astro";
 import { getAssetPath } from "../utils/paths.ts";
 import Winamp from "../components/winamp.astro";
 import Gadgets from "../components/gadgets.astro";
@@ -35,6 +37,10 @@ import "../styles/cursor.css";
     </head>
     <body>
         <Nav />
+        <!-- Dark Mode Toggle -->
+        <div class="absolute top-4 right-4 z-10">
+            <DarkModeToggle />
+        </div>
         <div class="flex">
             <section class="container main-container overflow-y-auto">
                 <section
@@ -106,6 +112,7 @@ import "../styles/cursor.css";
             </section>
             <!-- <LocalTime client:load /> -->
         </div>
+        <DarkModeScript />
     </body>
     <Winamp />
 </html>

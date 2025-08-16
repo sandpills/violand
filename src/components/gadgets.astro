@@ -1,6 +1,5 @@
 ---
-import Clock from "../components/localTime.svelte";
-import MouseFollower from "../components/MouseFollower.svelte";
+import DarkModeToggle from "../components/darkModeToggle.astro";
 import "../styles/global.css";
 import { getLinkHref } from "../utils/paths.ts";
 const musicUrl = getLinkHref("music.png");
@@ -212,6 +211,7 @@ const okUrl = getLinkHref("ok.png");
         >
             <img src={okUrl} alt="ok" />
         </button>
+        <DarkModeToggle />
     </div>
 
     <div id="music-gadget" class="hidden"></div>

@@ -14,7 +14,7 @@
 
     const maxTrailLength = 500; // too long is problem
     const trailDelay = 20;
-    const marqueeCol = 20;
+    const marqueeCol = 11;
 
     const startTracking = () => {
         // Reset everything
@@ -87,7 +87,7 @@
 
 {#if enabled}
     <div class="ok-container" bind:this={container}>
-        {#each trail as trailPoint, index (trailPoint.id)}
+        {#each trail.slice().reverse() as trailPoint, index (trailPoint.id)}
             <img
                 src={okUrl}
                 alt="ok"
@@ -95,26 +95,31 @@
                 style="
           left: {trailPoint.x}px; 
           top: {trailPoint.y}px;
-          opacity: {1 - (index / trail.length) * 0.1};
+          opacity: {1 - ((trail.length - 1 - index) / trail.length) * 0.1};
           transform: translate(-50%, -50%);
+          z-index: {1 + index};
         "
             />
         {/each}
 
-        <img
-            src={okUrl}
-            alt="ok"
-            class="main-image"
-            style="left: {mouseX}px; top: {mouseY}px;"
-        />
-
-        {#each Array(marqueeCol) as _}
-            <marquee behavior="scroll" direction="down" class="container">
-                {#each Array(marqueeCol) as _}
-                    <img src={okUrl} alt="ok" class="ok-scroll" />
-                {/each}
-            </marquee>
-        {/each}
+        <section class="ok-marquee-section">
+            <div class="ok-marquee-wrapper">
+                <ul class="marquee1">
+                    {#each Array(marqueeCol) as _}
+                        <li class="ok-scroll">
+                            <img src={okUrl} alt="ok" />
+                        </li>
+                    {/each}
+                </ul>
+                <ul class="marquee2">
+                    {#each Array(marqueeCol) as _}
+                        <li class="ok-scroll">
+                            <img src={okUrl} alt="ok" />
+                        </li>
+                    {/each}
+                </ul>
+            </div>
+        </section>
     </div>
 {/if}
 
@@ -129,7 +134,6 @@
         /* overflow: hidden; */
     }
 
-    .main-image,
     .trail-image {
         position: absolute;
         width: 80px;
@@ -139,17 +143,66 @@
         user-select: none;
     }
 
-    .ok-scroll {
-        width: 70px;
-        height: 70px;
-    }
-
-    .main-image {
-        z-index: 10;
-    }
+    /* .ok-scroll {
+        width: 80px;
+        height: 80px;
+    } */
 
     .trail-image {
-        z-index: 1;
+        /* z-index: 1; */
         transition: opacity 0.1s ease-out;
+    }
+
+    .ok-marquee-section {
+        overflow: hidden;
+        white-space: nowrap;
+        width: 90px;
+        height: 100vh;
+        display: flex;
+    }
+
+    .ok-marquee-wrapper {
+        position: relative;
+    }
+
+    ul {
+        display: flex;
+        flex-direction: column;
+        list-style: none;
+        padding: none;
+    }
+
+    li {
+        width: 80px;
+        height: 80px;
+        margin: 4.6px;
+    }
+
+    .marquee1 {
+        animation: marquee1 8s linear infinite;
+    }
+
+    .marquee2 {
+        animation: marquee2 8s linear infinite;
+        position: absolute;
+        top: 0;
+    }
+
+    @keyframes marquee1 {
+        from {
+            transform: translateY(0%);
+        }
+        to {
+            transform: translateY(-100%);
+        }
+    }
+
+    @keyframes marquee2 {
+        from {
+            transform: translateY(100%);
+        }
+        to {
+            transform: translateY(0%);
+        }
     }
 </style>

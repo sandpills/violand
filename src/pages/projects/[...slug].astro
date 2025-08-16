@@ -5,6 +5,8 @@ import "../../styles/markdown.css";
 import Nav from "../../components/nav.astro";
 import ProjectNav from "../../components/sitemap.astro";
 import Mouse from "../../components/Mouse.svelte";
+import DarkModeToggle from "../../components/darkModeToggle.astro";
+import DarkModeScript from "../../components/darkModeScript.astro";
 import { getAssetPath, getLinkHref } from "../../utils/paths.ts";
 
 export async function getStaticPaths() {
@@ -23,6 +25,9 @@ export async function getStaticPaths() {
 }
 
 const { project } = Astro.props;
+if (!project) {
+    throw new Error("Project not found");
+}
 const { Content } = await render(project);
 ---
 
@@ -45,7 +50,7 @@ const { Content } = await render(project);
                 class="container left-container outline overflow-y-auto"
                 id="left-container"
             >
-                <div class="outline sticky bg-neutral top-0">
+                <div class="outline sticky bg-neutral dark:bg-dark top-0">
                     <!-- Project Info -->
                     <section class="outline flex flex-row">
                         <span class="font-serif text-2xl pr-4">
@@ -102,7 +107,7 @@ const { Content } = await render(project);
                     </section>
                     <!-- Footer Nav -->
                     <section
-                        class="outline sticky bg-neutral bottom-0 flex-row"
+                        class="outline sticky bg-neutral dark:bg-dark bottom-0 flex-row"
                     >
                         <span class="px-2">
                             <a class="hover:blur-xs" href={getLinkHref("/")}>
@@ -124,6 +129,10 @@ const { Content } = await render(project);
                     <ProjectNav />
                 </div>
             </section>
+            <div class="pr-4 absolute right-0 bottom-6">
+                <DarkModeToggle />
+                <DarkModeScript />
+            </div>
             <Mouse client:load />
         </div>
     </body>
