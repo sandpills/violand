@@ -29,41 +29,31 @@ const lastUpdated = formatGitDateTime(gitLastCommit);
 <div class="metadata-container font-mono text-sm space-y-1">
     <!-- Current Whereabouts -->
     <div class="metadata-section">
-        <h3
-            class="text-sm font-serif italic text-blue-text dark:text-dark-text"
-        >
-            Current Whereabouts
-        </h3>
-        <div class="text-xs font-mono pb-2">
+        <h3 class="text-sm">Current Whereabouts</h3>
+        <div class="text-sm font-mono pb-2">
             <Violawhere />
         </div>
     </div>
 
     <!-- Things on Mind -->
     <div class="metadata-section">
-        <h3
-            class="text-sm font-serif italic text-blue-text dark:text-dark-text"
-        >
-            Things on my Mind
-        </h3>
-        <ul class="text-xs font-mono space-y-1 pb-2 pl-1">
+        <h3 class="text-sm">Things on my Mind</h3>
+        <ul class="text-sm font-mono space-y-1 pb-3 pl-1">
             {metadata.things.map((thing) => <li>⇢ {thing}</li>)}
         </ul>
     </div>
 
     <!-- Site Last Updated -->
     <div class="metadata-section">
-        <h3
-            class="text-sm font-serif italic text-blue-text dark:text-dark-text mr-1"
-        >
+        <h3 class="text-sm mr-1">
             Last Updated
-            <span class="font-mono not-italic text-xs ml-1">
-                ⇢ {lastUpdated}
+            <span class="time-display font-mono text-xs text-gray-500 ml-1">
+                {lastUpdated}
             </span>
-            <span class="font-mono not-italic text-xs text-black ml-1">
+            <span class="font-mono ml-1">
                 <a
                     href="https://github.com/sandpills/violand"
-                    class="hover:blur-xs">[source]</a
+                    class="hover:blur-xs text-sm">[source]</a
                 >
             </span>
         </h3>
@@ -76,7 +66,7 @@ const lastUpdated = formatGitDateTime(gitLastCommit);
         /* padding: 0.5rem 0.5rem; */
         padding-top: 0.25rem;
         padding-bottom: 0.25rem;
-        border-bottom: 2px dotted rgb(99, 99, 99);
+        border-bottom: 2px dotted rgb(118, 118, 118);
     }
 
     .metadata-section:last-child {
@@ -91,5 +81,9 @@ const lastUpdated = formatGitDateTime(gitLastCommit);
     .metadata-section ul {
         margin: 0;
         line-height: 1;
+    }
+
+    .time-display {
+        color: rgb(118, 118, 118);
     }
 </style>

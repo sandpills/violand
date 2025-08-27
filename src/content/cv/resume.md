@@ -28,16 +28,15 @@ description: "b. 1996, Shanghai China. Lived & Worked in LA, Brooklyn, and Shang
 # Selected Performances
 
 - *2025*
-- [byyb radio x Nike popup] | SH
 - [With All Due Respect](https://www.onx.studio/onx-programming/with-all-due-respect-onassis-onx-summer-exhibition) | Onassis ONX, NYC
-- [UFO Terminal Loading... Project] | West Bund Art Park, SH
+- UFO Terminal Loading... Project | West Bund Art Park, SH
 - [Finder Shanghai NY Tour](https://ra.co/events/2082993) | Trans Pecos, NYC
 - [A {room} of one's Own](https://utrfest.org/program/a-room-of-ones-own/) | Under the Radar Festival, NYC
 - *2024*
 - [Finder Shanghai Japan Tour](https://www.facebook.com/permalink.php/?story_fbid=891950149709872&id=100066846840738) | SPACE Tokyo
 - Odd Species | SYSTEM, SH
 - Hong Kong International Poetry Festival Shanghai | Theatre YOUNG, SH
-- Internet Friends 4ever EP Release | Chemistry Creative, NYC
+- [Internet Friends 4ever EP Release](https://partiful.com/e/VeuTIsTCfr7JsBgBSLG1?) | Chemistry Creative, NYC
 - [Wordhack](https://withfriends.co/event/19883236/wordhack_feat_todd_anderson_viola_he_and_edit_viau) | Wonderville, NYC
 - [Onassis ONX Summer Showcase](https://www.onx.studio/onx-programming/onx-summer-showcase) | Onassis ONX, NYC
 - [Friends:Forever](https://schedule.sxsw.com/2024/events/MS60931) | SXSW Music Festival, Austin TX
