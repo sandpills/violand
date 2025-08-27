@@ -13,20 +13,16 @@ if (!cv) {
 const { Content } = await render(cv);
 ---
 
-<section class="cv-container">
-    <header class="text-left mx-3 lg:mx-0">
+<section>
+    <header class="text-left">
         <p class="font-serif italic normal-case hover:not-italic text-sm">
             {cv.data.title}
         </p>
-        {
-            cv.data.description && (
-                <p class="text-xs lg:text-sm">{cv.data.description}</p>
-            )
-        }
+        {cv.data.description && <p class="text-sm">{cv.data.description}</p>}
     </header>
 
     <div
-        class="cv-content prose prose-lg dark:prose-invert max-w-none text-xs lg:text-sm"
+        class="cv-container prose prose-lg dark:prose-invert max-w-none text-sm"
     >
         <Content />
     </div>
