@@ -53,3 +53,7 @@
 html.dark .cv-container h1::before {
     color: #b2a2cd;
 }
+
+html.dark .cv-container ul li::before {
+    color: #b2a2cd;
+}
