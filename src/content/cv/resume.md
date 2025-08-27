@@ -49,9 +49,9 @@ description: "b. 1996, Shanghai China. Lived & Worked in LA, Brooklyn, and Shang
 - [Hexcode](https://grayarea.org/event/av-club-hexcode-halloween-party-october-28-2023/) | Gray Area, San Francisco
 - [Livecode @ Spectra](https://www.eventbrite.com/e/livecode-at-spectra-studio-tickets-676357231687) | Spectra Studio, LA
 - [LivecodeNYC presents Queer Coded](https://livecode.nyc/event/20230617-WondervilleShow.html) | Wonderville, NYC
-- human.machine.interface | Persona Studio, NYC
-- LivecodeNYC presents CRTical Mass | Wonderville, NYC
-- PlayHouse | _iidr Gallery, NYC
+- [human.machine.interface](https://alpha.persona.nyc/purchase/humanmachineinterface-6362d222) | Persona Studio, NYC
+- [LivecodeNYC presents CRTical Mass](https://withfriends.events/event/isommjap/cool/) | Wonderville, NYC
+- [PlayHouse](https://iidrr.com/playhouse) | _iidr Gallery, NYC
 
 - *2020-2022*
 - Moving into Sync | Willie Mae Rock Camp, NYC
@@ -61,14 +61,14 @@ description: "b. 1996, Shanghai China. Lived & Worked in LA, Brooklyn, and Shang
 - Sonar Flare | Hex H0use, NYC
 
 - *2017-2019 (theatre credits)*
-- Producer, Near Dawn | Hollywood Fringe Festival, LA
-- Designer, Mr.Crow | Son of Semele Theater, LA
+- Producer, [Near Dawn](https://www.hollywoodfringe.org/projects/6272) | Hollywood Fringe Festival, LA
+- Immersive Tech Designer, [Mr.Crow](https://noproscenium.com/la-mr-crow-f361329d6abf) | Son of Semele Theater, LA
 - Producer, I(HIM+HER) | Ground Zero, LA
 - Director, Hope it Finds You Well | Cammilleri Hall, LA
 - Producer, White Orchid | Bovard Auditorium, LA
 
 # Media & Features
 
-- Johann Diedrick, Viola He and Roslyn Orlando Moir on computer ears and who wants to be heard, [Shifting the Angles of Shine](https://yaocollaborative.org/shifting-the-angle-of-shine)
+- Computer Ears and Who Wants to be Heard, [Shifting the Angles of Shine](https://yaocollaborative.org/shifting-the-angle-of-shine)
 - [The Power of Small Hidden Networks](https://networkcultures.org/blog/2023/09/04/the-power-of-small-hidden-networks/), Institute of Networked Cultures
 - [Livecoding with Viola He](https://rss.com/podcasts/usurpator/1017051/), USURPATOR Podcast
