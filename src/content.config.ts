@@ -57,4 +57,35 @@ const things = defineCollection({
     }),
 });
 
-export const collections = { blogs, projects, events, things };
+const misc = defineCollection({
+    loader: glob({ pattern: '**/*.md', base: './src/content/misc' }),
+    schema: z.object({
+        title: z.string(),
+        description: z.string().optional(),
+        date: z.date().optional(),
+        link: z.string().optional(),
+    }),
+});
+
+const cv = defineCollection({
+    loader: glob({ pattern: '**/*.md', base: './src/content/cv' }),
+    schema: z.object({
+        title: z.string(),
+        description: z.string().optional(),
+        lastUpdated: z.date().optional(),
+        sections: z.array(z.object({
+            name: z.string(),
+            items: z.array(z.object({
+                title: z.string().optional(),
+                subtitle: z.string().optional(),
+                description: z.string().optional(),
+                date: z.string().optional(),
+                link: z.string().optional(),
+                location: z.string().optional(),
+                tags: z.array(z.string()).default([]),
+            })),
+        })).optional(),
+    }),
+});
+
+export const collections = { blogs, projects, events, things, misc, cv };

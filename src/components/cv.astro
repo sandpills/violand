@@ -1,0 +1,33 @@
+---
+import { getCollection, render } from "astro:content";
+import "../styles/global.css";
+
+// Get the CV content
+const cvEntries = await getCollection("cv");
+const cv = cvEntries[0]; // Get the first (and only) CV entry
+
+if (!cv) {
+    throw new Error("CV not found");
+}
+
+const { Content } = await render(cv);
+---
+
+<section class="cv-container">
+    <header class="text-left mx-3 lg:mx-0">
+        <p class="font-serif italic normal-case hover:not-italic text-sm">
+            {cv.data.title}
+        </p>
+        {
+            cv.data.description && (
+                <p class="text-xs lg:text-sm">{cv.data.description}</p>
+            )
+        }
+    </header>
+
+    <div
+        class="cv-content prose prose-lg dark:prose-invert max-w-none text-xs lg:text-sm"
+    >
+        <Content />
+    </div>
+</section>

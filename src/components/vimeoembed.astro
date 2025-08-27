@@ -1,0 +1,12 @@
+---
+const { id, title = "Vimeo video" } = Astro.props;
+---
+
+<div class="video-wrapper">
+    <iframe
+        src={`https://player.vimeo.com/video/${id}`}
+        title={title}
+        frameborder="0"
+        allowfullscreen
+        loading="lazy"></iframe>
+</div>

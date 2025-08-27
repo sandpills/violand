@@ -20,3 +20,5 @@ Presentation & Talks:
 - [The Future of Memory Festival](https://fomfestival.online/), China Residencies
 - [Towards a Future of Small Network Commons](https://docs.google.com/presentation/d/1sf6OH5XBfECPKjCcPPG50uo6BF8o8pWOCltdEHe-Ni4/), ITP Camp 2023, NYU
 - HASTAC conference 2023, Pratt Institute
+
+<iframe class="vid-embed" src="https://player.vimeo.com/video/716561763" frameborder="0" allowfullscreen></iframe>

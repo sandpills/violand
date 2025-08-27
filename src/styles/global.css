@@ -186,54 +186,6 @@ html.dark #clock-container {
     opacity: 1;
 }
 
-/* @media (max-width: 1024px) {
-    .main-container {
-        width: 100%;
-        height: auto;
-        position: relative;
-        padding: 10px;
-    }
-
-    .left-container {
-        width: 100%;
-        height: auto;
-        position: relative;
-    }
-
-    .main-container {
-        left: auto;
-        top: auto;
-    }
-
-    .main-container-right {
-        right: auto;
-        top: auto;
-        position: relative;
-        width: 100%;
-        margin-top: 10px;
-    }
-
-    #right-outline {
-        height: auto;
-        right: auto;
-        top: auto;
-        padding: 10px;
-    }
-
-    .marqueee {
-        display: none !important;
-    }
-
-    html {
-        cursor: auto !important;
-        overflow-x: hidden;
-    }
-
-    a {
-        cursor: pointer !important;
-    }
-} */
-
 @media (max-width: 768px) {
     .main-container {
         width: 100%;
