@@ -105,18 +105,15 @@ const { Content } = await render(blog);
                 <section
                     class="outline sticky bg-neutral dark:bg-dark bottom-0 flex flex-row justify-between items-center px-4 py-2"
                 >
-                    
                 </section>
             </div>
         </section>
-        <section
-            class="container overflow-y-hidden main-container-right scrollbar-hide"
-        >
+        <section class="container main-container-right scrollbar-hide">
             <div id="right-outline" class="sitemap flex flex-col outline">
                 <ProjectNav />
             </div>
         </section>
-        <div class="pr-4 absolute right-0 bottom-6">
+        <div class="fixed right-0 top-1">
             <DarkModeToggle />
             <DarkModeScript />
         </div>

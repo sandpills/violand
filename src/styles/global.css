@@ -192,16 +192,19 @@ html.dark #clock-container {
         width: 100%;
         height: auto;
         position: relative;
+        padding-top: 0px;
     }
 
     .main-container-right {
         width: 100%;
         height: fit-content;
         position: relative;
+        padding-bottom: 0px;
     }
 
     #right-outline {
         height: fit-content;
+        margin-bottom: 20px;
     }
 
     #left-outline {

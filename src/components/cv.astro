@@ -17,7 +17,7 @@ if (!cv) {
 const { Content } = await render(cv);
 ---
 
-<section>
+<section class="mx-2 lg:mx-0">
     <div class="text-left">
         <p class="font-serif italic normal-case hover:not-italic text-sm">
             {cv.data.title}
@@ -25,16 +25,18 @@ const { Content } = await render(cv);
         <span> ⇣</span>
     </div>
 </section>
-<section class="flex flex-row">
-    <div class="flex flex-col justify-top items-end pr-10 pt-1">
+<section class="flex lg:flex-row flex-col">
+    <div
+        class="flex flex-col justify-top lg:items-end mx-2 mb-2 lg:mx-0 pr-10 py-1"
+    >
         <ProfileImage />
     </div>
     <div class="w-full">
         {
             cv.data.description && (
-                <span class="text-sm font-mono not-italic">
+                <p class="text-sm font-mono not-italic mx-2 lg:mx-0">
                     {cv.data.description}
-                </span>
+                </p>
             )
         }
         <div class="cv-container text-sm">

@@ -1,7 +1,14 @@
 ---
 import Gadgets from "./gadgets.astro";
+import DarkModeToggle from "./darkModeToggle.astro";
+import DarkModeScript from "./darkModeScript.astro";
 ---
 
 <div class="absolute bottom-4 right-4 hidden lg:block">
     <Gadgets />
+</div>
+
+<div class="fixed right-0 top-1">
+    <DarkModeToggle />
+    <DarkModeScript />
 </div>
