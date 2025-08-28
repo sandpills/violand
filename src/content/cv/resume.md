@@ -7,7 +7,7 @@ description: "b. 1996, Shanghai China. Lived & Worked in LA, Brooklyn, and Shang
 # Education
 
 - *2022* MPS Interactive Telecommunications, New York University  
-- *2019* BA Communication, University of Southern California
+- *2018* BA Communication, University of Southern California
 
 # Teaching
 
@@ -22,9 +22,16 @@ description: "b. 1996, Shanghai China. Lived & Worked in LA, Brooklyn, and Shang
 # Residencies & Incubators
 - *2025* [NEW INC Y12, Art & Code](https://www.newmuseum.org/new-inc/members-alumni/?page=1&year=year-twelve) | NEW MUSEUM, NYC
 - *2024* [Onassis ONX Studio Member](https://www.onx.studio/members) | Onassis ONX, NYC
-- *2023* [Wave Farm Radio Artist-in-Residence](https://wavefarm.org/wf/calendar/jnsrtg) | Wave Farm, NY
+- *2023* [Wave Farm Artist-in-Residence](https://wavefarm.org/wf/calendar/jnsrtg) | Wave Farm, NY
 - *2022* [Future of Memory Residency](https://www.chinaresidencies.com/news/346) | China Residencies, Online
 
+# Talks & Presentations
+- *2024* [Live, Laugh, Code at Wordhack](https://withfriends.co/event/19883236/wordhack_feat_todd_anderson_viola_he_and_edit_viau) | Wonderville, NYC
+- *2023* [Livecoding as WorldBuilding](https://www.youtube.com/watch?v=p8j0WvSVhiA) | Hybrid Live Coding Interfaces Conference, Online
+- *2023* [Artist Talk at Yao Collaborative 10 Year Anniversary](https://withfriends.events/event/lsxrgm1i/cool/) | Farm to People, NY
+- *2023* [How About Talking To Neighbors](https://web.archive.org/web/20230604214519/https://hastac2023.sched.com/event/1LeQ8/how-about-talking-to-neighbors) | HASTAC Conference, Pratt Institute, NY
+- *2022* [Future of Memory Residency Presentation](https://withfriends.events/event/agtesbee/cool/#:~:text=Future%20of%20Memory%20Festival%3A,and%20interrogating%20algorithmic%20surveillance%20%26%20control.) | Future of Memory Festival, Online 
+- *2021* [VIOLASTREAM](https://2021.xcoax.org/vhe/) | Conference on Computation, Communication, Aesthetics & X, Online
 # Selected Performances
 *2025*
 - [With All Due Respect](https://www.onx.studio/onx-programming/with-all-due-respect-onassis-onx-summer-exhibition) | Onassis ONX, NYC
@@ -39,7 +46,6 @@ description: "b. 1996, Shanghai China. Lived & Worked in LA, Brooklyn, and Shang
 - [Internet Friends 4ever EP Release*](https://partiful.com/e/VeuTIsTCfr7JsBgBSLG1?) | Chemistry Creative, NYC
 - [Alice the Club: Elsewhere Pride](https://es.ra.co/events/1914053) | Elsewhere, NYC
 - [Onassis ONX Summer Showcase](https://www.onx.studio/onx-programming/onx-summer-showcase) | Onassis ONX, NYC
-- [Wordhack](https://withfriends.co/event/19883236/wordhack_feat_todd_anderson_viola_he_and_edit_viau) | Wonderville, NYC
 - [Friends:Forever](https://schedule.sxsw.com/2024/events/MS60931) | SXSW Music Festival, Austin TX
 - [Wise: Algorave](https://schedule.sxsw.com/2024/events/MS59481) | SXSW Music Festival, Austin TX
 - [Livecode at dadaLab](https://events.humanitix.com/livecode-at-dadalab), dadaLab, Austin TX

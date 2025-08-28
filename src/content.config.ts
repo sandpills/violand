@@ -57,16 +57,6 @@ const things = defineCollection({
     }),
 });
 
-const misc = defineCollection({
-    loader: glob({ pattern: '**/*.md', base: './src/content/misc' }),
-    schema: z.object({
-        title: z.string(),
-        description: z.string().optional(),
-        date: z.date().optional(),
-        link: z.string().optional(),
-    }),
-});
-
 const cv = defineCollection({
     loader: glob({ pattern: '**/*.md', base: './src/content/cv' }),
     schema: z.object({
@@ -88,4 +78,4 @@ const cv = defineCollection({
     }),
 });
 
-export const collections = { blogs, projects, events, things, misc, cv };
+export const collections = { blogs, projects, events, things, cv };
