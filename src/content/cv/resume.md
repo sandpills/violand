@@ -26,7 +26,7 @@ description: "b. 1996, Shanghai China. Lived & Worked in LA, Brooklyn, and Shang
 - *2022* [Future of Memory Residency](https://www.chinaresidencies.com/news/346) | China Residencies, Online
 
 # Talks & Presentations
-- *2024* [Live, Laugh, Code at Wordhack](https://withfriends.co/event/19883236/wordhack_feat_todd_anderson_viola_he_and_edit_viau) | Wonderville, NYC
+- *2024* [Wordhack: Live Laugh Code](https://withfriends.co/event/19883236/wordhack_feat_todd_anderson_viola_he_and_edit_viau) | Wonderville, NYC
 - *2023* [Livecoding as WorldBuilding](https://www.youtube.com/watch?v=p8j0WvSVhiA) | Hybrid Live Coding Interfaces Conference, Online
 - *2023* [Artist Talk at Yao Collaborative 10 Year Anniversary](https://withfriends.events/event/lsxrgm1i/cool/) | Farm to People, NY
 - *2023* [How About Talking To Neighbors](https://web.archive.org/web/20230604214519/https://hastac2023.sched.com/event/1LeQ8/how-about-talking-to-neighbors) | HASTAC Conference, Pratt Institute, NY

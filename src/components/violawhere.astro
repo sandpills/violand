@@ -19,7 +19,7 @@ const dateString = now.toLocaleDateString("en-US", {
 
 <div>
     <span class="location">{metadata.location}</span>
-    <!-- <span class="time-display text-xs">{timeString}</span> -->
+    <!-- <span class="violawhere-time-display text-xs">{timeString}</span> -->
     <div class="status">{metadata.status}</div>
 </div>
 
@@ -35,7 +35,8 @@ const dateString = now.toLocaleDateString("en-US", {
             hour12: true,
         });
 
-        const timeElement = document.querySelector(".time-display");
+        // time display within this component, not any time-display class
+        const timeElement = document.querySelector(".violawhere-time-display");
         if (timeElement) timeElement.textContent = timeString;
     }
 
