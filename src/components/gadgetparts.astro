@@ -3,6 +3,7 @@ import Mouse from "../components/Mouse.svelte";
 import DarkModeScript from "../components/darkModeScript.astro";
 import Clock from "../components/localTime.svelte";
 import MouseFollower from "../components/MouseFollower.svelte";
+import Winamp from "../components/winamp.astro";
 ---
 
 <Mouse client:load />
@@ -15,3 +16,4 @@ import MouseFollower from "../components/MouseFollower.svelte";
 <div id="ok-gadget" class="gadget hidden">
     <MouseFollower client:only enabled={false} />
 </div>
+<Winamp />

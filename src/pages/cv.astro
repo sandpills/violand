@@ -12,6 +12,9 @@ import LowerRight from "../components/lowerright.astro";
 import GadgetParts from "../components/gadgetparts.astro";
 import Metadata from "../components/metadata.astro";
 import Upcoming from "../components/upcoming.astro";
+import Winamp from "../components/winamp.astro";
+
+const profileUrl = getLinkHref("violahead.JPG");
 
 import "../styles/cv.css";
 import "../styles/global.css";
@@ -54,14 +57,12 @@ import "../styles/global.css";
             </section>
 
             <section
-                class="container main-container overflow-y-auto lg:fixed lg:left-0 lg:top-0 w-full mt-0 lg:mt-10"
+                class="container main-container overflow-y-auto lg:fixed lg:left-0 lg:top-0 w-full"
             >
-                <div>
-                    <section class="font-mono mb-10">
-                        <CV />
-                    </section>
-                    <br />
-                </div>
+                <section class="font-mono mb-10 mt-0 lg:mt-10">
+                    <CV />
+                </section>
+                <br />
             </section>
             <GadgetParts />
         </div>

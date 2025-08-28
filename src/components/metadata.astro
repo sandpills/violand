@@ -2,6 +2,8 @@
 import Violawhere from "./violawhere.astro";
 import { metadata, getGitLastCommit } from "../data/metadata.ts";
 
+import RecurseWebring from "./recursewebring.astro";
+
 // Get git last commit time (when you last pushed)
 const gitLastCommit = await getGitLastCommit();
 
@@ -30,7 +32,7 @@ const lastUpdated = formatGitDateTime(gitLastCommit);
     <!-- Current Whereabouts -->
     <div class="metadata-section">
         <h3 class="text-sm">Current Whereabouts</h3>
-        <div class="text-sm font-mono pb-2">
+        <div class="text-sm font-mono">
             <Violawhere />
         </div>
     </div>
@@ -38,34 +40,34 @@ const lastUpdated = formatGitDateTime(gitLastCommit);
     <!-- Things on Mind -->
     <div class="metadata-section">
         <h3 class="text-sm">Things on my Mind</h3>
-        <ul class="text-sm font-mono space-y-1 pb-3 pl-1">
+        <ul class="text-sm font-mono space-y-1">
             {metadata.things.map((thing) => <li>⇢ {thing}</li>)}
         </ul>
     </div>
 
     <!-- Site Last Updated -->
     <div class="metadata-section">
-        <h3 class="text-sm mr-1">
-            Last Updated
-            <span class="time-display font-mono text-xs text-gray-500 ml-1">
-                {lastUpdated}
-            </span>
-            <span class="font-mono ml-1">
-                <a
-                    href="https://github.com/sandpills/violand"
-                    class="hover:blur-xs text-sm">[source]</a
-                >
-            </span>
-        </h3>
-        <!-- <p class="text-xs"></p> -->
+        <h3 class="text-sm mr-2">Last Updated</h3>
+        <span class="time-display font-mono text-sm mr-1">
+            {lastUpdated}
+        </span>
+        <span class="font-mono">
+            <a
+                href="https://github.com/sandpills/violand"
+                class="hover:blur-xs text-sm">[source]</a
+            >
+        </span>
+    </div>
+
+    <div class="metadata-section">
+        <RecurseWebring />
     </div>
 </div>
 
 <style>
     .metadata-section {
-        /* padding: 0.5rem 0.5rem; */
         padding-top: 0.25rem;
-        padding-bottom: 0.25rem;
+        padding-bottom: 0.5rem;
         border-bottom: 2px dotted rgb(118, 118, 118);
     }
 
@@ -74,16 +76,20 @@ const lastUpdated = formatGitDateTime(gitLastCommit);
     }
 
     .metadata-section h3 {
-        margin-bottom: 0.25rem;
+        margin-bottom: 0.5rem;
     }
 
     .metadata-section p,
     .metadata-section ul {
         margin: 0;
-        line-height: 1;
+        line-height: 1.1;
     }
 
-    .time-display {
-        color: rgb(118, 118, 118);
+    .metadata-section li {
+        margin-bottom: 0.25rem;
     }
+
+    /* .time-display {
+        color: rgb(118, 118, 118);
+    } */
 </style>

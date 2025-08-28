@@ -20,7 +20,7 @@ description: "b. 1996, Shanghai China. Lived & Worked in LA, Brooklyn, and Shang
 - [Fundamentals of Physical Computing](https://ixdphysicalcomputing.github.io/syllabus/)
 
 # Residencies & Incubators
-- *2025* [NEW INC Year 12, Art & Code](https://www.newmuseum.org/new-inc/members-alumni/?page=1&year=year-twelve) | NEW MUSEUM, NYC
+- *2025* [NEW INC Y12, Art & Code](https://www.newmuseum.org/new-inc/members-alumni/?page=1&year=year-twelve) | NEW MUSEUM, NYC
 - *2024* [Onassis ONX Studio Member](https://www.onx.studio/members) | Onassis ONX, NYC
 - *2023* [Wave Farm Radio Artist-in-Residence](https://wavefarm.org/wf/calendar/jnsrtg) | Wave Farm, NY
 - *2022* [Future of Memory Residency](https://www.chinaresidencies.com/news/346) | China Residencies, Online
@@ -37,12 +37,13 @@ description: "b. 1996, Shanghai China. Lived & Worked in LA, Brooklyn, and Shang
 - [Odd Species*](https://www.instagram.com/reel/DDRBEfWMy9F/) | SYSTEM, SH
 - Hong Kong International Poetry Festival Shanghai | Theatre YOUNG, SH
 - [Internet Friends 4ever EP Release*](https://partiful.com/e/VeuTIsTCfr7JsBgBSLG1?) | Chemistry Creative, NYC
-- [Wordhack](https://withfriends.co/event/19883236/wordhack_feat_todd_anderson_viola_he_and_edit_viau) | Wonderville, NYC
+- [Alice the Club: Elsewhere Pride](https://es.ra.co/events/1914053) | Elsewhere, NYC
 - [Onassis ONX Summer Showcase](https://www.onx.studio/onx-programming/onx-summer-showcase) | Onassis ONX, NYC
+- [Wordhack](https://withfriends.co/event/19883236/wordhack_feat_todd_anderson_viola_he_and_edit_viau) | Wonderville, NYC
 - [Friends:Forever](https://schedule.sxsw.com/2024/events/MS60931) | SXSW Music Festival, Austin TX
 - [Wise: Algorave](https://schedule.sxsw.com/2024/events/MS59481) | SXSW Music Festival, Austin TX
 - [Livecode at dadaLab](https://events.humanitix.com/livecode-at-dadalab), dadaLab, Austin TX
-- [Artifice Presents: Black Box 001*](https://posh.vip/e/artifice-presents-black-box-2) | Evol, NYC
+- [Artifice Presents: Black Box 001+](https://posh.vip/e/artifice-presents-black-box-2) | Evol, NYC
 
 *2023*
 - [ANTI-PATTERNS*](https://livecode.nyc/event/20231201-anti-patterns.html) | Hex H0use & Festival Tsonami, Chile

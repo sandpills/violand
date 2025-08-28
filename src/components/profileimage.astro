@@ -1,0 +1,44 @@
+---
+import { getLinkHref } from "../utils/paths";
+const profileUrl = getLinkHref("violahead.JPG");
+import SvgFilter from "./svgfilter.astro";
+---
+
+<SvgFilter />
+
+<img
+    src={profileUrl}
+    class="profile-image w-60
+rounded-lg border-2 border-dotted border-gray-300 dark:border-gray-700"
+    alt="profile"
+/>
+
+<style>
+    .profile-image {
+        filter: blur(4px) grayscale(90%) url(#noisy);
+        transition: filter 0.2s ease;
+    }
+
+    .profile-image:hover {
+        border-top-left-radius: 0.75rem;
+        border-top-right-radius: 0.75rem;
+        filter: blur(0px) grayscale(0%) contrast(0.9);
+        transition: filter 0.2s ease;
+        transition: border-top-left-radius 0.2s ease;
+    }
+
+    html.dark .profile-image {
+        filter: blur(4px) grayscale(90%) invert(60%) brightness(0.6)
+            saturate(0.9) url(#dark-noisy);
+        transition: filter 0.2s ease;
+    }
+
+    html.dark .profile-image:hover {
+        border-top-left-radius: 0.75rem;
+        border-top-right-radius: 0.75rem;
+        filter: blur(0px) grayscale(0%) invert(20%) brightness(0.7)
+            saturate(0.9);
+        transition: filter 0.2s ease;
+        transition: border-top-left-radius 0.2s ease;
+    }
+</style>

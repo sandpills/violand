@@ -4,6 +4,7 @@ import { remark } from "remark";
 import remarkGfm from "remark-gfm";
 import html from "remark-html";
 import Box from "./Box.astro";
+import Svgfilter from "../components/svgfilter.astro";
 
 import getStaticPaths from "../pages/projects/[...slug].astro";
 
@@ -40,57 +41,7 @@ async function parseMarkdown(markdown: string): Promise<string> {
 const parsedBody = body ? await parseMarkdown(body) : "";
 ---
 
-<!-- SVG filter -->
-<svg width="0" height="0" style="position: absolute;">
-    <defs>
-        <filter id="noisy" x="0%" y="0%" width="100%" height="100%">
-            <feTurbulence
-                baseFrequency="1.1"
-                numOctaves="0.2"
-                result="rawNoise"
-                type="fractalNoise"></feTurbulence>
-            <feColorMatrix in="rawNoise" type="saturate" values="0"
-            ></feColorMatrix>
-            <!-- <feComponentTransfer in="rawNoise" result="softNoise">
-                <feFuncA type="discrete" tableValues="0.3 0.1 0.4 0.2 0.3 0.1"
-                ></feFuncA>
-            </feComponentTransfer>
-            <feGaussianBlur
-                in="softNoise"
-                stdDeviation="0.4"
-                result="blurredNoise"></feGaussianBlur> -->
-            <feBlend id="blend" in="SourceGraphic" in2="rawNoise" mode="screen"
-            ></feBlend>
-        </filter>
-    </defs>
-</svg>
-
-<svg width="0" height="0" style="position: absolute;">
-    <defs>
-        <filter id="dark-noisy" x="0%" y="0%" width="100%" height="100%">
-            <feTurbulence
-                baseFrequency="1.1"
-                numOctaves="0.2"
-                result="rawNoise"
-                type="fractalNoise"></feTurbulence>
-            <feColorMatrix in="rawNoise" type="saturate" values="0"
-            ></feColorMatrix>
-            <!-- <feComponentTransfer in="rawNoise" result="softNoise">
-                <feFuncA type="discrete" tableValues="0.3 0.1 0.4 0.2 0.3 0.1"
-                ></feFuncA>
-            </feComponentTransfer>
-            <feGaussianBlur
-                in="softNoise"
-                stdDeviation="0.4"
-                result="blurredNoise"></feGaussianBlur> -->
-            <feBlend
-                id="blend"
-                in="SourceGraphic"
-                in2="rawNoise"
-                mode="multiply"></feBlend>
-        </filter>
-    </defs>
-</svg>
+<Svgfilter />
 
 <div
     class="card relative h-100 z-0 shadow-md hover:rounded-xl hover:shadow-[0_0_25px_rgba(200,200,255,0.9)] hover:inset-shadow-[0_0_20px_20px_rgba(100,100,200,0.1)] dark:hover:shadow-[0_0_25px_rgba(100,120,100,0.9)] dark:hover:inset-shadow-[0_0_20px_20px_rgba(100,120,200,0.1)] hover:bg-bright dark:hover:bg-dark-bright overflow-hidden"
