@@ -1,11 +1,11 @@
 export const metadata = {
-    location: "Shanghai, China",
-    timezone: "Asia/Shanghai",
-    status: "✍️ i'm trying my best ok?",
+    location: "Brooklyn, NY",
+    timezone: "America/New_York",
+    status: "touching brains to touch hands",
     things: [
-        "computation as earnest as stone",
-        "oddly shaped browser windows",
-        "buffy the vampire slayer"
+        "computer as earnest as stone",
+        "teaching interface",
+        "playing outside"
     ]
 };
 

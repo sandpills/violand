@@ -21,4 +21,4 @@ Presentation & Talks:
 - [Towards a Future of Small Network Commons](https://docs.google.com/presentation/d/1sf6OH5XBfECPKjCcPPG50uo6BF8o8pWOCltdEHe-Ni4/), ITP Camp 2023, NYU
 - HASTAC conference 2023, Pratt Institute
 
-<iframe class="vid-embed" src="https://player.vimeo.com/video/716561763" frameborder="0" allowfullscreen></iframe>
+<iframe class="vid-embed" src="https://player.vimeo.com/video/1153696700?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allowfullscreen></iframe>

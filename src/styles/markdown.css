@@ -11,6 +11,16 @@
     pointer-events: auto;
 }
 
+.vid-embed-vertical {
+    /* height: 80vh; */
+    height: 60vw;
+    /* height: 600px;  */
+    aspect-ratio: 9/16;
+    margin-top: 2rem;
+    padding-bottom: 1rem;
+    pointer-events: auto;
+}
+
 .markdown-content {
     line-height: 1;
     font-size: 1.1rem;

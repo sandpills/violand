@@ -19,3 +19,5 @@ This piece, in turn, becomes a battle for narrative and creative control. It wea
 Performed at:
 - [Under the Radar Festival 2025](https://utrfest.org/program/a-room-of-ones-own/)
 - Onassis ONX Summer Showcase 2024
+
+<iframe class="vid-embed-vertical" src="https://player.vimeo.com/video/1153696700" frameborder="0" allowfullscreen></iframe>

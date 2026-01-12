@@ -2,8 +2,8 @@
 import About from "../components/about.astro";
 import Projects from "../components/projects.astro";
 import Nav from "../components/nav.astro";
-import Upcoming from "../components/upcoming.astro";
-import Mouse from "../components/Mouse.svelte";
+// import Upcoming from "../components/upcoming.astro";
+// import Mouse from "../components/Mouse.svelte";
 import AboutRC from "../components/aboutrc.astro";
 import LittleThings from "../components/littlethings.astro";
 import { getAssetPath } from "../utils/paths.ts";
@@ -13,6 +13,9 @@ import Metadata from "../components/metadata.astro";
 import Box from "../layouts/Box.astro";
 import LowerRight from "../components/lowerright.astro";
 import GadgetParts from "../components/gadgetparts.astro";
+
+import GuestBook from "../components/guestbook.svelte";
+import GuestBookDisplay from "../components/guestbookDisplay.svelte";
 
 import "../styles/global.css";
 ---
@@ -46,6 +49,8 @@ import "../styles/global.css";
 						<!-- <Upcoming /> -->
 					</div>
 					<LowerRight />
+					<!-- <GuestBook client:load />
+					<GuestBookDisplay client:load /> -->
 				</div>
 			</section>
 			<section
