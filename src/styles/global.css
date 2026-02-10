@@ -72,19 +72,20 @@ html.dark .edge-dot-glow {
     height: 100vh;
     position: fixed;
     overflow-x: hidden;
+    overflow-y: auto;
     left: 0;
     top: 0;
     padding: 10px;
     scrollbar-width: none;
     z-index: 0;
     transform: translateZ(0);
-    /* background-image: linear-gradient(180deg, #c7c7c7 0%, rgb(219, 229, 232) 20%, rgb(170, 178, 182) 50%, #c7c7c7 100%); */
 }
 
 .main-container-right {
     width: 30vw;
     height: 100vh;
     position: fixed;
+    overflow: hidden;
     right: 0;
     top: 0;
     padding: 10px;
@@ -199,7 +200,9 @@ html.dark #clock-container {
         width: 100%;
         height: fit-content;
         position: relative;
+        overflow: visible;
         padding-bottom: 0px;
+        margin-top: 1rem;
     }
 
     #right-outline {
@@ -235,7 +238,15 @@ html.dark #clock-container {
 
 
 
+.inside-pill {
+    display: flex;
+    column-gap: 0.25rem;
+    font-size: 0.75rem;
+}
+
 .pill {
+    font-family: var(--font-mono);
+    font-style: italic;
     padding-left: 0.25rem;
     padding-right: 0.25rem;
     border-width: 1px;
@@ -248,15 +259,87 @@ html.dark #clock-container {
     background-color: var(--color-bright);
     border-radius: 0.125rem;
     box-shadow:
-        inset 0 0 5px 5px rgba(0,0,255,0.1),
-        0 0 30px rgba(200,200,255,0.5);
+        inset 0 0 5px 5px rgba(0, 0, 255, 0.1),
+        0 0 30px rgba(200, 200, 255, 0.5);
 }
 
 html.dark .pill:hover {
     background-color: var(--color-dark-bright);
     box-shadow:
-        inset 0 0 5px 5px rgba(0,0,255,0.1),
-        0 0 6px rgba(200,200,255,0.5);
+        inset 0 0 5px 5px rgba(0, 0, 255, 0.1),
+        0 0 6px rgba(200, 200, 255, 0.5);
+}
+
+.card {
+    position: relative;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.card:hover {
+    border-radius: 0.75rem;
+    background-color: var(--color-bright);
+    box-shadow:
+        inset 0 0 20px 20px rgba(100, 100, 200, 0.1),
+        0 0 25px rgba(200, 200, 255, 0.9);
+}
+
+html.dark .card:hover {
+    background-color: var(--color-dark-bright);
+    box-shadow:
+        inset 0 0 20px 20px rgba(100, 120, 200, 0.1),
+        0 0 25px rgba(100, 120, 100, 0.9);
+}
+
+.title {
+    font-family: var(--font-serif);
+    font-size: 1.125rem;
+}
+
+.title:hover {
+    filter: blur(2px);
+}
+
+.card-body-link {
+    color: #3b82f6;
+    font-style: italic;
+    transition: color 0.2s;
+}
+
+.card-body-link:hover {
+    color: #1d4ed8;
+    font-style: normal;
+}
+
+.noisy-image {
+    filter: blur(4px) grayscale(90%) url(#noisy);
+    transition: filter 0.2s ease, border-radius 0.2s ease;
+}
+
+.noisy-image:hover,
+.card:hover .noisy-image {
+    border-top-left-radius: 0.75rem;
+    border-top-right-radius: 0.75rem;
+    filter: blur(0px) grayscale(0%);
+}
+
+html.dark .noisy-image {
+    filter: blur(4px) grayscale(90%) invert(60%) brightness(0.6) saturate(0.9) url(#dark-noisy);
+}
+
+
+.nav-link {
+    padding: 0 0.25rem;
+    display: inline-flex;
+    background-color: var(--color-neutral);
+}
+
+.nav-link:hover {
+    filter: blur(2px);
+}
+
+html.dark .nav-link {
+    background-color: var(--color-dark);
 }
 
 html.dark .glow {

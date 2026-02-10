@@ -3,6 +3,7 @@ import Violawhere from "./violawhere.astro";
 import { metadata, getGitLastCommit } from "../data/metadata.ts";
 
 import RecurseWebring from "./recursewebring.astro";
+import Aboutrc from "./aboutrc.astro";
 
 // Get git last commit time (when you last pushed)
 const gitLastCommit = await getGitLastCommit();
@@ -52,14 +53,14 @@ const lastUpdated = formatGitDateTime(gitLastCommit);
             {lastUpdated}
         </span>
         <span>
-            <a
-                href="https://github.com/sandpills/violand"
-                class="hover:blur-xs">[source]</a
+            <a href="https://github.com/sandpills/violand" class="hover:blur-xs"
+                >[source]</a
             >
         </span>
     </div>
 
     <div class="metadata-section">
+        <Aboutrc />
         <RecurseWebring />
     </div>
 </div>

@@ -1,9 +1,4 @@
-<button
-    id="darkModeToggle"
-    class="my-3 mx-4 w-12 h-12 bg-bright dark:bg-dark-bright shadow-lg hover:shadow-xl transition-all duration-300 dark:border-red-700 cursor-pointer flex items-center justify-center hover:scale-108"
-    style="cursor:none !important; pointer-events: auto !important;"
-    aria-label="Toggle dark mode"
->
+<button id="tog" class="daynight-toggle" aria-label="Toggle dark mode">
     <!-- Sun icon for light mode -->
     <svg
         id="sunIcon"
@@ -35,7 +30,7 @@
     function updateToggleState() {
         const sunIcon = document.getElementById("sunIcon");
         const moonIcon = document.getElementById("moonIcon");
-        const darkModeToggle = document.getElementById("darkModeToggle");
+        const darkModeToggle = document.getElementById("tog");
         const html = document.documentElement;
 
         if (html.classList.contains("dark")) {
@@ -53,7 +48,7 @@
 
     // Wait for DOM to be fully loaded and dark mode functions to be available
     document.addEventListener("DOMContentLoaded", () => {
-        const darkModeToggle = document.getElementById("darkModeToggle");
+        const darkModeToggle = document.getElementById("tog");
 
         // Set initial state
         updateToggleState();
@@ -86,3 +81,27 @@
         });
     });
 </script>
+
+<style>
+    .daynight-toggle {
+        margin: 0.75rem 1rem;
+        width: 3rem;
+        height: 3rem;
+        background-color: var(--color-bright);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s;
+        pointer-events: auto;
+    }
+
+    .daynight-toggle:hover {
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        transform: scale(1.08);
+    }
+
+    html.dark .daynight-toggle {
+        background-color: var(--color-dark-bright);
+    }
+</style>
