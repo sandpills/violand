@@ -35,6 +35,7 @@ const { Content } = await render(blog);
         <meta name="viewport" content="width=device-width" />
         <meta name="generator" content={Astro.generator} />
         <title>{blog.data.title}</title>
+        <meta name="author" content="viola he" />
     </head>
     <body>
         <!-- <Nav /> -->
@@ -45,7 +46,7 @@ const { Content } = await render(blog);
             <div class="outline sticky bg-neutral dark:bg-dark top-0">
                 <!-- Project Info -->
                 <section
-                    class="outline flex flex-row items-center justify-between"
+                    class="outline flex items-center justify-between"
                 >
                     <div class="flex items-center">
                         <span class="font-serif text-2xl pr-4">
@@ -96,19 +97,19 @@ const { Content } = await render(blog);
                     </div>
                 </section>
                 <!-- Main Content -->
-                <section class="pt-8 py-5 px-5 lg:px-12 font-serif text-md">
+                <section class="pt-8 pb-5 px-5 lg:px-12 font-serif text-md">
                     <div class="markdown-content">
                         <Content />
                     </div>
                 </section>
                 <!-- Footer Nav -->
                 <section
-                    class="outline sticky bg-neutral dark:bg-dark bottom-0 flex flex-row justify-between items-center px-4 py-2"
+                    class="outline sticky bg-neutral dark:bg-dark bottom-0 flex justify-between items-center px-4 py-2"
                 >
                 </section>
             </div>
         </section>
-        <section class="container main-container-right scrollbar-hide">
+        <section class="container main-container-right ">
             <div id="right-outline" class="sitemap flex flex-col outline">
                 <ProjectNav />
             </div>

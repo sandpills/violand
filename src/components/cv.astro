@@ -18,8 +18,8 @@ const { Content } = await render(cv);
 ---
 
 <section class="mx-2 lg:mx-0">
-    <div class="text-left">
-        <p class="font-serif italic normal-case hover:not-italic text-sm">
+    <div>
+        <p class="font-serif italic hover:not-italic text-sm">
             {cv.data.title}
         </p>
         <span> ⇣</span>
@@ -27,7 +27,7 @@ const { Content } = await render(cv);
 </section>
 <section class="flex lg:flex-row flex-col">
     <div
-        class="flex flex-col justify-top lg:items-end mx-2 mb-2 lg:mx-0 pr-7 py-1"
+        class="flex flex-col items-start lg:items-end mx-2 mb-2 lg:mx-0 pr-7 py-1"
     >
         <ProfileImage />
     </div>

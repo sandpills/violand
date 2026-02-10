@@ -1,6 +1,6 @@
 export const metadata = {
-    location: "Brooklyn, NY",
-    timezone: "America/New_York",
+    location: "Shanghai, China",
+    timezone: "Asia/Shanghai",
     status: "touching brains to touch hands",
     things: [
         "computer as earnest as stone",

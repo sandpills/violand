@@ -73,6 +73,7 @@ const getProjectSlug = (project: any) => {
         <meta name="viewport" content="width=device-width" />
         <meta name="generator" content={Astro.generator} />
         <title>{project.data.title}</title>
+        <meta name="author" content="viola he" />
     </head>
     <body>
         <!-- <Nav /> -->
@@ -83,7 +84,7 @@ const getProjectSlug = (project: any) => {
             >
                 <div class="outline sticky bg-neutral dark:bg-dark top-0">
                     <!-- Project Info -->
-                    <section class="outline flex flex-row">
+                    <section class="outline flex">
                         <span class="font-serif text-2xl pr-4">
                             <a class="hover:blur-xs" href={getLinkHref("/")}
                                 >↖︎</a
@@ -138,7 +139,7 @@ const getProjectSlug = (project: any) => {
                     </section>
                     <!-- Footer Nav -->
                     <section
-                        class="outline sticky bg-neutral dark:bg-dark bottom-0 flex flex-row justify-between items-center px-4 py-2"
+                        class="outline sticky bg-neutral dark:bg-dark bottom-0 flex justify-between items-center px-4 py-2"
                     >
                         <div class="flex items-center">
                             {
@@ -186,7 +187,7 @@ const getProjectSlug = (project: any) => {
                 </div>
             </section>
             <section
-                class="container overflow-y-hidden main-container-right scrollbar-hide"
+                class="container overflow-y-hidden main-container-right "
             >
                 <div id="right-outline" class="sitemap flex flex-col outline">
                     <ProjectNav />

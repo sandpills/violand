@@ -31,30 +31,30 @@ const lastUpdated = formatGitDateTime(gitLastCommit);
 <div class="metadata-container font-mono text-sm space-y-1">
     <!-- Current Whereabouts -->
     <div class="metadata-section">
-        <h3 class="text-sm">Current Whereabouts</h3>
-        <div class="text-sm font-mono">
+        <h3>Current Whereabouts</h3>
+        <div>
             <Violawhere />
         </div>
     </div>
 
     <!-- Things on Mind -->
     <div class="metadata-section">
-        <h3 class="text-sm">Things on my Mind</h3>
-        <ul class="text-sm font-mono space-y-1">
+        <h3>Things on my Mind</h3>
+        <ul class="space-y-1">
             {metadata.things.map((thing) => <li>⇢ {thing}</li>)}
         </ul>
     </div>
 
     <!-- Site Last Updated -->
     <div class="metadata-section">
-        <h3 class="text-sm mr-2">Last Updated</h3>
-        <span class="metadata-time-display font-mono text-sm mr-1">
+        <h3 class="mr-2">Last Updated</h3>
+        <span class="metadata-time-display mr-1">
             {lastUpdated}
         </span>
-        <span class="font-mono">
+        <span>
             <a
                 href="https://github.com/sandpills/violand"
-                class="hover:blur-xs text-sm">[source]</a
+                class="hover:blur-xs">[source]</a
             >
         </span>
     </div>
