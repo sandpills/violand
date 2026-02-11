@@ -1,3 +1,7 @@
-<li class="basis-100% lg:basis-80">
+---
+const { ...attrs } = Astro.props;
+---
+
+<li class="basis-100% lg:basis-75" {...attrs}>
     <slot />
 </li>

@@ -7,22 +7,66 @@ import RCCard from "../layouts/RCCard.astro";
 import "../styles/global.css";
 
 const things = await getCollection("things");
-console.log("Things loaded:", things.length);
+
+// Get a sortable timestamp: use date if available, otherwise Jan 1 of year
+function getSortTime(post: any): number | null {
+    if (post.data.date) return new Date(post.data.date).getTime();
+    if (post.data.year) return new Date(post.data.year, 0, 1).getTime();
+    return null;
+}
+
+// Get display year from date or year field
+function getYear(post: any): number | null {
+    if (post.data.date) return new Date(post.data.date).getFullYear();
+    if (post.data.year) return post.data.year;
+    return null;
+}
+
+// Sort by date descending, items without dates go last
+const sorted = [...things].sort((a, b) => {
+    const ta = getSortTime(a);
+    const tb = getSortTime(b);
+    if (ta === null && tb === null) return 0;
+    if (ta === null) return 1;
+    if (tb === null) return -1;
+    return tb - ta;
+});
+
+// Collect unique tags
+const allTags = [...new Set(sorted.flatMap((t) => t.data.tags ?? []))];
 ---
 
 <section>
     <p class="font-mono italic text-sm pb-2">found {things.length} things.</p>
 </section>
-<section>
+
+{
+    allTags.length > 0 && (
+        <section class="pb-3">
+            <div class="inside-pill">
+                <button class="pill thing-filter active" data-tag="all">
+                    all
+                </button>
+                {allTags.map((tag) => (
+                    <button class="pill thing-filter" data-tag={tag}>
+                        {tag}
+                    </button>
+                ))}
+            </div>
+        </section>
+    )
+}
+
+<section id="things-list">
     <CardListWrapper>
         {
-            things.map((post: any) => (
-                <CardListItem>
+            sorted.map((post: any) => (
+                <CardListItem data-tags={(post.data.tags ?? []).join(",")}>
                     <RCCard
                         href={post.data.link ?? `/things/${post.id}/`}
                         title={post.data.title}
                         body={post.data.description ?? ""}
-                        tags={post.data.tags}
+                        year={getYear(post)}
                         date={
                             post.data.date
                                 ? new Date(post.data.date)
@@ -35,3 +79,53 @@ console.log("Things loaded:", things.length);
         }
     </CardListWrapper>
 </section>
+
+<script>
+    function initThingFilters() {
+        const filters =
+            document.querySelectorAll<HTMLButtonElement>(".thing-filter");
+        const container = document.getElementById("things-list");
+        if (!container || filters.length === 0) return;
+        const items = container.querySelectorAll<HTMLLIElement>("[data-tags]");
+
+        filters.forEach((btn) => {
+            btn.addEventListener("click", () => {
+                const tag = btn.dataset.tag;
+
+                const wasActive = btn.classList.contains("active");
+                filters.forEach((b) => b.classList.remove("active"));
+
+                if (wasActive && tag !== "all") {
+                    document
+                        .querySelector<HTMLButtonElement>(
+                            '.thing-filter[data-tag="all"]',
+                        )
+                        ?.classList.add("active");
+                    items.forEach((item) => (item.style.display = ""));
+                } else {
+                    btn.classList.add("active");
+                    if (tag === "all") {
+                        items.forEach((item) => (item.style.display = ""));
+                    } else {
+                        items.forEach((item) => {
+                            const itemTags = (item.dataset.tags ?? "").split(
+                                ",",
+                            );
+                            item.style.display = itemTags.includes(tag!)
+                                ? ""
+                                : "none";
+                        });
+                    }
+                }
+            });
+        });
+    }
+
+    // Try both events to cover all Astro setups
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initThingFilters);
+    } else {
+        initThingFilters();
+    }
+    document.addEventListener("astro:after-swap", initThingFilters);
+</script>

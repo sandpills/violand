@@ -51,6 +51,7 @@ const things = defineCollection({
         title: z.string(),
         description: z.string().optional(),
         date: z.date().optional(),
+        year: z.number().optional(),
         link: z.string().optional(),
         tags: z.array(z.string()).default([]).optional(),
         heroImage: z.string().optional()

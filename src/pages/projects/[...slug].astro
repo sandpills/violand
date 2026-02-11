@@ -65,18 +65,14 @@ const getProjectSlug = (project: any) => {
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <link
-            rel="icon"
-            type="image/svg+xml"
-            href={getAssetPath("favicon.svg")}
-        />
+        <link rel="icon" type="image/svg+xml" href={getAssetPath("guy.png")} />
         <meta name="viewport" content="width=device-width" />
         <meta name="generator" content={Astro.generator} />
         <title>{project.data.title}</title>
         <meta name="author" content="viola he" />
     </head>
     <body>
-        <!-- <Nav /> -->
+        <Nav />
         <div class="flex flex-col lg:flex-row">
             <section
                 class="container left-container outline overflow-y-auto"
@@ -110,7 +106,7 @@ const getProjectSlug = (project: any) => {
                             >
                         </div>
                     </section>
-                    <section class="px-5 lg:px-12 pt-6 pb-3">
+                    <section class="px-5 lg:px-18 pt-6 pb-3">
                         <!-- Hero Image -->
                         {
                             project.data.heroImage && (
@@ -131,7 +127,7 @@ const getProjectSlug = (project: any) => {
                     </section>
                     <!-- Main Content -->
                     <section
-                        class="outline py-5 px-5 lg:px-12 font-serif text-md"
+                        class="content-box outline py-5 px-5 lg:px-18 font-serif text-md"
                     >
                         <div class="markdown-content">
                             <Content />
@@ -186,10 +182,8 @@ const getProjectSlug = (project: any) => {
                     </section>
                 </div>
             </section>
-            <section
-                class="main-container-right"
-            >
-                <div id="right-outline" class="sitemap flex flex-col outline">
+            <section class="main-container-right">
+                <div id="right-outline" class="sitemap flex flex-col">
                     <ProjectNav />
                 </div>
             </section>

@@ -68,7 +68,7 @@ html.dark .edge-dot-glow {
 }
 
 .main-container {
-    width: 70vw;
+    width: 74vw;
     height: 100vh;
     position: fixed;
     overflow-x: hidden;
@@ -82,22 +82,32 @@ html.dark .edge-dot-glow {
 }
 
 .main-container-right {
-    width: 30vw;
+    width: 26vw;
     height: 100vh;
     position: fixed;
-    overflow: hidden;
-    right: 0;
+    right: 0vw;
     top: 0;
+    overflow: hidden;
     padding: 10px;
     z-index: 0;
     transform: translateZ(0);
 }
 
+#right-outline {
+    /* background-color: blue; */
+    height: 97vh;
+    right: 10px;
+    top: 11px;
+    padding: 10px;
+    /* background-image: linear-gradient(180deg, #c7c7c7 0%, rgb(219, 229, 232) 20%, rgb(170, 178, 182) 50%, #c7c7c7 100%); */
+}
+
+
 .left-container {
-    width: 69vw;
+    width: 56vw;
     height: 97vh;
     position: fixed;
-    left: 10px;
+    left: 16vw;
     top: 10px;
     overflow-y: auto;
 }
@@ -114,6 +124,10 @@ html.dark .edge-dot-glow {
     pointer-events: none;
 }
 
+.content-box {
+    min-height: 37vh;
+}
+
 #ok-gadget {
     z-index: 10;
     position: fixed;
@@ -128,15 +142,6 @@ html.dark .edge-dot-glow {
     width: 70vw;
     height: 100vh;
     pointer-events: none;
-}
-
-#right-outline {
-    /* background-color: blue; */
-    height: 97vh;
-    right: 10px;
-    top: 11px;
-    padding: 10px;
-    /* background-image: linear-gradient(180deg, #c7c7c7 0%, rgb(219, 229, 232) 20%, rgb(170, 178, 182) 50%, #c7c7c7 100%); */
 }
 
 /* 
@@ -255,7 +260,8 @@ html.dark #clock-container {
     display: inline-flex;
 }
 
-.pill:hover {
+.pill:hover,
+.pill.active {
     background-color: var(--color-bright);
     border-radius: 0.125rem;
     box-shadow:
@@ -263,11 +269,16 @@ html.dark #clock-container {
         0 0 30px rgba(200, 200, 255, 0.5);
 }
 
-html.dark .pill:hover {
+html.dark .pill:hover,
+html.dark .pill.active {
     background-color: var(--color-dark-bright);
     box-shadow:
         inset 0 0 5px 5px rgba(0, 0, 255, 0.1),
         0 0 6px rgba(200, 200, 255, 0.5);
+}
+
+button.pill {
+    cursor: none !important;
 }
 
 .card {
@@ -301,13 +312,13 @@ html.dark .card:hover {
 }
 
 .card-body-link {
-    color: #3b82f6;
+    color: #0400ff;
     font-style: italic;
     transition: color 0.2s;
 }
 
 .card-body-link:hover {
-    color: #1d4ed8;
+    /* color: #0400ff; */
     font-style: normal;
 }
 

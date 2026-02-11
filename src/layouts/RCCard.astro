@@ -14,10 +14,11 @@ interface Props {
     body?: string;
     tags?: string[];
     date?: Date;
+    year?: number | null;
     image?: string;
 }
 
-const { href, title, body, tags, date, image } = Astro.props;
+const { href, title, body, tags, date, year, image } = Astro.props;
 
 async function parseMarkdown(markdown: string): Promise<string> {
     if (!markdown) return "";
@@ -58,6 +59,11 @@ const parsedBody = body ? await parseMarkdown(body) : "";
             >
                 {title}
             </a>
+            {year && (
+                <span class="font-mono text-xs italic ml-2 opacity-60">
+                    {year}
+                </span>
+            )}
         </h3>
         <div class="pb-2 pt-1 font-mono text-sm" set:html={parsedBody} />
         {

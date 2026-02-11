@@ -34,7 +34,7 @@ import "../styles/global.css";
 	<body>
 		<Nav />
 		<div class="flex flex-col lg:flex-row">
-			<section class="main-container-right lg:w-5/12">
+			<section class="main-container-right">
 				<div id="right-outline" class="flex flex-col">
 					<div class="mt-4 lg:mt-0">
 						<Metadata />
@@ -47,15 +47,17 @@ import "../styles/global.css";
 			<section class="main-container">
 				<div id="left-outline">
 					<About />
-					<Projects />
-					<section id="more" class="font-mono text-sm py-4">
-						<Box> ⇣ more </Box>
-					</section>
-					<section class="hide mb-10" id="rc-section">
-						<section>
-							<LittleThings />
+					<div class="projects">
+						<Projects />
+						<section id="more" class="py-4">
+							<Box> ⇣ more </Box>
 						</section>
-					</section>
+						<section class="hide mb-10" id="rc-section">
+							<section>
+								<LittleThings />
+							</section>
+						</section>
+					</div>
 					<marquee
 						behavior="scroll"
 						scrollamount="5"

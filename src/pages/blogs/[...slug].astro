@@ -27,11 +27,7 @@ const { Content } = await render(blog);
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <link
-            rel="icon"
-            type="image/svg+xml"
-            href={getAssetPath("favicon.svg")}
-        />
+        <link rel="icon" type="image/svg+xml" href={getAssetPath("guy.png")} />
         <meta name="viewport" content="width=device-width" />
         <meta name="generator" content={Astro.generator} />
         <title>{blog.data.title}</title>
@@ -45,9 +41,7 @@ const { Content } = await render(blog);
         >
             <div class="outline sticky bg-neutral dark:bg-dark top-0">
                 <!-- Project Info -->
-                <section
-                    class="outline flex items-center justify-between"
-                >
+                <section class="outline flex items-center justify-between">
                     <div class="flex items-center">
                         <span class="font-serif text-2xl pr-4">
                             <a class="hover:blur-xs" href={getLinkHref("/")}
@@ -110,7 +104,7 @@ const { Content } = await render(blog);
             </div>
         </section>
         <section class="main-container-right">
-            <div id="right-outline" class="sitemap flex flex-col outline">
+            <div id="right-outline" class="sitemap flex flex-col">
                 <ProjectNav />
             </div>
         </section>
