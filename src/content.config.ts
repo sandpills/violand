@@ -2,7 +2,7 @@ import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
 const blogs = defineCollection({
-    loader: glob({ pattern: '**/*.md', base: './src/content/blogs' }),
+    loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/blogs' }),
     schema: z.object({
         title: z.string(),
         description: z.string().optional(),
@@ -18,7 +18,7 @@ const blogs = defineCollection({
 });
 
 const projects = defineCollection({
-    loader: glob({ pattern: '**/*.md', base: './src/content/projects' }),
+    loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/projects' }),
     schema: z.object({
         title: z.string(),
         year: z.number(),
@@ -30,7 +30,7 @@ const projects = defineCollection({
 });
 
 const events = defineCollection({
-    loader: glob({ pattern: '**/*.md', base: './src/content/events' }),
+    loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/events' }),
     schema: z.object({
         title: z.string(),
         date: z.date(),
@@ -46,7 +46,7 @@ const events = defineCollection({
 });
 
 const things = defineCollection({
-    loader: glob({ pattern: '**/*.md', base: './src/content/things' }),
+    loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/things' }),
     schema: z.object({
         title: z.string(),
         description: z.string().optional(),
@@ -59,7 +59,7 @@ const things = defineCollection({
 });
 
 const cv = defineCollection({
-    loader: glob({ pattern: '**/*.md', base: './src/content/cv' }),
+    loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/cv' }),
     schema: z.object({
         title: z.string(),
         description: z.string().optional(),

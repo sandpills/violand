@@ -1,9 +1,9 @@
 ---
 import { getCollection } from "astro:content";
 import { getLinkHref } from "../utils/paths.ts";
-import CardListWrapper from "../layouts/CardListWrapper.astro";
-import CardListItem from "../layouts/CardListItem.astro";
-import RCCard from "../layouts/RCCard.astro";
+import CardListWrapper from "./CardListWrapper.astro";
+import CardListItem from "./CardListItem.astro";
+import RCCard from "./RCCard.astro";
 import "../styles/global.css";
 
 const things = await getCollection("things");

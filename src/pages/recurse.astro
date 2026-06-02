@@ -1,16 +1,16 @@
 ---
 import Nav from "../components/nav.astro";
-import Mouse from "../components/Mouse.svelte";
-import LocalTime from "../components/localTime.svelte";
+import Mouse from "../scripts/Mouse.svelte";
+import LocalTime from "../scripts/localTime.svelte";
 import DarkModeToggle from "../components/darkModeToggle.astro";
 import DarkModeScript from "../components/darkModeScript.astro";
 import { getAssetPath } from "../utils/paths.ts";
 import Winamp from "../components/winamp.astro";
-import Gadgets from "../components/gadgets.astro";
-import MouseFollower from "../components/MouseFollower.svelte";
+import Gadgets from "../layouts/gadgets.astro";
+import MouseFollower from "../scripts/MouseFollower.svelte";
 import { getLinkHref } from "../utils/paths.ts";
-import LittleThings from "../components/littlethings.astro";
-import SiteMap from "../components/sitemap.astro";
+import LittleThings from "../layouts/littlethings.astro";
+import SiteMap from "../layouts/sitemap.astro";
 
 import "../styles/global.css";
 import "../styles/cursor.css";

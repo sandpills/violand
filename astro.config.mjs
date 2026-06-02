@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 import svelte from '@astrojs/svelte';
+import mdx from '@astrojs/mdx';
 
 
 export default defineConfig({
@@ -9,7 +10,7 @@ export default defineConfig({
         plugins: [tailwindcss()],
     },
 
-    integrations: [svelte()],
+    integrations: [svelte(), mdx()],
     site: 'https://viola.city',
     base: undefined,
 });

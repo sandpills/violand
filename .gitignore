@@ -27,6 +27,7 @@ pnpm-debug.log*
 
 # misc folder
 notes/
+worker/
 
 # obsidian workflow
 .obsidian/

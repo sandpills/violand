@@ -1,0 +1,68 @@
+---
+import Nav from "../components/nav.astro";
+import Mouse from "../scripts/Mouse.svelte";
+import DarkModeToggle from "../components/darkModeToggle.astro";
+import DarkModeScript from "../components/darkModeScript.astro";
+import { getAssetPath } from "../utils/paths.ts";
+import Now from "../components/now.svelte";
+
+import "../styles/global.css";
+import "../styles/cursor.css";
+---
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <link
+            rel="icon"
+            type="image/svg+xml"
+            href={getAssetPath("blueguy.png")}
+        />
+        <title>now</title>
+        <meta name="author" content="viola he" />
+        <style>
+            html,
+            body,
+            * {
+                cursor: none !important;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="container">
+            <Nav />
+            <div class="absolute top-4 right-4 z-10">
+                <DarkModeToggle />
+            </div>
+
+            <main class="now-page">
+                <h1>now</h1>
+                <p class="intro">what i'm currently working on & up to.</p>
+                <Now client:load />
+            </main>
+        </div>
+        <DarkModeScript />
+        <Mouse client:load />
+    </body>
+</html>
+
+<style>
+    .now-page {
+        max-width: 42rem;
+        margin: 6rem auto 4rem;
+        padding: 0 1.5rem;
+        font-family: var(--font-mono, monospace);
+    }
+
+    .now-page h1 {
+        font-style: italic;
+        margin-bottom: 0.25rem;
+    }
+
+    .intro {
+        opacity: 0.6;
+        font-style: italic;
+        margin-bottom: 2rem;
+    }
+</style>

@@ -1,0 +1,31 @@
+---
+interface Props {
+    text: string;
+}
+
+const { text } = Astro.props;
+---
+
+<figure class="mdx-caption">
+    <slot />
+    <figcaption>{text}</figcaption>
+</figure>
+
+<style>
+    .mdx-caption {
+        margin: 1rem 0;
+    }
+
+    .mdx-caption figcaption {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        font-style: italic;
+        color: #666;
+        margin-top: 0.5rem;
+        text-align: center;
+    }
+
+    :global(html.dark) .mdx-caption figcaption {
+        color: #999;
+    }
+</style>

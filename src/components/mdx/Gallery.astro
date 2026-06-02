@@ -1,0 +1,36 @@
+---
+interface Props {
+    cols?: number;
+    gap?: string;
+}
+
+const { cols = 2, gap = "0.75rem" } = Astro.props;
+---
+
+<div
+    class="mdx-gallery"
+    style={`grid-template-columns: repeat(${cols}, 1fr); gap: ${gap};`}
+>
+    <slot />
+</div>
+
+<style>
+    .mdx-gallery {
+        display: grid;
+        width: 100%;
+        margin: 1.5rem 0;
+    }
+
+    .mdx-gallery :global(img) {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        border-radius: 0.25rem;
+    }
+
+    @media (max-width: 768px) {
+        .mdx-gallery {
+            grid-template-columns: 1fr !important;
+        }
+    }
+</style>

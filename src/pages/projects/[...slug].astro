@@ -3,8 +3,8 @@ import { getCollection, render } from "astro:content";
 import "../../styles/global.css";
 import "../../styles/markdown.css";
 import Nav from "../../components/nav.astro";
-import ProjectNav from "../../components/sitemap.astro";
-import Mouse from "../../components/Mouse.svelte";
+import ProjectNav from "../../layouts/sitemap.astro";
+import Mouse from "../../scripts/Mouse.svelte";
 import DarkModeToggle from "../../components/darkModeToggle.astro";
 import DarkModeScript from "../../components/darkModeScript.astro";
 import { getAssetPath, getLinkHref } from "../../utils/paths.ts";
@@ -15,7 +15,7 @@ export async function getStaticPaths() {
         (project) => project.data.link === "",
     );
     return filteredProjects.map((project) => {
-        const fileName = project.id.split("/").pop().replace(".md", "");
+        const fileName = project.id.split("/").pop().replace(/\.mdx?$/, "");
         const cleanSlug = fileName.replace(/^\d+-/, ""); // remove number prefix chunk
         return {
             params: { slug: cleanSlug },
@@ -57,7 +57,7 @@ const nextProject =
 
 // Helper function to get clean slug for navigation
 const getProjectSlug = (project: any) => {
-    const fileName = project.id.split("/").pop()?.replace(".md", "");
+    const fileName = project.id.split("/").pop()?.replace(/\.mdx?$/, "");
     return fileName?.replace(/^\d+-/, "");
 };
 ---

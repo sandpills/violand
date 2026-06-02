@@ -1,0 +1,30 @@
+---
+interface Props {
+    id: string;
+    vertical?: boolean;
+    title?: string;
+    height?: string;
+}
+
+const { id, vertical = false, title = "Vimeo video", height } = Astro.props;
+const defaultHeight = vertical ? "60vh" : "auto";
+const h = height || defaultHeight;
+---
+
+<iframe
+    class="vimeo-embed"
+    style={vertical ? `height: ${h};` : `aspect-ratio: 16/9;`}
+    src={`https://player.vimeo.com/video/${id}`}
+    title={title}
+    allow="autoplay; fullscreen; picture-in-picture"
+    allowfullscreen
+    loading="lazy"></iframe>
+
+<style>
+    .vimeo-embed {
+        display: block;
+        width: 100%;
+        border: 0;
+        pointer-events: auto;
+    }
+</style>
