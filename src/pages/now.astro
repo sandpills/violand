@@ -4,7 +4,8 @@ import Mouse from "../scripts/Mouse.svelte";
 import DarkModeToggle from "../components/darkModeToggle.astro";
 import DarkModeScript from "../components/darkModeScript.astro";
 import { getAssetPath } from "../utils/paths.ts";
-import Now from "../components/now.svelte";
+import Metadata from "../components/metadata.astro";
+import Now from "../scripts/now.svelte";
 
 import "../styles/global.css";
 import "../styles/cursor.css";
@@ -32,15 +33,22 @@ import "../styles/cursor.css";
     <body>
         <div class="container">
             <Nav />
-            <div class="absolute top-4 right-4 z-10">
+            <div class="fixed right-0 top-1 z-10">
                 <DarkModeToggle />
             </div>
 
             <main class="now-page">
-                <h1>now</h1>
-                <p class="intro">what i'm currently working on & up to.</p>
+                <!-- <h1>now</h1> -->
+                <p class="intro">you found viola's secret log!</p>
                 <Now client:load />
             </main>
+            <section class="main-container-right">
+                <div id="right-outline" class="flex flex-col">
+                    <div class="mt-4 lg:mt-0">
+                        <Metadata />
+                    </div>
+                </div>
+            </section>
         </div>
         <DarkModeScript />
         <Mouse client:load />

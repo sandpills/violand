@@ -59,17 +59,13 @@ const lastUpdated = formatGitDateTime(gitLastCommit);
         </span>
     </div>
 
-    <div class="metadata-section">
+    <!-- <div class="metadata-section">
         <Aboutrc />
         <RecurseWebring />
-    </div>
+    </div> -->
 </div>
 
 <script>
-    // Live-update Whereabouts + Things on my Mind from the /now worker.
-    // The values rendered above (from metadata.ts) are the build-time fallback;
-    // these override them on load when matching entries exist. If the fetch
-    // fails, the static fallback simply stays.
     import { renderInline } from "../utils/minimd";
 
     const WORKER_URL = "https://guest.viola-9ee.workers.dev/now";
@@ -90,8 +86,6 @@ const lastUpdated = formatGitDateTime(gitLastCommit);
             const { records = [] } = await res.json();
 
             // Location line: most recent entry that carries a city (ANY tag).
-            // The iOS Shortcut stamps every post with your current city, so
-            // whereabouts auto-updates whenever you log anything from your phone.
             const located = records
                 .filter((r) => (r.fields?.City || "").trim())
                 .sort(
@@ -116,7 +110,10 @@ const lastUpdated = formatGitDateTime(gitLastCommit);
             const ul = document.querySelector("[data-mind-list]");
             if (ul && mind.length) {
                 ul.innerHTML = mind
-                    .map((m) => `<li>⇢ ${renderInline(m.fields.Text || "")}</li>`)
+                    .map(
+                        (m) =>
+                            `<li>⇢ ${renderInline(m.fields.Text || "")}</li>`,
+                    )
                     .join("");
             }
         } catch (e) {
