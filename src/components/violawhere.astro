@@ -1,25 +1,10 @@
 ---
 import { metadata } from "../data/metadata.ts";
-
-// Get current time in the specified timezone
-const now = new Date();
-const timeString = now.toLocaleTimeString("en-US", {
-    timeZone: metadata.timezone,
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-});
-const dateString = now.toLocaleDateString("en-US", {
-    timeZone: metadata.timezone,
-    weekday: "short",
-    month: "short",
-    day: "numeric",
-});
 ---
 
 <div>
     <span class="location">{metadata.location}</span>
-    <span class="violawhere-time-display">{timeString}</span>
+    <span class="violawhere-time-display"></span>
     <div class="status">{metadata.status}</div>
 </div>
 
@@ -32,14 +17,14 @@ const dateString = now.toLocaleDateString("en-US", {
             timeZone: metadata.timezone,
             hour: "2-digit",
             minute: "2-digit",
-            hour12: true,
+            hour12: false,
         });
 
-        // time display within this component, not any time-display class
+        // time display within this component
         const timeElement = document.querySelector(".violawhere-time-display");
         if (timeElement) timeElement.textContent = timeString;
     }
 
-    // Update every minute
+    updateTime();
     setInterval(updateTime, 60000);
 </script>

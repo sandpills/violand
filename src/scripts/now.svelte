@@ -26,7 +26,13 @@
     // open todos -> checklist at top
     $: openTodos = entries
         .filter((e) => tagOf(e) === "todo" && !e.fields.Done)
-        .sort((a, b) => new Date(a.createdTime) - new Date(b.createdTime));
+        .sort((a, b) => {
+            const da = dueInfo(a.fields.Due);
+            const db = dueInfo(b.fields.Due);
+            if (!!da !== !!db) return da ? -1 : 1; // dated before undated
+            if (da && db) return da.days - db.days; // soonest (incl. overdue) first
+            return new Date(a.createdTime) - new Date(b.createdTime);
+        });
 
     // logs always show; completed todos only when "show done" is toggled on
     $: logItems = entries
@@ -63,6 +69,30 @@
         });
     }
 
+    // day grouping helpers
+    function dayKey(iso) {
+        const d = new Date(iso);
+        return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+    }
+    // fixed-width formats
+    function shortDate(d) {
+        const m = String(d.getMonth() + 1).padStart(2, "0");
+        const day = String(d.getDate()).padStart(2, "0");
+        return `${m}-${day}`;
+    }
+    function dayLabel(iso) {
+        return shortDate(new Date(iso));
+    }
+    function fmtTime(iso) {
+        const d = new Date(iso);
+        const h = String(d.getHours()).padStart(2, "0");
+        const min = String(d.getMinutes()).padStart(2, "0");
+        return `${h}:${min}`;
+    }
+    function fmtStamp(iso) {
+        return `${shortDate(new Date(iso))} ${fmtTime(iso)}`;
+    }
+
     // todo with a Due date
     function dueInfo(iso) {
         if (!iso) return null;
@@ -74,10 +104,7 @@
         const now = new Date();
         const t0 = new Date(now.getFullYear(), now.getMonth(), now.getDate());
         const days = Math.round((due - t0) / 86400000);
-        const label = due.toLocaleString(undefined, {
-            month: "short",
-            day: "numeric",
-        });
+        const label = shortDate(due);
         return { label, days, overdue: days < 0, soon: days >= 0 && days <= 7 };
     }
 
@@ -123,7 +150,7 @@
         } catch (e) {
             rec.fields.Done = prev;
             entries = [...entries];
-            alert("couldn't check off — try again");
+            alert("couldn't check off, try again");
         }
     }
 </script>
@@ -132,11 +159,14 @@
     {#if loading}
         <p class="muted">loading…</p>
     {:else if failed}
-        <p class="muted">couldn't load right now — try again later.</p>
+        <p class="muted">couldn't load right now, try again later.</p>
     {:else}
         {#if doneItems.length}
             <div class="controls">
-                <button class="toggle" on:click={() => (showDone = !showDone)}>
+                <button
+                    class="pill text-sm"
+                    on:click={() => (showDone = !showDone)}
+                >
                     {showDone ? "hide done" : `show done (${doneItems.length})`}
                 </button>
             </div>
@@ -177,9 +207,12 @@
             <ul class="feed">
                 {#each stream as item (item.key)}
                     <li class:done={item.kind === "done"}>
-                        <span class="date">{fmt(item.when)}</span>
+                        <span class="ts">{fmtStamp(item.when)}</span>
                         {#if item.kind === "done"}
                             <span class="check">✓</span>
+                        {/if}
+                        {#if item.kind === "log"}
+                            <span class="check">~</span>
                         {/if}
                         <span class="text">{@html renderInline(item.text)}</span
                         >
@@ -196,113 +229,3 @@
         {/if}
     {/if}
 </div>
-
-<style>
-    .now {
-        font-family: var(--font-mono, monospace);
-        font-size: 0.95rem;
-        line-height: 1.6;
-        max-width: 42rem;
-    }
-
-    ul {
-        list-style: none;
-        padding: 0;
-        margin: 0 0 2rem 0;
-    }
-
-    .controls {
-        margin-bottom: 1.25rem;
-    }
-
-    .toggle {
-        font: inherit;
-        font-size: 0.8rem;
-        font-style: italic;
-        background: none;
-        border: 1px dotted rgb(118, 118, 118);
-        padding: 0.1rem 0.2rem;
-        color: inherit;
-        cursor: pointer;
-        opacity: 0.7;
-    }
-
-    .toggle:hover {
-        opacity: 1;
-    }
-
-    .todos li {
-        display: flex;
-        gap: 0.5rem;
-        align-items: baseline;
-        margin-bottom: 0.4rem;
-    }
-
-    /* checkbox */
-    button.box {
-        flex: none;
-        background: none;
-        border: none;
-        padding: 0;
-        margin: 0;
-        font: inherit;
-        color: inherit;
-        cursor: pointer;
-        transition: opacity 0.1s;
-    }
-
-    button.box:hover {
-        opacity: 0.55;
-    }
-
-    .feed li {
-        display: block;
-        margin-bottom: 0.6rem;
-    }
-
-    .feed li.done .text {
-        text-decoration: line-through;
-        opacity: 0.6;
-    }
-
-    .date {
-        font-style: italic;
-        opacity: 0.6;
-        margin-right: 0.5rem;
-    }
-
-    .check {
-        color: var(--color-blue-text);
-        margin-right: 0.25rem;
-    }
-
-    :global(html.dark) .check {
-        color: var(--color-dark-text);
-    }
-
-    .city {
-        opacity: 0.55;
-    }
-
-    .due {
-        margin-left: 0.3rem;
-        /* font-size: 0.86em; */
-        font-style: italic;
-        opacity: 0.6;
-    }
-
-    .due.soon {
-        color: #324e7e;
-        opacity: 0.85;
-    }
-
-    .due.overdue {
-        color: #0037ff;
-        opacity: 0.9;
-    }
-
-    .muted {
-        opacity: 0.55;
-        font-style: italic;
-    }
-</style>

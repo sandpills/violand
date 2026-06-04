@@ -2,7 +2,7 @@
     import { onMount } from "svelte";
 
     let currentTime = new Date();
-    let currentTimeString = currentTime.toLocaleTimeString("en-US", {
+    $: currentTimeString = currentTime.toLocaleTimeString("en-US", {
         hour: "2-digit",
         minute: "2-digit",
         second: "2-digit",

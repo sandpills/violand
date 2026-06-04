@@ -9,6 +9,7 @@ import Now from "../scripts/now.svelte";
 
 import "../styles/global.css";
 import "../styles/cursor.css";
+import "../styles/now.css";
 ---
 
 <html lang="en">
@@ -38,13 +39,11 @@ import "../styles/cursor.css";
                 <DarkModeToggle />
             </div>
 
-            <section class="main-container">
-                <div class="now-page">
-                    <!-- <h1>now</h1> -->
-                    <p class="intro">you found viola's secret log!</p>
-                    <Now client:load />
-                </div>
-            </section>
+            <div class="now-page">
+                <!-- <h1>now</h1> -->
+                <p class="now-intro">you found viola's secret log!</p>
+                <Now client:load />
+            </div>
 
             <section class="main-container-right">
                 <div id="right-outline" class="flex flex-col">
@@ -58,23 +57,3 @@ import "../styles/cursor.css";
         <Mouse client:load />
     </body>
 </html>
-
-<style>
-    .now-page {
-        max-width: 40rem;
-        margin: 6rem auto 4rem;
-        padding: 0 2rem;
-        font-family: var(--font-mono, monospace);
-    }
-
-    .now-page h1 {
-        font-style: italic;
-        margin-bottom: 0.25rem;
-    }
-
-    .intro {
-        opacity: 0.6;
-        font-style: italic;
-        margin-bottom: 2rem;
-    }
-</style>
