@@ -292,12 +292,12 @@
     }
 
     .due.soon {
-        color: #c87137;
+        color: #324e7e;
         opacity: 0.85;
     }
 
     .due.overdue {
-        color: #c0392b;
+        color: #0037ff;
         opacity: 0.9;
     }
 
