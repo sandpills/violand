@@ -63,6 +63,24 @@
         });
     }
 
+    // todo with a Due date
+    function dueInfo(iso) {
+        if (!iso) return null;
+        const m = String(iso)
+            .slice(0, 10)
+            .match(/^(\d{4})-(\d{2})-(\d{2})$/);
+        if (!m) return null;
+        const due = new Date(+m[1], +m[2] - 1, +m[3]);
+        const now = new Date();
+        const t0 = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        const days = Math.round((due - t0) / 86400000);
+        const label = due.toLocaleString(undefined, {
+            month: "short",
+            day: "numeric",
+        });
+        return { label, days, overdue: days < 0, soon: days >= 0 && days <= 7 };
+    }
+
     function getToken() {
         let t = localStorage.getItem("now_token");
         if (!t) {
@@ -127,16 +145,29 @@
         {#if openTodos.length}
             <ul class="todos">
                 {#each openTodos as t (t.id)}
+                    {@const di = dueInfo(t.fields.Due)}
                     <li>
                         <button
                             class="box"
                             on:click={() => markDone(t)}
                             aria-label="check off"
-                            title="check off">☐</button
+                            title="check off">[ ]</button
                         >
                         <span class="text"
                             >{@html renderInline(t.fields.Text)}</span
                         >
+                        {#if di}
+                            <span
+                                class="due"
+                                class:overdue={di.overdue}
+                                class:soon={di.soon}
+                                >~ {di.label}{di.overdue
+                                    ? ` (${-di.days}d ago)`
+                                    : di.days === 0
+                                      ? "~ today"
+                                      : ""}</span
+                            >
+                        {/if}
                     </li>
                 {/each}
             </ul>
@@ -251,6 +282,23 @@
 
     .city {
         opacity: 0.55;
+    }
+
+    .due {
+        margin-left: 0.3rem;
+        /* font-size: 0.86em; */
+        font-style: italic;
+        opacity: 0.6;
+    }
+
+    .due.soon {
+        color: #c87137;
+        opacity: 0.85;
+    }
+
+    .due.overdue {
+        color: #c0392b;
+        opacity: 0.9;
     }
 
     .muted {

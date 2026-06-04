@@ -38,11 +38,14 @@ import "../styles/cursor.css";
                 <DarkModeToggle />
             </div>
 
-            <main class="now-page">
-                <!-- <h1>now</h1> -->
-                <p class="intro">you found viola's secret log!</p>
-                <Now client:load />
-            </main>
+            <section class="main-container">
+                <div class="now-page">
+                    <!-- <h1>now</h1> -->
+                    <p class="intro">you found viola's secret log!</p>
+                    <Now client:load />
+                </div>
+            </section>
+
             <section class="main-container-right">
                 <div id="right-outline" class="flex flex-col">
                     <div class="mt-4 lg:mt-0">
@@ -58,9 +61,9 @@ import "../styles/cursor.css";
 
 <style>
     .now-page {
-        max-width: 42rem;
+        max-width: 40rem;
         margin: 6rem auto 4rem;
-        padding: 0 1.5rem;
+        padding: 0 2rem;
         font-family: var(--font-mono, monospace);
     }
 
