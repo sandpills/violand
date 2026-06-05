@@ -1,9 +1,7 @@
 ---
 import { getCollection } from "astro:content";
-import { getLinkHref } from "../utils/paths.ts";
-import CardListWrapper from "./CardListWrapper.astro";
-import CardListItem from "./CardListItem.astro";
-import RCCard from "./RCCard.astro";
+import Svgfilter from "../components/svgfilter.astro";
+import WorkRow from "../components/workRow.astro";
 import "../styles/global.css";
 
 const things = await getCollection("things");
@@ -36,6 +34,8 @@ const sorted = [...things].sort((a, b) => {
 const allTags = [...new Set(sorted.flatMap((t) => t.data.tags ?? []))];
 ---
 
+<Svgfilter />
+
 <section>
     <p class="font-mono italic text-sm pb-2">found {things.length} things.</p>
 </section>
@@ -57,28 +57,20 @@ const allTags = [...new Set(sorted.flatMap((t) => t.data.tags ?? []))];
     )
 }
 
-<section id="things-list">
-    <CardListWrapper>
-        {
-            sorted.map((post: any) => (
-                <CardListItem data-tags={(post.data.tags ?? []).join(",")}>
-                    <RCCard
-                        href={post.data.link ?? `/things/${post.id}/`}
-                        title={post.data.title}
-                        body={post.data.description ?? ""}
-                        year={getYear(post)}
-                        date={
-                            post.data.date
-                                ? new Date(post.data.date)
-                                : undefined
-                        }
-                        image={post.data.heroImage}
-                    />
-                </CardListItem>
-            ))
-        }
-    </CardListWrapper>
-</section>
+<ul class="work-list" id="things-list">
+    {
+        sorted.map((post: any) => (
+            <WorkRow
+                href={post.data.link ?? `/things/${post.id}/`}
+                title={post.data.title}
+                body={post.data.description ?? ""}
+                tags={post.data.tags}
+                year={getYear(post)}
+                image={post.data.heroImage}
+            />
+        ))
+    }
+</ul>
 
 <script>
     function initThingFilters() {

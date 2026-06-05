@@ -1,5 +1,5 @@
 ---
-import Box from "../layouts/Box.astro";
+import Box from "../components/box.astro";
 ---
 
 <script>

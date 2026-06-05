@@ -1,12 +1,10 @@
 ---
 import About from "../components/about.astro";
-import Projects from "../layouts/projects.astro";
+import Works from "../layouts/works.astro";
 import Nav from "../components/nav.astro";
-import LittleThings from "../layouts/littlethings.astro";
 import { getAssetPath } from "../utils/paths.ts";
 
 import Metadata from "../components/metadata.astro";
-import Box from "../layouts/Box.astro";
 import LowerRight from "../layouts/lowerright.astro";
 import GadgetParts from "../layouts/gadgetparts.astro";
 
@@ -44,18 +42,10 @@ import "../styles/global.css";
 				</div>
 			</section>
 			<section class="main-container">
-				<div id="left-outline">
+				<div id="left-outline" class="px-2">
 					<About />
 					<div class="projects">
-						<Projects />
-						<section id="more" class="py-4">
-							<Box> ⇣ more </Box>
-						</section>
-						<section class="hide mb-10" id="rc-section">
-							<section>
-								<LittleThings />
-							</section>
-						</section>
+						<Works />
 					</div>
 					<marquee
 						behavior="scroll"
@@ -96,29 +86,3 @@ import "../styles/global.css";
 		<GadgetParts />
 	</body>
 </html>
-
-<script>
-	const dropdown = document.getElementById("more");
-	const rcSection = document.getElementById("rc-section");
-	// let toggleMore = false;
-
-	dropdown?.addEventListener("click", async function () {
-		if (dropdown && rcSection?.classList.contains("show")) {
-			rcSection?.classList.add("hide");
-			dropdown.textContent;
-			rcSection?.classList.remove("show");
-		} else if (dropdown) {
-			rcSection?.classList.add("show");
-			rcSection?.classList.remove("hide");
-		}
-	});
-</script>
-
-<style>
-	.hide {
-		display: none;
-	}
-	.show {
-		display: block;
-	}
-</style>

@@ -17,7 +17,7 @@ if (!cv) {
 const { Content } = await render(cv);
 ---
 
-<section class="mx-2 lg:mx-0">
+<section class="pl-2 mx-2 lg:mx-0">
     <div>
         <p class="font-serif italic hover:not-italic text-sm">
             {cv.data.title}
@@ -25,11 +25,18 @@ const { Content } = await render(cv);
         <span> ⇣</span>
     </div>
 </section>
-<section class="flex lg:flex-row flex-col">
+<section class="flex lg:flex-row flex-col pl-1">
     <div
         class="flex flex-col items-start lg:items-end mx-2 mb-2 lg:mx-0 pr-7 py-1"
     >
         <ProfileImage />
+        <p class="text-sm flex gap-1 pt-2">
+            <a class="pill" href="https://www.instagram.com/v10101a/"
+                >instagram</a
+            >
+            <a class="pill" href="https://www.github.com/v10101a">github</a>
+            <a class="pill" href="mailto:viola@nyu.edu">email</a>
+        </p>
     </div>
     <div class="w-full">
         {

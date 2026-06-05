@@ -15,7 +15,10 @@ export async function getStaticPaths() {
         (project) => project.data.link === "",
     );
     return filteredProjects.map((project) => {
-        const fileName = project.id.split("/").pop().replace(/\.mdx?$/, "");
+        const fileName = project.id
+            .split("/")
+            .pop()
+            .replace(/\.mdx?$/, "");
         const cleanSlug = fileName.replace(/^\d+-/, ""); // remove number prefix chunk
         return {
             params: { slug: cleanSlug },
@@ -57,7 +60,10 @@ const nextProject =
 
 // Helper function to get clean slug for navigation
 const getProjectSlug = (project: any) => {
-    const fileName = project.id.split("/").pop()?.replace(/\.mdx?$/, "");
+    const fileName = project.id
+        .split("/")
+        .pop()
+        ?.replace(/\.mdx?$/, "");
     return fileName?.replace(/^\d+-/, "");
 };
 ---
@@ -81,11 +87,13 @@ const getProjectSlug = (project: any) => {
                 <div class="outline sticky bg-neutral dark:bg-dark top-0">
                     <!-- Project Info -->
                     <section class="outline flex">
-                        <span class="font-serif text-2xl pr-4">
-                            <a class="hover:blur-xs" href={getLinkHref("/")}
-                                >↖︎</a
-                            >
-                        </span>
+                        <a
+                            class="hover:blur-xs font-serif text-2xl px-3 py-1 flex items-center"
+                            href={getLinkHref("/")}
+                            aria-label="Back to home"
+                        >
+                            ↖︎
+                        </a>
                         <h1 class="font-serif text-2xl outline pl-2 pr-5 py-1">
                             {project.data.title}
                         </h1>

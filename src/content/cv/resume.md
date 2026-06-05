@@ -14,7 +14,7 @@ description: "b. 1996, Shanghai China. Lived & Worked in LA, Brooklyn, and Shang
 *2024-Present* Interactive Media Arts, NYU Shanghai
 - [Interaction Lab](https://wp.nyu.edu/shanghai-ima-interaction-lab/#)
 - [Creative Coding Lab](https://cclab.work/)
-- [Integrated Approaches to Live Coding](https://sandpills.github.io/Integrated-livecoding/)
+- [Integrated Approaches to Live Coding](https://v10101a.github.io/Integrated-livecoding/)
 
 *2022-2023* MFA Interaction Design, School of Visual Arts
 - [Fundamentals of Physical Computing](https://ixdphysicalcomputing.github.io/syllabus/)

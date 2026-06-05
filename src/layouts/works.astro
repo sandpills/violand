@@ -1,0 +1,226 @@
+---
+import { getCollection } from "astro:content";
+import Svgfilter from "../components/svgfilter.astro";
+import WorkCard from "../components/workCard.astro";
+import WorkRow from "../components/workRow.astro";
+
+interface WorkItem {
+    title: string;
+    href: string;
+    body: string;
+    tags: string[];
+    year: number | null;
+    date?: Date;
+    image?: string;
+    time: number;
+}
+
+const projectsRaw = await getCollection("projects");
+const thingsRaw = await getCollection("things");
+
+// selected
+const sortedProjects = [...projectsRaw].sort((a, b) => {
+    const am = a.id.match(/^(\d+)-/);
+    const bm = b.id.match(/^(\d+)-/);
+    if (am && bm) return parseInt(am[1]) - parseInt(bm[1]);
+    return a.id.localeCompare(b.id);
+});
+
+function projItem(p: any): WorkItem {
+    const slug = p.id.split("/").pop()?.replace(".md", "").replace(/^\d+-/, "");
+    return {
+        title: p.data.title,
+        href: p.data.link || `/projects/${slug}/`,
+        body: p.data.description ?? "",
+        tags: p.data.tags ?? [],
+        year: p.data.year ?? null,
+        date: p.data.year ? new Date(p.data.year, 0, 1) : undefined,
+        image: p.data.heroImage,
+        time: p.data.year ? new Date(p.data.year, 0, 1).getTime() : 0,
+    };
+}
+
+function thingItem(t: any): WorkItem {
+    const year = t.data.date
+        ? new Date(t.data.date).getFullYear()
+        : (t.data.year ?? null);
+    const time = t.data.date
+        ? new Date(t.data.date).getTime()
+        : t.data.year
+          ? new Date(t.data.year, 0, 1).getTime()
+          : 0;
+    return {
+        title: t.data.title,
+        href: t.data.link || `/things/${t.id}/`,
+        body: t.data.description ?? "",
+        tags: t.data.tags ?? [],
+        year,
+        date: t.data.date ? new Date(t.data.date) : undefined,
+        image: t.data.heroImage,
+        time,
+    };
+}
+
+const selected = sortedProjects.map(projItem);
+
+// everything
+const everything = [
+    ...projectsRaw.map(projItem),
+    ...thingsRaw.map(thingItem),
+].sort((a, b) => b.time - a.time);
+
+// type filter
+const tagCounts: Record<string, number> = {};
+everything.forEach((i) =>
+    i.tags.forEach((t) => {
+        tagCounts[t] = (tagCounts[t] ?? 0) + 1;
+    }),
+);
+const filterTags = [...new Set(everything.flatMap((i) => i.tags))].filter(
+    (t) => tagCounts[t] >= 3,
+);
+---
+
+<Svgfilter />
+
+<section class="works">
+    <div class="works-bar">
+        <div class="works-tabs">
+            <button class="pill works-tab active" data-view="selected">
+                selected
+            </button>
+            <button class="pill works-tab" data-view="everything">
+                everything
+            </button>
+        </div>
+        <p class="works-count" data-view="selected">
+            found {selected.length} projects
+        </p>
+        <p class="works-count hidden" data-view="everything">
+            found {everything.length} things
+        </p>
+    </div>
+
+    <div class="works-view pt-2" data-view="selected">
+        <ul class="flex flex-wrap gap-x-4 gap-y-4">
+            {
+                selected.map((item) => (
+                    <WorkCard
+                        href={item.href}
+                        title={item.title}
+                        body={item.body}
+                        tags={item.tags}
+                        date={item.date}
+                        image={item.image}
+                    />
+                ))
+            }
+        </ul>
+    </div>
+
+    <div class="works-view hidden" data-view="everything">
+        {
+            filterTags.length > 0 && (
+                <div class="works-filters">
+                    <button class="pill type-filter active" data-tag="all">
+                        all
+                    </button>
+                    {filterTags.map((tag) => (
+                        <button class="pill type-filter" data-tag={tag}>
+                            {tag}
+                        </button>
+                    ))}
+                </div>
+            )
+        }
+        <ul class="work-list" id="everything-list">
+            {
+                everything.map((item) => (
+                    <WorkRow
+                        href={item.href}
+                        title={item.title}
+                        body={item.body}
+                        tags={item.tags}
+                        year={item.year}
+                        image={item.image}
+                    />
+                ))
+            }
+        </ul>
+    </div>
+</section>
+
+<script>
+    const VIEW_KEY = "works-view";
+    const FILTER_KEY = "works-filter";
+
+    function initWorks() {
+        const tabs = document.querySelectorAll<HTMLButtonElement>(".works-tab");
+        const views = document.querySelectorAll<HTMLElement>(".works-view");
+        const counts = document.querySelectorAll<HTMLElement>(".works-count");
+        const filters =
+            document.querySelectorAll<HTMLButtonElement>(".type-filter");
+        const list = document.getElementById("everything-list");
+        const items = list?.querySelectorAll<HTMLElement>("[data-tags]") ?? [];
+
+        function applyView(view: string) {
+            tabs.forEach((t) =>
+                t.classList.toggle("active", t.dataset.view === view),
+            );
+            views.forEach((v) =>
+                v.classList.toggle("hidden", v.dataset.view !== view),
+            );
+            counts.forEach((c) =>
+                c.classList.toggle("hidden", c.dataset.view !== view),
+            );
+        }
+
+        function applyFilter(tag: string) {
+            filters.forEach((b) =>
+                b.classList.toggle("active", b.dataset.tag === tag),
+            );
+            items.forEach((item) => {
+                if (tag === "all") {
+                    item.style.display = "";
+                    return;
+                }
+                const tags = (item.dataset.tags || "").split(",");
+                item.style.display = tags.includes(tag) ? "" : "none";
+            });
+        }
+
+        tabs.forEach((tab) => {
+            tab.addEventListener("click", () => {
+                const view = tab.dataset.view || "selected";
+                applyView(view);
+                localStorage.setItem(VIEW_KEY, view);
+            });
+        });
+
+        filters.forEach((btn) => {
+            btn.addEventListener("click", () => {
+                const tag = btn.dataset.tag || "all";
+                applyFilter(tag);
+                localStorage.setItem(FILTER_KEY, tag);
+            });
+        });
+
+        // restore saved view + filter (like the dark-mode toggle)
+        const savedView = localStorage.getItem(VIEW_KEY);
+        if (savedView) applyView(savedView);
+
+        const savedTag = localStorage.getItem(FILTER_KEY);
+        // only restore the tag if its pill still exists (it may have dropped
+        // below the show-threshold), otherwise fall back to "all"
+        const tagExists =
+            savedTag && [...filters].some((b) => b.dataset.tag === savedTag);
+        applyFilter(tagExists ? savedTag! : "all");
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initWorks);
+    } else {
+        initWorks();
+    }
+    document.addEventListener("astro:after-swap", initWorks);
+</script>

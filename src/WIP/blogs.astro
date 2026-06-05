@@ -1,35 +1,30 @@
 ---
 import { getCollection } from "astro:content";
-import CardListWrapper from "../layouts/CardListWrapper.astro";
-import CardListItem from "../layouts/CardListItem.astro";
-import Card from "../layouts/Card.astro";
+import Svgfilter from "../components/svgfilter.astro";
+import WorkCard from "../components/workCard.astro";
 import "../styles/global.css";
 
 const blogs = await getCollection("blogs");
 console.log("Blogs loaded:", blogs.length);
 ---
 
+<Svgfilter />
+
 <section>
     <p class="font-mono italic text-sm">found {blogs.length} blogs.</p>
 </section>
 <section>
-    <CardListWrapper>
+    <ul class="flex flex-wrap gap-x-4 gap-y-4">
         {
             blogs.map((post: any) => (
-                <CardListItem>
-                    <Card
-                        href={`/blogs/${post.id}/`}
-                        title={post.data.title}
-                        body={post.data.description ?? ""}
-                        tags={post.data.tags}
-                        date={
-                            post.data.date
-                                ? new Date(post.data.date)
-                                : undefined
-                        }
-                    />
-                </CardListItem>
+                <WorkCard
+                    href={`/blogs/${post.id}/`}
+                    title={post.data.title}
+                    body={post.data.description ?? ""}
+                    tags={post.data.tags}
+                    date={post.data.date ? new Date(post.data.date) : undefined}
+                />
             ))
         }
-    </CardListWrapper>
+    </ul>
 </section>
