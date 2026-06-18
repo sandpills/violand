@@ -5,6 +5,7 @@ import { remark } from "remark";
 import remarkGfm from "remark-gfm";
 import html from "remark-html";
 import Box from "./box.astro";
+import type { TypedLink } from "../utils/projectLinks.ts";
 
 interface Props {
     href?: string;
@@ -13,9 +14,10 @@ interface Props {
     tags?: string[];
     year?: number | null;
     image?: string;
+    links?: TypedLink[];
 }
 
-const { href, title, body, tags, year, image } = Astro.props;
+const { href, title, body, tags, year, image, links } = Astro.props;
 
 async function parseMarkdown(markdown: string): Promise<string> {
     if (!markdown) return "";
@@ -67,6 +69,22 @@ const imgSrc = image
             <div class="font-mono text-sm">
                 <p set:html={parsedBody} />
             </div>
+            {
+                links && links.length > 0 && (
+                    <div class="card-links flex flex-wrap gap-1">
+                        {links.map((l) => (
+                            <a
+                                href={l.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="pill card-go-link"
+                            >
+                                {l.type} ↗
+                            </a>
+                        ))}
+                    </div>
+                )
+            }
         </div>
         <div class="work-col flex flex-col gap-1 p-2">
             {

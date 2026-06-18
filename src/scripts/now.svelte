@@ -23,9 +23,17 @@
 
     const tagOf = (e) => (e.fields.Tag || "").toLowerCase();
 
-    // open todos -> checklist at top
+    // open todos -> checklist at top. a recurring occurrence dated in the
+    // future stays hidden until its day — only the currently-due one shows.
     $: openTodos = entries
-        .filter((e) => tagOf(e) === "todo" && !e.fields.Done)
+        .filter((e) => {
+            if (tagOf(e) !== "todo" || e.fields.Done) return false;
+            if ((e.fields.Repeat || "").trim()) {
+                const di = dueInfo(e.fields.Due);
+                if (di && di.days > 0) return false;
+            }
+            return true;
+        })
         .sort((a, b) => {
             const da = dueInfo(a.fields.Due);
             const db = dueInfo(b.fields.Due);
@@ -93,6 +101,14 @@
         return `${shortDate(new Date(iso))} ${fmtTime(iso)}`;
     }
 
+    // local calendar date as YYYY-MM-DD (for recurrence "today")
+    function localToday() {
+        const d = new Date();
+        const m = String(d.getMonth() + 1).padStart(2, "0");
+        const day = String(d.getDate()).padStart(2, "0");
+        return `${d.getFullYear()}-${m}-${day}`;
+    }
+
     // todo with a Due date
     function dueInfo(iso) {
         if (!iso) return null;
@@ -127,6 +143,18 @@
         rec.fields["Done At"] = new Date().toISOString();
         entries = [...entries];
 
+        // a recurring todo also tells the worker to spawn the next occurrence
+        const repeat = (rec.fields.Repeat || "").trim();
+        const body = {
+            id: rec.id,
+            fields: { Done: true, "Done At": rec.fields["Done At"] },
+        };
+        if (repeat) {
+            body.repeat = repeat;
+            body.text = rec.fields.Text;
+            body.today = localToday();
+        }
+
         try {
             const res = await fetch(WORKER_URL, {
                 method: "PATCH",
@@ -134,10 +162,7 @@
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`,
                 },
-                body: JSON.stringify({
-                    id: rec.id,
-                    fields: { Done: true, "Done At": rec.fields["Done At"] },
-                }),
+                body: JSON.stringify(body),
             });
             if (res.status === 401) {
                 localStorage.removeItem("now_token");
@@ -186,7 +211,9 @@
                         <span class="text"
                             >{@html renderInline(t.fields.Text)}</span
                         >
-                        {#if di}
+                        {#if (t.fields.Repeat || "").trim()}
+                            <span class="due">⟳ {(t.fields.Repeat || "").trim()}</span>
+                        {:else if di}
                             <span
                                 class="due"
                                 class:overdue={di.overdue}

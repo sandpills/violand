@@ -377,6 +377,37 @@ html.dark .active {
     z-index: 2;
 }
 
+/* link pills */
+.card .card-links {
+    position: relative;
+    z-index: 2;
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.card:not(.work-row) .card-footer {
+    position: absolute;
+    left: 0.75rem;
+    right: 0.75rem;
+    bottom: 0.5rem;
+    display: flex;
+    align-items: flex-end;
+    gap: 0.5rem;
+}
+
+.card:not(.work-row) .card-footer .card-links {
+    margin-top: 0;
+}
+
+.card .card-go-link {
+    z-index: 2;
+    color: var(--color-blue-text);
+}
+
+html.dark .card .card-go-link {
+    color: var(--color-dark-text);
+}
+
 /* mobile for cards */
 
 @media (max-width: 768px) {

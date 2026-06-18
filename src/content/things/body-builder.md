@@ -5,5 +5,5 @@ date: 2025-08-01
 link: "https://sandpills.itch.io/bodybuilding-web"
 heroImage: "/images/things/building.png"
 tags:
-  ["game"]
+  ["Game"]
 ---

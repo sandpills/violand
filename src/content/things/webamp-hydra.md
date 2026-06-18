@@ -5,5 +5,5 @@ date: 2025-08-03
 link: "/music/"
 heroImage: "/images/things/webamp.png"
 tags:
-  ["Web"]
+  ["Web", "Tool"]
 ---

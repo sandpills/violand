@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import { getLinkHref } from "../utils/paths.ts";
+import { getTypedLinks } from "../utils/projectLinks.ts";
 
 const projects = await getCollection("projects");
 const blogs = await getCollection("blogs");
@@ -24,12 +25,21 @@ const sortedThings = things.sort((a, b) => {
     return a.id.localeCompare(b.id);
 });
 
+const sortedBlogs = blogs.sort(
+    (a, b) =>
+        new Date(b.data.date ?? 0).getTime() -
+        new Date(a.data.date ?? 0).getTime(),
+);
+
 const sortedProjectsNewPaths = sortedProjects.map((project) => {
-    const fileName = project.id.split("/").pop()?.replace(".md", "");
+    const fileName = project.id.split("/").pop()?.replace(/\.mdx?$/, "");
     const cleanSlug = fileName?.replace(/^\d+-/, ""); // remove number prefix chunk
     return {
         ...project,
         id: cleanSlug,
+        // projects with a writeup have their own page; others link straight out
+        hasWriteup: Boolean((project.body ?? "").trim()),
+        firstLink: getTypedLinks(project.data)[0]?.url,
     };
 });
 
@@ -65,14 +75,19 @@ const sortedUpcomingEvents = upcomingEvents.sort((a, b) => {
                                         : "tree-item"
                                 }
                             >
-                                {project.data.link ? (
-                                    <a href={getLinkHref(project.data.link)}>
+                                {project.hasWriteup ? (
+                                    <a
+                                        href={getLinkHref(
+                                            `/projects/${project.id}`,
+                                        )}
+                                    >
                                         {project.data.title}
                                     </a>
                                 ) : (
                                     <a
                                         href={getLinkHref(
-                                            `/projects/${project.id}`,
+                                            project.firstLink ||
+                                                `/projects/${project.id}`,
                                         )}
                                     >
                                         {project.data.title}
@@ -116,10 +131,10 @@ const sortedUpcomingEvents = upcomingEvents.sort((a, b) => {
             <div class="tree-header italic">blogs/</div>
             <ul class="tree-list">
                 {
-                    blogs.map((blog: any, index: number) => (
+                    sortedBlogs.map((blog: any, index: number) => (
                         <li
                             class={
-                                index === blogs.length - 1
+                                index === sortedBlogs.length - 1
                                     ? "tree-item-last"
                                     : "tree-item"
                             }

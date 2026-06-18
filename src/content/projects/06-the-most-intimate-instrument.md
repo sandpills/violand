@@ -1,9 +1,9 @@
 ---
 title: "The Most Intimate Instrument"
-year: 2023
+date: 2023-05
 link: ""
 tags:
-  ["Performance", "Audio-visual"]
+  ["Performance", "AV"]
 image:
 description: Two humans, one computer - Sylvia hums, breathes, and destroys their computer slowly, while directing Viola’s body, an embodied machine, move within the space.
 heroImage: "/images/projects/intimate-instrument.png"

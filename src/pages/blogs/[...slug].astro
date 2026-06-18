@@ -1,7 +1,7 @@
 ---
 import { getCollection, render } from "astro:content";
 import "../../styles/global.css";
-import "../../styles/markdown.css";
+import "../../styles/reader.css";
 import Nav from "../../components/nav.astro";
 import { getAssetPath, getLinkHref } from "../../utils/paths.ts";
 import ProjectNav from "../../layouts/sitemap.astro";
@@ -17,11 +17,33 @@ export async function getStaticPaths() {
     }));
 }
 
+// newest-first ordering for prev/next page turns
+const allBlogs = await getCollection("blogs");
+const sortedBlogs = allBlogs.sort(
+    (a, b) =>
+        new Date(b.data.date ?? 0).getTime() -
+        new Date(a.data.date ?? 0).getTime(),
+);
+
 const { blog } = Astro.props;
 if (!blog) {
     throw new Error("Blog not found");
 }
 const { Content } = await render(blog);
+
+const currentIndex = sortedBlogs.findIndex((p) => p.id === blog.id);
+const newerPost = currentIndex > 0 ? sortedBlogs[currentIndex - 1] : null;
+const olderPost =
+    currentIndex < sortedBlogs.length - 1
+        ? sortedBlogs[currentIndex + 1]
+        : null;
+
+const formatDate = (d: any) =>
+    new Date(d).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+    });
 ---
 
 <html lang="en">
@@ -33,85 +55,116 @@ const { Content } = await render(blog);
         <title>{blog.data.title}</title>
         <meta name="author" content="viola he" />
     </head>
-    <body>
-        <!-- <Nav /> -->
-        <section
-            class="container left-container outline overflow-y-auto"
-            id="left-container"
-        >
-            <div class="outline sticky bg-neutral dark:bg-dark top-0">
-                <!-- Project Info -->
-                <section class="outline flex items-center justify-between">
-                    <div class="flex items-center">
-                        <span class="font-serif text-2xl pr-4">
-                            <a class="hover:blur-xs" href={getLinkHref("/")}
-                                >↖︎</a
-                            >
-                        </span>
-                        <h1 class="font-serif text-2xl outline pl-2 pr-5 py-1">
-                            {blog.data.title}
-                        </h1>
-                    </div>
-                </section>
-            </div>
-            <div class="scroll-container outline">
-                <section class="pl-2 pb-1 outline">
-                    <div class="flex gap-2 pt-2 pb-1">
+    <body class="reader">
+        <Nav />
+        <div class="reader-progress" id="reader-progress"></div>
+
+        <article class="reader-page">
+            <header class="reader-head">
+                <h1 class="reader-title">{blog.data.title}</h1>
+                <p class="reader-meta">
+                    <span class="reader-meta-facts">
                         {
                             blog.data.date && (
-                                <span class="text-sm font-mono">
-                                    Published:{" "}
-                                    {new Date(
-                                        blog.data.date,
-                                    ).toLocaleDateString("en-US", {
-                                        year: "numeric",
-                                        month: "long",
-                                        day: "numeric",
-                                    })}
-                                </span>
+                                <span>{formatDate(blog.data.date)}</span>
                             )
                         }
-                        <span class="text-sm font-mono"> | </span>
                         {
-                            blog.data.description && (
-                                <span class="text-sm font-mono">
-                                    {blog.data.description}
-                                </span>
+                            blog.data.tags && blog.data.tags.length > 0 && (
+                                <span>{blog.data.tags.join(", ")}</span>
                             )
                         }
-                        <!-- 
-                            {
-                                blog.data.tags && (
-                                    <span class="text-sm font-mono">
-                                        {" "}
-                                        {blog.data.tags.join(", ")}
-                                    </span>
-                                )
-                            } -->
-                    </div>
-                </section>
-                <!-- Main Content -->
-                <section class="pt-8 pb-5 px-5 lg:px-12 font-serif text-md">
-                    <div class="markdown-content">
-                        <Content />
-                    </div>
-                </section>
-                <!-- Footer Nav -->
-                <section
-                    class="outline sticky bg-neutral dark:bg-dark bottom-0 flex justify-between items-center px-4 py-2"
-                >
-                </section>
+                    </span>
+                    {
+                        blog.data.source && (
+                            <span class="reader-meta-links">
+                                <a
+                                    class="reader-meta-link"
+                                    href={blog.data.source}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    read on substack ↗
+                                </a>
+                            </span>
+                        )
+                    }
+                </p>
+            </header>
+            <hr class="reader-rule" />
+
+            {
+                blog.data.description && (
+                    <p class="reader-standfirst">{blog.data.description}</p>
+                )
+            }
+
+            <div class="markdown-content">
+                <Content />
             </div>
-        </section>
-        <section class="main-container-right">
-            <div id="right-outline" class="sitemap flex flex-col">
-                <ProjectNav />
-            </div>
-        </section>
+
+            <nav class="reader-pager">
+                {
+                    newerPost ? (
+                        <a
+                            class="pager-prev"
+                            href={getLinkHref(`/blogs/${newerPost.id}/`)}
+                        >
+                            <span>←</span>
+                            <span>{newerPost.data.title}</span>
+                        </a>
+                    ) : (
+                        <span class="pager-empty">⇤ newest</span>
+                    )
+                }
+                {
+                    olderPost ? (
+                        <a
+                            class="pager-next"
+                            href={getLinkHref(`/blogs/${olderPost.id}/`)}
+                        >
+                            <span>{olderPost.data.title}</span>
+                            <span>→</span>
+                        </a>
+                    ) : (
+                        <span class="pager-empty pager-next">oldest ⇥</span>
+                    )
+                }
+            </nav>
+        </article>
+
+        <aside class="reader-toc">
+            <ProjectNav />
+        </aside>
+
         <div class="fixed right-0 top-1">
             <DarkModeToggle />
             <DarkModeScript />
         </div>
         <Mouse client:load />
+
+        <script>
+            function initReader() {
+                const bar = document.getElementById("reader-progress");
+                if (!bar) return;
+                const update = () => {
+                    const max =
+                        document.documentElement.scrollHeight -
+                        window.innerHeight;
+                    const pct = max > 0 ? (window.scrollY / max) * 100 : 0;
+                    bar.style.width = pct + "%";
+                };
+                update();
+                window.addEventListener("scroll", update, { passive: true });
+                window.addEventListener("resize", update);
+            }
+
+            if (document.readyState === "loading") {
+                document.addEventListener("DOMContentLoaded", initReader);
+            } else {
+                initReader();
+            }
+            document.addEventListener("astro:after-swap", initReader);
+        </script>
     </body>
 </html>

@@ -1,24 +1,27 @@
 ---
 import { getCollection, render } from "astro:content";
 import "../../styles/global.css";
-import "../../styles/markdown.css";
+import "../../styles/reader.css";
 import Nav from "../../components/nav.astro";
 import ProjectNav from "../../layouts/sitemap.astro";
 import Mouse from "../../scripts/Mouse.svelte";
 import DarkModeToggle from "../../components/darkModeToggle.astro";
 import DarkModeScript from "../../components/darkModeScript.astro";
 import { getAssetPath, getLinkHref } from "../../utils/paths.ts";
+import { getTypedLinks } from "../../utils/projectLinks.ts";
+import { getEntryDate } from "../../utils/dates.ts";
 
 export async function getStaticPaths() {
     const projects = await getCollection("projects");
-    const filteredProjects = projects.filter(
-        (project) => project.data.link === "",
+    // a project gets its own page only when it has a writeup
+    const filteredProjects = projects.filter((project) =>
+        Boolean((project.body ?? "").trim()),
     );
     return filteredProjects.map((project) => {
-        const fileName = project.id
-            .split("/")
-            .pop()
-            .replace(/\.mdx?$/, "");
+        const fileName = (project.id.split("/").pop() ?? "").replace(
+            /\.mdx?$/,
+            "",
+        );
         const cleanSlug = fileName.replace(/^\d+-/, ""); // remove number prefix chunk
         return {
             params: { slug: cleanSlug },
@@ -29,8 +32,8 @@ export async function getStaticPaths() {
 
 // Get all projects w page link for navigation
 const allProjects = await getCollection("projects");
-const internalProjects = allProjects.filter(
-    (project) => project.data.link === "",
+const internalProjects = allProjects.filter((project) =>
+    Boolean((project.body ?? "").trim()),
 );
 const sortedProjects = internalProjects.sort((a, b) => {
     const aMatch = a.id.match(/^(\d+)-/);
@@ -46,6 +49,8 @@ if (!project) {
     throw new Error("Project not found");
 }
 const { Content } = await render(project);
+const projectLinks = getTypedLinks(project.data);
+const projectYear = getEntryDate(project.data).year;
 
 // Find current project index and get previous/next
 const currentProjectIndex = sortedProjects.findIndex(
@@ -77,129 +82,129 @@ const getProjectSlug = (project: any) => {
         <title>{project.data.title}</title>
         <meta name="author" content="viola he" />
     </head>
-    <body>
+    <body class="reader">
         <Nav />
-        <div class="flex flex-col lg:flex-row">
-            <section
-                class="container left-container outline overflow-y-auto"
-                id="left-container"
-            >
-                <div class="outline sticky bg-neutral dark:bg-dark top-0">
-                    <!-- Project Info -->
-                    <section class="outline flex">
-                        <a
-                            class="hover:blur-xs font-serif text-2xl px-3 py-1 flex items-center"
-                            href={getLinkHref("/")}
-                            aria-label="Back to home"
-                        >
-                            ↖︎
-                        </a>
-                        <h1 class="font-serif text-2xl outline pl-2 pr-5 py-1">
-                            {project.data.title}
-                        </h1>
-                    </section>
-                </div>
-                <div class="scroll-container outline">
-                    <section class="pl-2 pb-1 outline">
-                        <div class="flex gap-2 pt-2 pb-1">
-                            {
-                                project.data.tags && (
-                                    <span class="text-sm font-mono italic">
-                                        {project.data.tags.join(", ")}
-                                    </span>
-                                )
-                            }
-                            <span class="text-sm font-mono"
-                                >{project.data.year}</span
-                            >
-                        </div>
-                    </section>
-                    <section class="px-5 lg:px-18 pt-6 pb-3">
-                        <!-- Hero Image -->
+        <div class="reader-progress" id="reader-progress"></div>
+
+        <article class="reader-page">
+            <header class="reader-head">
+                <h1 class="reader-title">{project.data.title}</h1>
+                <p class="reader-meta">
+                    <span class="reader-meta-facts">
                         {
-                            project.data.heroImage && (
-                                <img
-                                    src={
-                                        project.data.heroImage?.startsWith("/")
-                                            ? getAssetPath(
-                                                  project.data.heroImage,
-                                              )
-                                            : project.data.heroImage
-                                    }
-                                    alt={project.data.title}
-                                    class="w-full mb-4 rounded-lg"
-                                    loading="lazy"
-                                />
-                            )
+                            project.data.tags &&
+                                project.data.tags.length > 0 && (
+                                    <span>{project.data.tags.join(", ")}</span>
+                                )
                         }
-                    </section>
-                    <!-- Main Content -->
-                    <section
-                        class="content-box outline py-5 px-5 lg:px-18 font-serif text-md"
-                    >
-                        <div class="markdown-content">
-                            <Content />
-                        </div>
-                    </section>
-                    <!-- Footer Nav -->
-                    <section
-                        class="outline sticky bg-neutral dark:bg-dark bottom-0 flex justify-between items-center px-4 py-2"
-                    >
-                        <div class="flex items-center">
-                            {
-                                prevProject ? (
+                        {projectYear && <span>{projectYear}</span>}
+                    </span>
+                    {
+                        projectLinks.length > 0 && (
+                            <span class="reader-meta-links">
+                                {projectLinks.map((l) => (
                                     <a
-                                        class="hover:blur-xs flex items-center gap-2"
-                                        href={getLinkHref(
-                                            `/projects/${getProjectSlug(prevProject)}/`,
-                                        )}
+                                        href={l.url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="pill reader-meta-link"
                                     >
-                                        <span class="text-lg">←</span>
-                                        <span class="text-sm font-mono">
-                                            {prevProject.data.title}
-                                        </span>
+                                        {l.type} ↗
                                     </a>
-                                ) : (
-                                    <span class="text-lg font-mono text-gray-500">
-                                        ⇤
-                                    </span>
-                                )
+                                ))}
+                            </span>
+                        )
+                    }
+                </p>
+            </header>
+            <hr class="reader-rule" />
+
+            {
+                project.data.heroImage && (
+                    <figure class="reader-frontispiece">
+                        <img
+                            src={
+                                project.data.heroImage?.startsWith("/")
+                                    ? getAssetPath(project.data.heroImage)
+                                    : project.data.heroImage
                             }
-                        </div>
-                        <div class="flex items-center">
-                            {
-                                nextProject ? (
-                                    <a
-                                        class="hover:blur-xs flex items-center gap-2"
-                                        href={getLinkHref(
-                                            `/projects/${getProjectSlug(nextProject)}/`,
-                                        )}
-                                    >
-                                        <span class="text-sm font-mono">
-                                            {nextProject.data.title}
-                                        </span>
-                                        <span class="text-lg">→</span>
-                                    </a>
-                                ) : (
-                                    <span class="text-sm font-mono text-gray-500">
-                                        ⇥
-                                    </span>
-                                )
-                            }
-                        </div>
-                    </section>
-                </div>
-            </section>
-            <section class="main-container-right">
-                <div id="right-outline" class="sitemap flex flex-col">
-                    <ProjectNav />
-                </div>
-            </section>
-            <div class="fixed right-0 top-1">
-                <DarkModeToggle />
-                <DarkModeScript />
+                            alt={project.data.title}
+                            loading="lazy"
+                        />
+                    </figure>
+                )
+            }
+
+            <div class="markdown-content">
+                <Content />
             </div>
-            <Mouse client:load />
+
+            <nav class="reader-pager">
+                {
+                    prevProject ? (
+                        <a
+                            class="pager-prev"
+                            href={getLinkHref(
+                                `/projects/${getProjectSlug(prevProject)}/`,
+                            )}
+                        >
+                            <span>←</span>
+                            <span>{prevProject.data.title}</span>
+                        </a>
+                    ) : (
+                        <span class="pager-empty">⇤ start</span>
+                    )
+                }
+                {
+                    nextProject ? (
+                        <a
+                            class="pager-next"
+                            href={getLinkHref(
+                                `/projects/${getProjectSlug(nextProject)}/`,
+                            )}
+                        >
+                            <span>{nextProject.data.title}</span>
+                            <span>→</span>
+                        </a>
+                    ) : (
+                        <span class="pager-empty pager-next">end ⇥</span>
+                    )
+                }
+            </nav>
+        </article>
+
+        <aside class="reader-toc">
+            <ProjectNav />
+        </aside>
+
+        <div class="fixed right-0 top-1">
+            <DarkModeToggle />
+            <DarkModeScript />
         </div>
+        <Mouse client:load />
+
+        <script>
+            function initReader() {
+                const bar = document.getElementById("reader-progress");
+                if (!bar) return;
+                const update = () => {
+                    const max =
+                        document.documentElement.scrollHeight -
+                        window.innerHeight;
+                    const pct = max > 0 ? (window.scrollY / max) * 100 : 0;
+                    bar.style.width = pct + "%";
+                };
+                update();
+                window.addEventListener("scroll", update, { passive: true });
+                window.addEventListener("resize", update);
+            }
+
+            if (document.readyState === "loading") {
+                document.addEventListener("DOMContentLoaded", initReader);
+            } else {
+                initReader();
+            }
+            document.addEventListener("astro:after-swap", initReader);
+        </script>
     </body>
 </html>

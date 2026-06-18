@@ -5,5 +5,5 @@ date: 2024-12-18
 link: "/"
 heroImage: "/images/things/odd-species.png"
 tags:
-  ["Event", "Music", "Performance"]
+  ["Event", "Music","AV", "Performance"]
 ---

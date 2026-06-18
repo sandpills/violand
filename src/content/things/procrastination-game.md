@@ -5,5 +5,5 @@ date: 2025-08-01
 link: "https://v10101a.github.io/procrastination-game/"
 heroImage: "/images/things/procrastinate.png"
 tags:
-  ["game", "Web"]
+  ["Game", "Web"]
 ---

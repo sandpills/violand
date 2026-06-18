@@ -5,5 +5,5 @@ date: 2023-07-21
 link: "https://vimeo.com/852553514?share=copy&fl=sv&fe=ci"
 heroImage: "/images/things/spectra.png"
 tags:
-  ["Event", "Music", "Performance"]
+  ["Event", "Music","AV", "Performance"]
 ---

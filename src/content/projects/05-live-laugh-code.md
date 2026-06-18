@@ -1,7 +1,7 @@
 ---
 title: "Live, Laugh, Code"
-year: 2024
-link: "https://www.instagram.com/p/C6t2w3Fu5js/?img_index=1"
+date: 2024
+watch: "https://www.instagram.com/p/C6t2w3Fu5js/?img_index=1"
 tags:
   ["Performance", "Web"]
 image:

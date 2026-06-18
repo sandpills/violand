@@ -1,17 +1,17 @@
 ---
 title: "How About Talking to Neighbors"
-year: 2022
+date: 2022
 link: ""
 tags:
-  ["Research", "Hardware Design"]
+  ["Research", "Hardware"]
 image:
 description: A series of research and electronics design project, in search of surveillance resistance through using small wireless protocols. 
 heroImage: "/images/projects/neighbors-zine.png"
 ---
 
-Master’s Thesis at NYU
-
 How About Talking to Neighbors is a series of hardware research, theory development, and DIY electronics design projects, in search of surveillance protection by using small technologies within small networks. As our digital spaces become highly centralized and surveilled, this project thinks back on physical proximity (“neighborhood”) as a digital communication framework, creating with small-scale wireless protocols that are independent to large infrastructures as a form of radical resistance.
+
+Completed this project as my Master’s Thesis at NYU.
 
 Featured at:
 - [Future of Memory Residency Program](https://www.chinaresidencies.com/news/346), China Residencies

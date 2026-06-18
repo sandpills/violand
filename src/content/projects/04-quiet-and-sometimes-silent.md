@@ -1,9 +1,9 @@
 ---
 title: "Quiet, and Sometimes Silent"
-year: 2023
+date: 2023
 link: ""
 tags:
-  ["Hardware Design", "Wearable"]
+  ["Hardware"]
 image:
 description: A DIY wearable project that explores proximity, intimacy, and subtle communication.
 heroImage: "/images/projects/quiet-dither.png"

@@ -3,6 +3,8 @@ import { getCollection } from "astro:content";
 import Svgfilter from "../components/svgfilter.astro";
 import WorkCard from "../components/workCard.astro";
 import WorkRow from "../components/workRow.astro";
+import { getTypedLinks, type TypedLink } from "../utils/projectLinks.ts";
+import { getEntryDate } from "../utils/dates.ts";
 
 interface WorkItem {
     title: string;
@@ -10,9 +12,9 @@ interface WorkItem {
     body: string;
     tags: string[];
     year: number | null;
-    date?: Date;
     image?: string;
     time: number;
+    links: TypedLink[];
 }
 
 const projectsRaw = await getCollection("projects");
@@ -27,37 +29,45 @@ const sortedProjects = [...projectsRaw].sort((a, b) => {
 });
 
 function projItem(p: any): WorkItem {
-    const slug = p.id.split("/").pop()?.replace(".md", "").replace(/^\d+-/, "");
+    const slug = p.id
+        .split("/")
+        .pop()
+        ?.replace(/\.mdx?$/, "")
+        .replace(/^\d+-/, "");
+    const hasWriteup = Boolean((p.body ?? "").trim());
+    const links = getTypedLinks(p.data);
+    // full date (down to the day) drives sorting; only the year is displayed
+    const { year, time } = getEntryDate(p.data);
     return {
         title: p.data.title,
-        href: p.data.link || `/projects/${slug}/`,
+        // with a writeup the card opens the project's own page; without one it
+        // links straight out to its first typed link
+        href: hasWriteup
+            ? `/projects/${slug}/`
+            : links[0]?.url || `/projects/${slug}/`,
         body: p.data.description ?? "",
         tags: p.data.tags ?? [],
-        year: p.data.year ?? null,
-        date: p.data.year ? new Date(p.data.year, 0, 1) : undefined,
+        year,
         image: p.data.heroImage,
-        time: p.data.year ? new Date(p.data.year, 0, 1).getTime() : 0,
+        time,
+        // typed-link buttons only make sense when the card itself opens the page
+        links: hasWriteup ? links : [],
     };
 }
 
 function thingItem(t: any): WorkItem {
-    const year = t.data.date
-        ? new Date(t.data.date).getFullYear()
-        : (t.data.year ?? null);
-    const time = t.data.date
-        ? new Date(t.data.date).getTime()
-        : t.data.year
-          ? new Date(t.data.year, 0, 1).getTime()
-          : 0;
+    const { year, time } = getEntryDate(t.data);
+    const links = getTypedLinks(t.data);
     return {
         title: t.data.title,
-        href: t.data.link || `/things/${t.id}/`,
+        // primary destination, falling back to the first typed link
+        href: t.data.link || links[0]?.url || `/things/${t.id}/`,
         body: t.data.description ?? "",
         tags: t.data.tags ?? [],
         year,
-        date: t.data.date ? new Date(t.data.date) : undefined,
         image: t.data.heroImage,
         time,
+        links,
     };
 }
 
@@ -109,9 +119,8 @@ const filterTags = [...new Set(everything.flatMap((i) => i.tags))].filter(
                         href={item.href}
                         title={item.title}
                         body={item.body}
-                        tags={item.tags}
-                        date={item.date}
                         image={item.image}
+                        links={item.links}
                     />
                 ))
             }
@@ -143,6 +152,7 @@ const filterTags = [...new Set(everything.flatMap((i) => i.tags))].filter(
                         tags={item.tags}
                         year={item.year}
                         image={item.image}
+                        links={item.links}
                     />
                 ))
             }

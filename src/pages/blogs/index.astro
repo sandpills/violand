@@ -1,0 +1,85 @@
+---
+import { getCollection } from "astro:content";
+import "../../styles/global.css";
+import "../../styles/reader.css";
+import Nav from "../../components/nav.astro";
+import { getLinkHref } from "../../utils/paths.ts";
+import DarkModeToggle from "../../components/darkModeToggle.astro";
+import DarkModeScript from "../../components/darkModeScript.astro";
+
+const posts = (await getCollection("blogs")).sort(
+    (a, b) =>
+        new Date(b.data.date ?? 0).getTime() -
+        new Date(a.data.date ?? 0).getTime(),
+);
+
+const formatDate = (d: any) =>
+    new Date(d).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+    });
+---
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="generator" content={Astro.generator} />
+        <title>blog · viola</title>
+        <meta name="author" content="viola he" />
+    </head>
+    <body class="reader">
+        <Nav />
+
+        <main class="reader-page">
+            <header class="reader-head">
+                <h1 class="reader-title">blog</h1>
+                <p class="reader-meta">
+                    <span class="reader-meta-facts">
+                        <span>{posts.length} posts</span>
+                    </span>
+                </p>
+            </header>
+            <hr class="reader-rule" />
+
+            <ul class="blog-index">
+                {
+                    posts.map((post) => (
+                        <li class="blog-index-item">
+                            <a
+                                class="blog-index-link"
+                                href={getLinkHref(`/blogs/${post.id}/`)}
+                            >
+                                <span class="blog-index-title">
+                                    {post.data.title}
+                                </span>
+                                {post.data.date && (
+                                    <span class="blog-index-date">
+                                        {formatDate(post.data.date)}
+                                    </span>
+                                )}
+                            </a>
+                            {post.data.description && (
+                                <p class="blog-index-desc">
+                                    {post.data.description}
+                                    {post.data.source && (
+                                        <span class="blog-index-tag">
+                                            {" "}
+                                            ✦ substack
+                                        </span>
+                                    )}
+                                </p>
+                            )}
+                        </li>
+                    ))
+                }
+            </ul>
+        </main>
+
+        <div class="fixed right-0 top-1">
+            <DarkModeToggle />
+            <DarkModeScript />
+        </div>
+    </body>
+</html>

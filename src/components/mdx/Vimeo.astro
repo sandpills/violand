@@ -7,13 +7,16 @@ interface Props {
 }
 
 const { id, vertical = false, title = "Vimeo video", height } = Astro.props;
-const defaultHeight = vertical ? "60vh" : "auto";
-const h = height || defaultHeight;
+// vertical embeds size from their container width via aspect-ratio rather than
+// a fixed viewport height (which ballooned on tall screens); an explicit
+// `height` prop still wins when a caller wants to pin one.
+const ratioStyle = vertical ? "aspect-ratio: 9/16;" : "aspect-ratio: 16/9;";
+const style = height ? `height: ${height};` : ratioStyle;
 ---
 
 <iframe
     class="vimeo-embed"
-    style={vertical ? `height: ${h};` : `aspect-ratio: 16/9;`}
+    style={style}
     src={`https://player.vimeo.com/video/${id}`}
     title={title}
     allow="autoplay; fullscreen; picture-in-picture"

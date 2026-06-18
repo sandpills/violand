@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import Svgfilter from "../components/svgfilter.astro";
 import WorkRow from "../components/workRow.astro";
+import { getTypedLinks } from "../utils/projectLinks.ts";
 import "../styles/global.css";
 
 const things = await getCollection("things");
@@ -59,16 +60,20 @@ const allTags = [...new Set(sorted.flatMap((t) => t.data.tags ?? []))];
 
 <ul class="work-list" id="things-list">
     {
-        sorted.map((post: any) => (
-            <WorkRow
-                href={post.data.link ?? `/things/${post.id}/`}
-                title={post.data.title}
-                body={post.data.description ?? ""}
-                tags={post.data.tags}
-                year={getYear(post)}
-                image={post.data.heroImage}
-            />
-        ))
+        sorted.map((post: any) => {
+            const links = getTypedLinks(post.data);
+            return (
+                <WorkRow
+                    href={post.data.link ?? links[0]?.url ?? `/things/${post.id}/`}
+                    title={post.data.title}
+                    body={post.data.description ?? ""}
+                    tags={post.data.tags}
+                    year={getYear(post)}
+                    image={post.data.heroImage}
+                    links={links}
+                />
+            );
+        })
     }
 </ul>
 
