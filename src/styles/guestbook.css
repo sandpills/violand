@@ -1,0 +1,630 @@
+@import url('https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap');
+
+:root {
+    --gb-ink: #141411;
+    --gb-paper: #c7c7c7;
+    --gb-line: rgba(20, 20, 17, 0.3);
+}
+
+html {
+    cursor: auto !important;
+}
+
+html body * {
+    cursor: auto !important;
+}
+
+html body a,
+html body button,
+html body label,
+html body summary,
+html body .pill {
+    cursor: pointer !important;
+}
+
+html body input,
+html body textarea {
+    cursor: text !important;
+}
+
+.gb-page {
+    max-width: 52rem;
+    margin: 3.5rem auto 4rem;
+    padding: 0 1rem;
+    font-family: var(--font-mono, monospace);
+}
+
+.gb-head {
+    font-family: "Silkscreen", var(--font-mono), monospace;
+    font-size: 1.6rem;
+    letter-spacing: 0.02em;
+    margin-bottom: 0.4rem;
+}
+
+.gb-sub {
+    opacity: 0.6;
+    font-style: italic;
+    margin-bottom: 1.75rem;
+}
+
+.gb-window {
+    max-width: 33rem;
+    margin: 0 auto 1.5rem;
+    padding: 0.7rem 0.75rem 0.8rem;
+    /* background: rgba(255, 255, 255, 0.751); */
+    border: 1px dashed var(--gb-line);
+}
+
+html.dark .gb-window {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(178, 162, 205, 0.22);
+}
+
+.gb-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem 0.55rem;
+    margin-bottom: 0.5rem;
+    min-height: 2rem;
+}
+
+.gb-modes,
+.gb-pats,
+.gb-sizes,
+.gb-actions {
+    display: flex;
+    gap: 0.3rem;
+    align-items: center;
+}
+
+.gb-actions {
+    margin-left: auto;
+}
+
+.gb-mode,
+.gb-pat,
+.gb-size,
+.gb-tool {
+    font-size: 0.8rem;
+    padding: 0.28rem 0.45rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.gb-pat {
+    font-style: normal;
+    font-size: 0.9rem;
+    width: 2rem;
+    padding: 0.2rem 0.2rem;
+}
+
+.gb-size {
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+}
+
+.gb-dot {
+    display: block;
+    background: currentColor;
+}
+
+.gb-mode.active,
+.gb-pat.active,
+.gb-size.active {
+    border-style: solid;
+    border-color: var(--color-blue-text);
+    color: var(--color-blue-text);
+    background-color: var(--color-bright);
+    box-shadow: none;
+}
+
+html.dark .gb-mode.active,
+html.dark .gb-pat.active,
+html.dark .gb-size.active {
+    border-color: var(--color-dark-text);
+    color: var(--color-dark-text);
+    background-color: var(--color-dark-bright);
+}
+
+.gb-tool:disabled {
+    opacity: 0.35;
+}
+
+.gb-canvas-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 96 / 64;
+    background: var(--gb-paper);
+    /* border: 1px solid rgba(20, 20, 17, 0.4); */
+    box-shadow: 2px 2px 10px rgba(20, 20, 17, 0.15);
+    container-type: inline-size;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+    outline: none;
+}
+
+html.dark .gb-canvas-wrap {
+    box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.4);
+}
+
+.gb-canvas-wrap.typing {
+    outline: 1px solid var(--color-blue-text);
+    outline-offset: 1px;
+}
+
+html.dark .gb-canvas-wrap.typing {
+    outline-color: var(--color-dark-text);
+}
+
+.gb-canvas-px,
+.gb-card-canvas,
+.gb-tlayer {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.gb-canvas-px,
+.gb-card-canvas {
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+
+.gb-tlayer {
+    display: grid;
+    grid-template-columns: repeat(var(--tc), 1fr);
+    grid-template-rows: repeat(var(--tr), 1fr);
+    font-family: "Silkscreen", var(--font-mono), monospace;
+    font-size: 4.4cqw;
+    line-height: 1;
+    color: var(--gb-ink);
+}
+
+.gb-tcell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: pre;
+}
+
+.gb-tcell.cursor {
+    box-shadow: inset 0 0 0 1px rgba(20, 20, 17, 0.55);
+    animation: gb-blink 1s step-end infinite;
+}
+
+@keyframes gb-blink {
+    50% {
+        box-shadow: inset 0 0 0 1px transparent;
+    }
+}
+
+.gb-canvas-wrap.mode-draw .gb-tlayer {
+    pointer-events: none;
+}
+
+.gb-canvas-wrap.mode-type .gb-canvas-px {
+    pointer-events: none;
+}
+
+html body .gb-canvas-wrap.mode-draw .gb-canvas-px {
+    cursor: crosshair !important;
+}
+
+html body .gb-canvas-wrap.mode-type {
+    cursor: text !important;
+}
+
+/* hidden field that summons the mobile keyboard without grabbing taps */
+.gb-keycatcher {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    border: 0;
+    padding: 0;
+    font-size: 16px;
+    /* keeps iOS from zooming on focus */
+    pointer-events: none;
+}
+
+/* ---- form fields ------------------------------------------------------- */
+.gb-honeypot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+.gb-fields {
+    max-width: 33rem;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.gb-input,
+.gb-textarea {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.9rem;
+    background: transparent;
+    color: inherit;
+    border: 1px solid var(--gb-line);
+    padding: 0.4rem 0.5rem;
+    width: 100%;
+}
+
+.gb-textarea {
+    resize: vertical;
+}
+
+.gb-input:focus,
+.gb-textarea:focus {
+    outline: none;
+    border-color: var(--color-blue-text);
+}
+
+html.dark .gb-input:focus,
+html.dark .gb-textarea:focus {
+    border-color: var(--color-dark-text);
+}
+
+.gb-input::placeholder,
+.gb-textarea::placeholder {
+    color: currentColor;
+    opacity: 0.4;
+    font-style: italic;
+}
+
+.gb-name-row {
+    display: flex;
+    gap: 0.5rem;
+    align-items: stretch;
+}
+
+.gb-name-row .gb-name {
+    flex: 1;
+    min-width: 0;
+}
+
+.gb-color-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.76rem;
+    font-style: italic;
+    white-space: nowrap;
+    border: 1px solid var(--gb-line);
+    padding: 0 0.55rem 0 0.3rem;
+}
+
+.gb-color {
+    width: 1.6rem;
+    height: 1.5rem;
+    border: none;
+    background: none;
+    padding: 0;
+}
+
+.gb-color-text {
+    opacity: 0.7;
+}
+
+.gb-submit-row {
+    max-width: 33rem;
+    margin: 0.85rem auto 0;
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    flex-wrap: wrap;
+}
+
+.gb-submit {
+    font-size: 1rem;
+    padding: 0.2rem 0.5rem;
+    color: var(--color-blue-text);
+}
+
+html.dark .gb-submit {
+    color: var(--color-dark-text);
+}
+
+.gb-submit:disabled {
+    opacity: 0.45;
+}
+
+.gb-status {
+    font-size: 0.82rem;
+    font-style: italic;
+}
+
+.gb-status.success {
+    color: #1c7a3e;
+}
+
+.gb-status.error {
+    color: #c0392b;
+}
+
+/* ---- the wall ---------------------------------------------------------- */
+.gb-wall {
+    margin-top: 3.5rem;
+}
+
+.gb-wall-msg {
+    opacity: 0.55;
+    font-style: italic;
+    text-align: center;
+}
+
+.gb-grid-wall {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.4rem 1.2rem;
+    align-items: start;
+}
+
+.gb-card {
+    position: relative;
+    margin: 0.5rem 0 0;
+    padding: 0.9rem 0.55rem 0.55rem;
+    background: var(--gb-paper);
+    /* border: 1px dashed var(--gb-line); */
+    box-shadow: 1px 2px 5px rgba(20, 20, 17, 0.13);
+    transition:
+        transform 0.16s ease,
+        box-shadow 0.16s ease;
+}
+
+/* an invisible button covering the whole card — tap anywhere (drawing or note)
+   to blow it up in the popup. keeps <figure>/<figcaption> semantics intact. */
+.gb-card-hit {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+/* pinned-to-a-board wobble */
+.gb-card:nth-child(3n) {
+    transform: rotate(-1.3deg);
+}
+
+.gb-card:nth-child(3n + 1) {
+    transform: rotate(1deg);
+}
+
+.gb-card:nth-child(4n) {
+    transform: rotate(0.5deg);
+}
+
+/* straighten + lift the card you're about to open (placed after the wobble
+   rules so it wins the equal-specificity tie) */
+.gb-card:hover,
+.gb-card:focus-within {
+    transform: rotate(0deg) scale(1.035);
+    box-shadow: 2px 5px 14px rgba(20, 20, 17, 0.22);
+    z-index: 3;
+}
+
+.gb-card:focus-within {
+    outline: 2px solid var(--color-blue-text);
+    outline-offset: 3px;
+}
+
+html.dark .gb-card:focus-within {
+    outline-color: var(--color-dark-text);
+}
+
+/* a strip of "tape" in the signer's favorite color */
+.gb-tape {
+    position: absolute;
+    top: -0.55rem;
+    left: 50%;
+    transform: translateX(-50%) rotate(-3deg);
+    width: 3.1rem;
+    height: 1rem;
+    background: var(--tape, #2e00fd);
+    opacity: 1;
+    /* full strength so the chosen color shows true */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.22);
+}
+
+.gb-card-art {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    border: 1px solid var(--gb-line);
+    background: var(--gb-paper);
+    container-type: inline-size;
+}
+
+.gb-card-pre {
+    font-family: var(--font-mono, monospace);
+    font-size: 11px;
+    line-height: 1;
+    white-space: pre;
+    overflow-x: auto;
+    color: var(--gb-ink);
+    background: var(--gb-paper);
+    margin: 0;
+    padding: 0.3rem;
+    border: 1px solid var(--gb-line);
+}
+
+.gb-card-cap {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    margin-top: 0.45rem;
+    color: var(--gb-ink);
+}
+
+.gb-card-byline {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+
+.gb-card-name {
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+.gb-card-name a {
+    color: var(--gb-ink);
+    text-decoration: underline;
+}
+
+.gb-card-msg {
+    font-size: 0.8rem;
+    font-style: italic;
+    line-height: 1.3;
+}
+
+.gb-card-date {
+    font-size: 0.66rem;
+    opacity: 0.5;
+}
+
+@media (max-width: 600px) {
+    .gb-grid-wall {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 1.2rem 0.9rem;
+    }
+}
+
+/* ---- the polaroid popup ------------------------------------------------ */
+.gb-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background: rgba(20, 20, 17, 0.55);
+    animation: gb-fade 0.18s ease;
+}
+
+html.dark .gb-modal {
+    background: rgba(0, 0, 0, 0.7);
+}
+
+/* full-bleed click target behind the card — tap outside to close */
+.gb-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.gb-dialog {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 30rem;
+    display: flex;
+    justify-content: center;
+}
+
+.gb-polaroid {
+    position: relative;
+    margin: 0;
+    width: 100%;
+    padding: 1.5rem 1rem 1.1rem;
+    background: var(--gb-paper);
+    box-shadow: 3px 6px 22px rgba(20, 20, 17, 0.4);
+    transform: rotate(-1deg);
+    animation: gb-pop 0.22s cubic-bezier(0.2, 0.9, 0.3, 1.3);
+}
+
+.gb-polaroid .gb-tape {
+    top: -0.7rem;
+    width: 4.5rem;
+    height: 1.3rem;
+}
+
+.gb-polaroid-cap {
+    margin-top: 0.7rem;
+}
+
+.gb-polaroid .gb-card-name {
+    font-size: 0.95rem;
+}
+
+.gb-polaroid .gb-card-date {
+    font-size: 0.72rem;
+}
+
+.gb-polaroid .gb-card-msg {
+    font-size: 0.9rem;
+}
+
+.gb-modal-close {
+    position: absolute;
+    top: 0.35rem;
+    right: 0.4rem;
+    z-index: 3;
+    width: 1.6rem;
+    height: 1.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    line-height: 1;
+    color: var(--gb-ink);
+    background: transparent;
+    border: 0;
+    opacity: 0.5;
+}
+
+.gb-modal-close:hover {
+    opacity: 1;
+}
+
+@keyframes gb-fade {
+    from {
+        opacity: 0;
+    }
+}
+
+@keyframes gb-pop {
+    from {
+        opacity: 0;
+        transform: rotate(-1deg) scale(0.9);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .gb-modal,
+    .gb-polaroid {
+        animation: none;
+    }
+
+    .gb-card {
+        transition: none;
+    }
+}

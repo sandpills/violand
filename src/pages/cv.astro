@@ -1,10 +1,11 @@
 ---
 import Nav from "../components/nav.astro";
-import { getAssetPath } from "../utils/paths.ts";
+import { getAssetPath, getLinkHref } from "../utils/paths.ts";
 import CV from "../components/cv.astro";
 import LowerRight from "../layouts/lowerright.astro";
 import GadgetParts from "../layouts/gadgetparts.astro";
 import Metadata from "../components/metadata.astro";
+import GuestbookPeek from "../scripts/guestbookPeek.svelte";
 
 import "../styles/cv.css";
 import "../styles/global.css";
@@ -34,20 +35,35 @@ import "../styles/global.css";
     <body>
         <Nav />
         <div class="flex flex-col lg:flex-row">
-            <section
-                class="main-container-right lg:w-5/12"
-            >
+            <section class="main-container-right lg:w-5/12">
                 <section id="right-outline" class="flex flex-col">
                     <div class="mt-4 lg:mt-0">
                         <Metadata />
                     </div>
                     <LowerRight />
+                    <div class="mt-4">
+                        <div class="flex flex-row gap-4">
+                            <a
+                                href={getLinkHref("/guestbook/")}
+                                class="gb-side-title">guestbook →</a
+                            >
+                            <!-- <a
+								href={getLinkHref("/guestbook/")}
+								class="pill self-start"
+								aria-label="sign my guestbook"
+							>
+								sign
+							</a> -->
+                        </div>
+                        <GuestbookPeek
+                            client:load
+                            guestbookHref={getLinkHref("/guestbook/")}
+                        />
+                    </div>
                 </section>
             </section>
 
-            <section
-                class="main-container"
-            >
+            <section class="main-container">
                 <section class="font-mono mb-10 mt-0 lg:mt-10">
                     <CV />
                 </section>

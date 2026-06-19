@@ -2,11 +2,12 @@
 import About from "../components/about.astro";
 import Works from "../layouts/works.astro";
 import Nav from "../components/nav.astro";
-import { getAssetPath } from "../utils/paths.ts";
+import { getAssetPath, getLinkHref } from "../utils/paths.ts";
 
 import Metadata from "../components/metadata.astro";
 import LowerRight from "../layouts/lowerright.astro";
 import GadgetParts from "../layouts/gadgetparts.astro";
+import GuestbookPeek from "../scripts/guestbookPeek.svelte";
 
 import "../styles/global.css";
 ---
@@ -37,8 +38,25 @@ import "../styles/global.css";
 						<Metadata />
 					</div>
 					<LowerRight />
-					<!-- <GuestBook client:load />
-					<GuestBookDisplay client:load /> -->
+					<div class="mt-4">
+						<div class="flex flex-row gap-4">
+							<a
+								href={getLinkHref("/guestbook/")}
+								class="gb-side-title">guestbook →</a
+							>
+							<!-- <a
+								href={getLinkHref("/guestbook/")}
+								class="pill self-start"
+								aria-label="sign my guestbook"
+							>
+								sign
+							</a> -->
+						</div>
+						<GuestbookPeek
+							client:load
+							guestbookHref={getLinkHref("/guestbook/")}
+						/>
+					</div>
 				</div>
 			</section>
 			<section class="main-container">

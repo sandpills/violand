@@ -470,6 +470,7 @@ html.dark .card:hover {
 }
 
 .title:hover span,
+.gb-side-title:hover,
 .card:hover .title span {
     filter: blur(2px);
 }
@@ -491,7 +492,8 @@ html.dark .card:hover {
 }
 
 .noisy-image:hover,
-.card:hover .noisy-image {
+.card:hover .noisy-image,
+.peek-row:hover .noisy-image {
     /* border-top-left-radius: 0.75rem;
     border-top-right-radius: 0.75rem; */
     border-radius: 0.2rem;
@@ -547,4 +549,9 @@ html.dark .glow {
             0 0 8px #292d1a,
             0 0 9px #292d1a;
     }
+}
+
+.gb-side-title {
+    font-family: "Silkscreen", var(--font-mono), monospace;
+    font-size: 1.05rem;
 }

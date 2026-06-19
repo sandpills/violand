@@ -3,9 +3,9 @@ export const metadata = {
     timezone: "America/Los_Angeles",
     status: "touching brains to touch hands",
     things: [
-        "computer as earnest as stone",
-        "teaching interface",
-        "playing outside"
+        "art and tech is fake",
+        "unemployment",
+        "need to do my O1 visa!!"
     ]
 };
 

@@ -1,0 +1,45 @@
+---
+import Nav from "../components/nav.astro";
+import DarkModeToggle from "../components/darkModeToggle.astro";
+import DarkModeScript from "../components/darkModeScript.astro";
+import { getAssetPath } from "../utils/paths.ts";
+import GuestbookSign from "../scripts/guestbookSign.svelte";
+import GuestbookWall from "../scripts/guestbookWall.svelte";
+
+import "../styles/global.css";
+import "../styles/guestbook.css";
+---
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="icon"
+            type="image/svg+xml"
+            href={getAssetPath("blueguy.png")}
+        />
+        <title>guestbook ✦</title>
+        <meta name="description" content="draw me a little something" />
+        <meta name="author" content="viola he" />
+    </head>
+
+    <body>
+        <Nav />
+        <div class="fixed right-0 top-1 z-10">
+            <DarkModeToggle />
+        </div>
+
+        <main class="gb-page">
+            <h1 class="gb-head">guestbook</h1>
+            <p class="gb-sub">
+                thanks for visiting, please leave a note on my fridge ♡
+            </p>
+
+            <GuestbookSign client:load />
+            <GuestbookWall client:load />
+        </main>
+
+        <DarkModeScript />
+    </body>
+</html>
