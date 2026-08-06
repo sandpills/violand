@@ -1,11 +1,11 @@
 export const metadata = {
-    location: "San Francisco",
-    timezone: "America/Los_Angeles",
-    status: "touching brains to touch hands",
+    location: "Shanghai",
+    timezone: "Asia/Shanghai",
+    status: "working on something new",
     things: [
-        "art and tech is fake",
-        "unemployment",
-        "need to do my O1 visa!!"
+        "computer art",
+        "malware",
+        "almost done with O1 visa!!!"
     ]
 };
 
